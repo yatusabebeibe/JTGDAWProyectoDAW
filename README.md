@@ -32,7 +32,7 @@
         - [**Nombre y configuración de red**](#nombre-y-configuración-de-red-1)
         - [**Cuentas administradoras**](#cuentas-administradoras-1)
       - [1.2.2 **Navegadores**](#122-navegadores)
-      - [1.2.3 **FileZilla**](#123-filezilla)
+      - [1.2.3 **MovaXterm**](#123-movaxterm)
       - [1.2.4 **Netbeans**](#124-netbeans)
         - [Creacion de proyectos](#creacion-de-proyectos)
         - [Eliminacion de proyectos](#eliminacion-de-proyectos)
@@ -293,7 +293,23 @@ sudo systemctl restart php8.3-fpm
 ##### **Nombre y configuración de red**
 ##### **Cuentas administradoras**
 #### 1.2.2 **Navegadores**
-#### 1.2.3 **FileZilla**
+
+#### 1.2.3 **MovaXterm**
+
+Para crear una nueva sesion de usuario le damos aqui:
+
+![alt text](./images/MovaXterm/menuSessionButton.png)
+
+
+Se abrira un menu para elegir el tipo de conexion.
+Elegiremos SSH y pondremos la IP del servidor, marcamos la casilla y ponemos nuestro uruario.
+
+![alt text](./images/MovaXterm/CreateNewSessionSSH.png)
+
+Al darle a Ok nos pedira la contraseña. Se la ponemos y ya estaria creada la sesion para poder administrar el servidor.
+
+
+
 #### 1.2.4 **Netbeans**
 
 ##### Creacion de proyectos
