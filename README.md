@@ -319,7 +319,7 @@ Creamos un usuario llamado `operadorweb` que tenga el grupo `www-data`.
 
 ```bash
 # Creamos el usuario
-sudo useradd -m -d /var/www/html/ -s /bin/bash -G www-data operadorweb
+sudo useradd -m -d /var/www/html/ -s /bin/bash -g www-data operadorweb
 
 # Le ponemos contraseña
 sudo passwd operadorweb
