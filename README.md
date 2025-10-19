@@ -10,17 +10,31 @@
         - [**Actualizar el sistema**](#actualizar-el-sistema)
         - [**Configuración fecha y hora**](#configuración-fecha-y-hora)
         - [**Cuentas administradoras**](#cuentas-administradoras)
-        - [**Cuentas desarrolladores**](#cuentas-desarrolladores)
-        - [**Habilitar cortafuegos**](#habilitar-cortafuegos)
+        - [**Cortafuegos (UFW)**](#cortafuegos-ufw)
+          - [Instalacion](#instalacion)
+          - [Configuracion](#configuracion)
+          - [Monitorizacion](#monitorizacion)
+          - [Mantenimiento](#mantenimiento)
         - [**SSH**](#ssh)
-      - [1.1.2 Instalación del servidor web](#112-instalación-del-servidor-web)
+          - [Instalacion](#instalacion-1)
+          - [Configuracion](#configuracion-1)
+          - [Monitorizacion](#monitorizacion-1)
+          - [Mantenimiento](#mantenimiento-1)
+        - [**Antivirus**](#antivirus)
+          - [Instalacion](#instalacion-2)
+          - [Configuracion](#configuracion-2)
+          - [Monitorizacion](#monitorizacion-2)
+          - [Mantenimiento](#mantenimiento-2)
+      - [1.1.2 Servidor web (Apache)](#112-servidor-web-apache)
         - [Instalación](#instalación)
-        - [Verificación del servicio](#verificación-del-servicio)
+        - [Configuracion](#configuracion-3)
+        - [Monitorizacion](#monitorizacion-3)
+        - [Mantenimiento](#mantenimiento-3)
         - [Virtual Hosts](#virtual-hosts)
         - [Permisos y usuarios](#permisos-y-usuarios)
-      - [1.1.3 PHP](#113-php)
-        - [Instalacion](#instalacion)
-        - [Configuracion](#configuracion)
+      - [1.1.3 PHP-FPM](#113-php-fpm)
+        - [Instalacion](#instalacion-3)
+        - [Configuracion](#configuracion-4)
       - [1.1.4 MySQL](#114-mysql)
       - [1.1.5 XDebug](#115-xdebug)
       - [1.1.6 DNS](#116-dns)
@@ -32,7 +46,7 @@
         - [**Nombre y configuración de red**](#nombre-y-configuración-de-red-1)
         - [**Cuentas administradoras**](#cuentas-administradoras-1)
       - [1.2.2 **Navegadores**](#122-navegadores)
-      - [1.2.3 **FileZilla**](#123-filezilla)
+      - [1.2.3 **MovaXterm**](#123-movaxterm)
       - [1.2.4 **Netbeans**](#124-netbeans)
         - [Creacion de proyectos](#creacion-de-proyectos)
         - [Eliminacion de proyectos](#eliminacion-de-proyectos)
@@ -104,12 +118,12 @@ network:
       routes:
         - to: default
           via: 10.199.8.1
-````
+```
 
 ##### **Actualizar el sistema**
 
 ```bash
-sudo apt update && sudo apt upgrade
+sudo apt update && sudo apt upgrade -y
 ```
 
 ##### **Configuración fecha y hora**
@@ -150,48 +164,127 @@ sudo passwd <usuario> # Para poner la contraseña
 sudo chown -R <usuario>:<grupo> </ruta/del/home> # Para cambiar el dueño de la carpeta home
 ```
 
-##### **Cuentas desarrolladores**
+##### **Cortafuegos (UFW)**
 
-> - [X] operadorweb/paso
-> - [X] operadorweb2/paso
-> - [X] operadorweb3/paso
-
-##### **Habilitar cortafuegos**
-
+###### Instalacion
 ```bash
-sudo ufw enable     # Lo activamos
-sudo ufw allow 22   # Abrimos el puerto 22
+sudo apt update
+sudo apt install ufw     # Instalamos UFW si no está instalado
+```
+###### Configuracion
+```bash
+sudo ufw enable          # Activamos el cortafuegos
+sudo ufw allow 22        # Abrimos el puerto 22 (SSH)
+```
 
-# Para eliminar la regla del IPv6 hacemos esto
-sudo ufw status numbered
-sudo ufw delete 2   # O el numoro que sea la v6
+Para eliminar reglas específicas (por ejemplo IPv6 o cualquier otra):
+```bash
+sudo ufw status numbered  # Mostramos reglas con número
+sudo ufw delete 2         # Eliminamos la regla con el número correspondiente
+```
+###### Monitorizacion
+```bash
+sudo ufw status verbose    # Mostramos el estado detallado del cortafuegos y las reglas activas
+```
+###### Mantenimiento
+```bash
+sudo ufw disable           # Desactivamos el cortafuegos temporalmente
+sudo ufw reset             # Reseteamos todas las reglas a la configuración inicial
 ```
 
 ##### **SSH**
 
+###### Instalacion
 ```bash
-sudo systemctl status  ssh   # Comprobamos su estado
-sudo systemctl enable  ssh   # Habilitamos el servicio
-sudo systemctl disable ssh   # Deshabilitamos el servicio
-sudo systemctl reboot  ssh   # Reiniciamos el servicio
+sudo apt update
+sudo apt install openssh-server   # Instalamos el servidor SSH
+```
+###### Configuracion
+```bash
+sudo nano /etc/ssh/sshd_config   # Archivo de configuración SSH
+sudo systemctl restart ssh       # Reiniciamos el servicio para aplicar cambios si hacemos
+```
+###### Monitorizacion
+```bash
+sudo systemctl status ssh        # Comprobamos el estado del servicio
+```
+###### Mantenimiento
+```bash
+sudo systemctl enable ssh         # Habilitamos que SSH se inicie al arrancar
+sudo systemctl disable ssh        # Deshabilitamos el inicio automático si se necesita
+sudo systemctl restart ssh        # Reiniciamos el servicio si hay problemas
 ```
 
-#### 1.1.2 Instalación del servidor web
+
+##### **Antivirus**
+
+###### Instalacion
+Instalaremos el Antivirus `ClamAV`:
+```bash
+sudo apt update && sudo apt install -y clamav
+```
+
+###### Configuracion
+Si no quieres cambiar nada, puedes verificar la configuración.
+```bash
+cat /etc/clamav/clamd.conf      # Mostramos la configuración del demonio
+cat /etc/clamav/freshclam.conf  # Mostramos la configuración de actualizaciones
+```
+
+Si quieres actualizar la base de datos de los virus:
+```bash
+sudo systemctl stop clamav-freshclam   # Detenemos el servicio de actualizaciones
+sudo freshclam                         # Actualizamos la base de datos de virus
+sudo systemctl start clamav-freshclam  # Volvemos a iniciar el servicio
+```
+###### Monitorizacion
+```bash
+sudo systemctl status clamav-daemon    # Comprobamos el estado del servicio ClamAV
+sudo systemctl status clamav-freshclam # Comprobamos el estado del servicio de actualizaciones
+```
+###### Mantenimiento
+```bash
+sudo systemctl enable clamav-daemon     # Habilitamos el demonio al inicio del sistema
+sudo systemctl disable clamav-daemon    # Deshabilitamos el inicio automático si se necesita
+sudo systemctl restart clamav-daemon    # Reiniciamos el servicio si hay problemas
+```
+
+#### 1.1.2 Servidor web (Apache)
 
 ##### Instalación
-
 ```bash
-sudo apt update # Para actualizar los repositorios
-sudo apt install apache2 -y # Para instalar Apache
+sudo apt update
+sudo apt install apache2 -y   # Instalamos Apache
 ```
-
-##### Verificación del servicio
+##### Configuracion
 ```bash
-sudo systemctl status apache2 # Comprueba si esta corriedo o detenido
+cat /etc/apache2/apache2.conf   # Mostramos la configuración principal
+cat /etc/apache2/sites-available/000-default.conf  # Configuración del sitio por defecto
+```
+Para aplicar los cambios despues de editar usamos:
+```bash
+sudo apache2ctl configtest      # Comprobamos que no de errores = "Syntax OK"
+sudo systemctl restart apache2  # Reiniciamos el servicio para aplicar cambios
+```
+Abrimos el puerto 80:
+```bash
+sudo ufw allow 80         # Abrimos el puerto 80 (HTTP)
+sudo ufw status numbered  # Mostramos reglas con número
+sudo ufw delete 3         # Eliminamos la regla IPv6
+```
+##### Monitorizacion
+```bash
+sudo systemctl status apache2   # Comprobamos si Apache está activo
+sudo ufw status | grep "80"     # Verificamos que el puerto 80 está escuchando
+```
+##### Mantenimiento
+```bash
+sudo systemctl start apache2     # Iniciamos el servicio si está detenido
+sudo systemctl stop apache2      # Detenemos el servicio
+sudo systemctl restart apache2   # Reiniciamos el servicio
+sudo systemctl enable apache2    # Habilitamos el inicio automático al arrancar
+sudo systemctl disable apache2   # Deshabilitamos el inicio automático si se necesita
 
-sudo systemctl start   apache2 # Para activarlo si esta denenido
-sudo systemctl stop    apache2 # Para detenerlo
-sudo systemctl restart apache2 # Para reiniciarlo
 ```
 
 ---
@@ -218,17 +311,30 @@ sudo apache2ctl configtest
 ##### Virtual Hosts
 ##### Permisos y usuarios
 
+> - [X] operadorweb/paso
+> - [X] operadorweb2/paso
+> - [X] operadorweb3/paso
+
 Creamos un usuario llamado `operadorweb` que tenga el grupo `www-data`.
 
 ```bash
-# Cambiamos el propietario de la carpeta con:
+# Creamos el usuario
+sudo useradd -m -d /var/www/html/ -s /bin/bash -g www-data operadorweb
+
+# Le ponemos contraseña
+sudo passwd operadorweb
+
+
+# Cambiamos el propietario de su carpeta home con:
 sudo chown -R operadorweb:www-data /var/www/html/
 
 # Y los permisos con:
 sudo chmod -R 775 /var/www/html
 ```
 
-#### 1.1.3 PHP
+Y habilitamos el puerto 80 en el UFW si no esta ya.
+
+#### 1.1.3 PHP-FPM
 
 ##### Instalacion
 
@@ -293,7 +399,23 @@ sudo systemctl restart php8.3-fpm
 ##### **Nombre y configuración de red**
 ##### **Cuentas administradoras**
 #### 1.2.2 **Navegadores**
-#### 1.2.3 **FileZilla**
+
+#### 1.2.3 **MovaXterm**
+
+Para crear una nueva sesion de usuario le damos aqui:
+
+![alt text](./images/MovaXterm/menuSessionButton.png)
+
+
+Se abrira un menu para elegir el tipo de conexion.
+Elegiremos SSH y pondremos la IP del servidor, marcamos la casilla y ponemos nuestro uruario.
+
+![alt text](./images/MovaXterm/CreateNewSessionSSH.png)
+
+Al darle a Ok nos pedira la contraseña. Se la ponemos y ya estaria creada la sesion para poder administrar el servidor.
+
+
+
 #### 1.2.4 **Netbeans**
 
 ##### Creacion de proyectos
