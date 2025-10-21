@@ -261,6 +261,9 @@ sudo apt install apache2 -y   # Instalamos Apache
 cat /etc/apache2/apache2.conf   # Mostramos la configuración principal
 cat /etc/apache2/sites-available/000-default.conf  # Configuración del sitio por defecto
 ```
+Cambiamos el `None` por `All`, para poder modificar los archivos **``.htaccess``**
+![alt text](./images/apache/apacheAllowOverride.png)
+
 Para aplicar los cambios despues de editar usamos:
 ```bash
 sudo apache2ctl configtest      # Comprobamos que no de errores = "Syntax OK"
