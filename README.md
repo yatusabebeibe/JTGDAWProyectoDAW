@@ -340,6 +340,8 @@ Y habilitamos el puerto 80 en el UFW si no esta ya.
 
 ##### HTTPS
 
+![alt text](./images/apache/imagenModeloHTTPS.png)
+
 
 Generamos un certificado autofirmado y su clave privada (válido 1 año), y rellenamos la info que nos pide.
 ```bash
@@ -366,6 +368,11 @@ Habilitamos el sitio y reiniciamos apache para aplicar cambios.
 ```bash
 sudo a2ensite jtg-used.conf
 sudo systemctl reload apache2
+```
+
+Para terminar, abrimos el puerto 443 para permitir HTTPS.
+```bash
+sudo ufw allow 443
 ```
 
 #### 1.1.3 PHP-FPM
