@@ -32,6 +32,7 @@
         - [Mantenimiento](#mantenimiento-3)
         - [Virtual Hosts](#virtual-hosts)
         - [Permisos y usuarios](#permisos-y-usuarios)
+        - [HTTPS](#https)
       - [1.1.3 PHP-FPM](#113-php-fpm)
         - [Instalacion](#instalacion-3)
         - [Configuracion](#configuracion-4)
@@ -261,6 +262,9 @@ sudo apt install apache2 -y   # Instalamos Apache
 cat /etc/apache2/apache2.conf   # Mostramos la configuración principal
 cat /etc/apache2/sites-available/000-default.conf  # Configuración del sitio por defecto
 ```
+Cambiamos el `None` por `All`, para poder modificar los archivos **``.htaccess``**
+![alt text](./images/apache/apacheAllowOverride.png)
+
 Para aplicar los cambios despues de editar usamos:
 ```bash
 sudo apache2ctl configtest      # Comprobamos que no de errores = "Syntax OK"
@@ -333,6 +337,36 @@ sudo chmod -R 775 /var/www/html
 ```
 
 Y habilitamos el puerto 80 en el UFW si no esta ya.
+
+##### HTTPS
+
+
+Generamos un certificado autofirmado y su clave privada (válido 1 año), y rellenamos la info que nos pide.
+```bash
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/jtg-used.key -out /etc/ssl/certs/jtg-used.crt
+```
+
+Comprobamos que se han creado correctamente los certificados:
+```bash
+sudo ls -la /etc/ssl/certs/   | grep jtg-used
+sudo ls -la /etc/ssl/private/ | grep jtg-used
+```
+
+Habilitamnos el modulo ssh, y configuramos un sitio para que lo use.
+```bash
+sudo a2enmod ssl
+sudo systemctl restart apache2
+cd /etc/apache2/sites-available/
+sudo cp default-ssl.conf jtg-used.conf
+sudo nano jtg-used.conf
+```
+![alt text](./images/apache/apacheSiteConfgHTTPS.png)
+
+Habilitamos el sitio y reiniciamos apache para aplicar cambios.
+```bash
+sudo a2ensite jtg-used.conf
+sudo systemctl reload apache2
+```
 
 #### 1.1.3 PHP-FPM
 
