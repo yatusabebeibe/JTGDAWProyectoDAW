@@ -44,6 +44,10 @@
         - [Monitorizacion](#monitorizacion-5)
         - [Mantenimiento](#mantenimiento-5)
       - [1.1.5 XDebug](#115-xdebug)
+        - [Instalacion](#instalacion-5)
+        - [Configuracion](#configuracion-6)
+        - [Monitorizacion](#monitorizacion-6)
+        - [Mantenimiento](#mantenimiento-6)
       - [1.1.6 DNS](#116-dns)
       - [1.1.7 SFTP](#117-sftp)
       - [1.1.8 Apache Tomcat](#118-apache-tomcat)
@@ -508,6 +512,65 @@ sudo php -m | grep mysql
 ```
 
 #### 1.1.5 XDebug
+
+##### Instalacion
+
+```bash
+sudo apt update
+sudo apt install php8.3-xdebug -y   # Instalamos XDebug para PHP 8.3
+```
+
+Verificamos que XDebug está activo:
+```bash
+sudo php -v | grep Xdebug   # Con la X mayuscula; sino no aparece
+```
+
+##### Configuracion
+
+El archivo principal de configuración se encuentra en:
+```bash
+/etc/php/8.3/fpm/conf.d/20-xdebug.ini:
+```
+
+Y tiene que tener esto:
+```bash
+zend_extension=xdebug.so
+xdebug.mode=develop,debug
+xdebug.start_with_request=yes
+xdebug.client_port=9003
+xdebug.log=/tmp/xdebug.log
+xdebug.log_level=7
+xdebug.idekey="netbeans-xdebug"
+xdebug.discover_client_host=1
+```
+
+Reiniciamos PHP-FPM para aplicar los cambios:
+```bash
+sudo systemctl restart php8.3-fpm
+```
+
+##### Monitorizacion
+
+Verificamos que XDebug está cargado:
+```bash
+php -m | grep xdebug
+```
+
+Podemos revisar el log para errores o avisos:
+```bash
+cat /tmp/xdebug.log
+```
+
+##### Mantenimiento
+
+```bash
+sudo systemctl start php8.3-fpm      # Inicia el servicio PHP-FPM
+sudo systemctl stop php8.3-fpm       # Detiene el servicio
+sudo systemctl restart php8.3-fpm    # Reinicia el servicio
+sudo systemctl enable php8.3-fpm     # Habilita inicio automático
+sudo systemctl disable php8.3-fpm    # Deshabilita inicio automático
+```
+
 #### 1.1.6 DNS
 #### 1.1.7 SFTP
 #### 1.1.8 Apache Tomcat
