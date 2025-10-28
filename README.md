@@ -36,7 +36,11 @@
       - [1.1.3 PHP-FPM](#113-php-fpm)
         - [Instalacion](#instalacion-3)
         - [Configuracion](#configuracion-4)
-      - [1.1.4 MySQL](#114-mysql)
+      - [1.1.4 MariaDB](#114-mariadb)
+        - [Instalacion](#instalacion-4)
+        - [Configuracion](#configuracion-5)
+        - [Monitorizacion](#monitorizacion-4)
+        - [Mantenimiento](#mantenimiento-4)
       - [1.1.5 XDebug](#115-xdebug)
       - [1.1.6 DNS](#116-dns)
       - [1.1.7 SFTP](#117-sftp)
@@ -428,7 +432,58 @@ Y reiniciamos el servicio para aplicar los cambios a la configuracion con:
 sudo systemctl restart php8.3-fpm
 ```
 
-#### 1.1.4 MySQL
+#### 1.1.4 MariaDB
+
+##### Instalacion
+Instalamos con:
+```bash
+sudo apt update
+sudo apt install mariadb-server -y  # Instalamos el servidor MariaDB
+```
+##### Configuracion
+El archivo principal de configuración se encuentra en:
+```
+/etc/mysql/mariadb.conf.d/50-server.cnf
+```
+
+Editamos la línea del ``bind-address`` para permitir conexiones desde cualquier IP (por defecto solo permite localhost), cambiandolo de ``127.0.0.1`` por ``0.0.0.0`` para permitir todas las conexiones externas.
+
+Guardamos los cambios y ejecutamos el asistente de seguridad:
+```bash
+sudo mysql_secure_installation   # Configuramos contraseña root y opciones de seguridad
+```
+
+Reiniciamos el servicio para aplicar los cambios:
+```bash
+sudo systemctl restart mariadb
+```
+
+##### Monitorizacion
+
+Verificamos la IP y el puerto que está utilizando MariaDB:
+```bash
+sudo ss -punta | grep mariadb   # Muestra conexiones activas y puertos usados por MariaDB
+```
+
+Comprobamos el estado del servicio:
+```bash
+sudo systemctl status mariadb
+```
+
+##### Mantenimiento
+```bash
+sudo systemctl start mariadb      # Inicia el servicio
+sudo systemctl stop mariadb       # Detiene el servicio
+sudo systemctl restart mariadb    # Reinicia el servicio
+sudo systemctl enable mariadb     # Habilita el inicio automático
+sudo systemctl disable mariadb    # Deshabilita el inicio automático
+```
+
+Comprobamos si PHP detecta los módulos de MySQL/MariaDB:
+```bash
+sudo php -m | grep mysql
+```
+
 #### 1.1.5 XDebug
 #### 1.1.6 DNS
 #### 1.1.7 SFTP
