@@ -36,11 +36,13 @@
       - [1.1.3 PHP-FPM](#113-php-fpm)
         - [Instalacion](#instalacion-3)
         - [Configuracion](#configuracion-4)
+        - [Monitorizacion](#monitorizacion-4)
+        - [Mantenimiento](#mantenimiento-4)
       - [1.1.4 MariaDB](#114-mariadb)
         - [Instalacion](#instalacion-4)
         - [Configuracion](#configuracion-5)
-        - [Monitorizacion](#monitorizacion-4)
-        - [Mantenimiento](#mantenimiento-4)
+        - [Monitorizacion](#monitorizacion-5)
+        - [Mantenimiento](#mantenimiento-5)
       - [1.1.5 XDebug](#115-xdebug)
       - [1.1.6 DNS](#116-dns)
       - [1.1.7 SFTP](#117-sftp)
@@ -422,7 +424,9 @@ sudo systemctl reload apache2
 
 ##### Configuracion
 
-En `/etc/php/8.3/fpm` hacemos una copia de seguridad de `php.ini` y despues lo editamos cambiando estos valores:
+El archivo principal de configuración de PHP-FPM se encuentra en ``/etc/php/8.3/fpm/php.ini``.
+
+Hacemos una copia de seguridad de `php.ini` y despues lo editamos cambiando estos valores:
 
 ![](./images/php/php.ini_errors.png)
 ![](./images/php/php.ini_memory.png)
@@ -430,6 +434,24 @@ En `/etc/php/8.3/fpm` hacemos una copia de seguridad de `php.ini` y despues lo e
 Y reiniciamos el servicio para aplicar los cambios a la configuracion con:
 ```bash
 sudo systemctl restart php8.3-fpm
+```
+
+##### Monitorizacion
+
+```bash
+sudo systemctl status php8.3-fpm   # Verifica el estado de PHP-FPM
+php -v    # Comprobamos la versión de PHP
+php -m    # Lista los módulos activos
+```
+
+##### Mantenimiento
+
+```bash
+sudo systemctl start php8.3-fpm      # Inicia el servicio
+sudo systemctl stop php8.3-fpm       # Detiene el servicio
+sudo systemctl restart php8.3-fpm    # Reinicia el servicio
+sudo systemctl enable php8.3-fpm     # Habilita inicio automático al arrancar
+sudo systemctl disable php8.3-fpm    # Deshabilita inicio automático
 ```
 
 #### 1.1.4 MariaDB
@@ -440,6 +462,7 @@ Instalamos con:
 sudo apt update
 sudo apt install mariadb-server -y  # Instalamos el servidor MariaDB
 ```
+
 ##### Configuracion
 El archivo principal de configuración se encuentra en:
 ```
