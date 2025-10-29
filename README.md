@@ -66,6 +66,7 @@
         - [Como crear un Workspace](#como-crear-un-workspace)
         - [Conexion SFTP con maquina de desarrollo](#conexion-sftp-con-maquina-de-desarrollo)
         - [Control de versiones](#control-de-versiones)
+        - [Debug PHP (Xdebug)](#debug-php-xdebug)
         - [Informacion del IDE](#informacion-del-ide-1)
   - [2. GitHub](#2-github)
   - [3.Entorno de Explotación](#3entorno-de-explotación)
@@ -697,9 +698,11 @@ Una vez creadas las carpetas. Seleccionamos las carpetas **DENTRO** de ***Proyec
 
 Una vez hecho. En el explorador del editor apareceran los diferentes proyectos. 
 
-**IMPORTANTE**: Ir al ***File > Save Workspace As...*** y guardarlo *(Preferiblemente en la carpeta del workspace)*. Es necesario para algunas configuraciones mas tarde.
+> **IMPORTANTE**: Ir al ***File > Save Workspace As...*** y guardarlo *(Preferiblemente en la carpeta del workspace)*. Es necesario para algunas configuraciones mas tarde.
+> 
+> *Por defecto, el nombre del proyecto es el mismo que el de la carpeta del proyecto, pero puedes editar el archivo ``.code-workspace`` y añadir un **"name"** después del **"path"** del proyecto para que aparezca con un nombre visual diferente. (Si haces esto, es importante tenerlo en cuenta para algunas configuraciones posteriores.)*
 
-*Si ya estan los proyectos creados del netbeans, "D:\Proyectos_NetBeans" (O como se llame la carpeta) seria la carpeta del workspace.*
+> *Si ya estan los proyectos creados del netbeans, la carpeta del workspace seria "D:\Proyectos_NetBeans" (O como se llame la carpeta).*
 
 ##### Conexion SFTP con maquina de desarrollo
 
@@ -744,7 +747,44 @@ Para subir/descargar archivos manualmente, podemos seleccionar el archivo en cue
 
 Para abir el panel para el control de versiones, en la barra lateral buscamos un icono con un círculo dividido con ramas; o hacemos ``Ctrl + Shift + G``.
 
-Desde hay podemos hacer
+Desde hay podemos controlar todos los git de cada proyecto (Hacer commits, cambiar ramas, crear y añadir tags, gestionar stashes, ...)
+
+
+##### Debug PHP (Xdebug)
+
+Para debuggear PHP con Xdebug, en el archivo ``.code-workspace`` al nivel de **"folders"**, añadir la configuracion del **"launch"** (Si has añadino un **"name"** a algun proyecto):
+```json
+{
+  "folders": [
+    ...
+  ],
+  "launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"name": "Listen for Xdebug",
+				"type": "php",
+				"request": "launch",
+				"port": 9003,
+				"stopOnEntry": true,
+				"pathMappings": {
+					"/var/www/html": "${workspaceFolder:Web Principal}",
+					"/var/www/html/JTGDAWProyectoDAW":    "${workspaceFolder:DAW}",
+					"/var/www/html/JTGDWECSopaLetras":    "${workspaceFolder:DWEC SopaLetras}",
+					"/var/www/html/JTGDWECProyectoDWEC":  "${workspaceFolder:DWEC - Cliente}",
+					"/var/www/html/JTGDWESProyectoDWES":  "${workspaceFolder:DWES - Servidor}",
+					"/var/www/html/JTGDWESProyectoTema3": "${workspaceFolder:ProyectoTema3}",
+					"/var/www/html/JTGDWESProyectoTema4": "${workspaceFolder:ProyectoTema4}",
+					"/var/www/html/JTGCIBProyectoCiberseguridad": "${workspaceFolder:Ciberseguridad}"
+				},
+				"xdebugSettings": {
+					"max_data": 2048,
+				}
+			}
+		]
+	},
+}
+```
 
 
 ##### Informacion del IDE
