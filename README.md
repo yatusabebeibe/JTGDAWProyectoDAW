@@ -693,6 +693,7 @@ D:\
     ├── xxxProyectoDAW
     └── ...
 ```
+> *Si ya estan los proyectos creados del netbeans, la carpeta del workspace seria "D:\Proyectos_NetBeans" (O como se llame la carpeta).*
 
 Una vez creadas las carpetas. Seleccionamos las carpetas **DENTRO** de ***ProyectosWebDAW***, no la carpeta ***ProyectosWebDAW*** en si. (Se pueden seleccionar todas a la vez)
 
@@ -701,8 +702,6 @@ Una vez hecho. En el explorador del editor apareceran los diferentes proyectos.
 > **IMPORTANTE**: Ir al ***File > Save Workspace As...*** y guardarlo *(Preferiblemente en la carpeta del workspace)*. Es necesario para algunas configuraciones mas tarde.
 > 
 > *Por defecto, el nombre del proyecto es el mismo que el de la carpeta del proyecto, pero puedes editar el archivo ``.code-workspace`` y añadir un **"name"** después del **"path"** del proyecto para que aparezca con un nombre visual diferente. (Si haces esto, es importante tenerlo en cuenta para algunas configuraciones posteriores.)*
-
-> *Si ya estan los proyectos creados del netbeans, la carpeta del workspace seria "D:\Proyectos_NetBeans" (O como se llame la carpeta).*
 
 ##### Conexion SFTP con maquina de desarrollo
 
@@ -748,6 +747,22 @@ Para subir/descargar archivos manualmente, podemos seleccionar el archivo en cue
 Para abir el panel para el control de versiones, en la barra lateral buscamos un icono con un círculo dividido con ramas; o hacemos ``Ctrl + Shift + G``.
 
 Desde hay podemos controlar todos los git de cada proyecto (Hacer commits, cambiar ramas, crear y añadir tags, gestionar stashes, ...)
+
+Estaria bien incluir esto en los ``.gitignore`` del proyecto:
+```
+.bash_history
+.bashrc
+.wget-hsts
+.cache/
+.dotnet/
+.local/
+.ssh/
+.vscode-server/
+.vscode/
+
+*.code-workspace
+nbproject/
+```
 
 
 ##### Debug PHP (Xdebug)
