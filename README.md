@@ -809,7 +809,7 @@ Y despues en el archivo ``.code-workspace`` al nivel de **"folders"** poner este
 				"type": "php",
 				"request": "launch",
 				"port": 9003,
-				"stopOnEntry": true,
+				"stopOnEntry": false,
 				"pathMappings": {
 					"/var/www/html": "${workspaceFolder:xxxProyectoDAW}",
 					"/var/www/html/xxxDAWProyectoDAW":    "${workspaceFolder:xxxDAWProyectoDAW}",
