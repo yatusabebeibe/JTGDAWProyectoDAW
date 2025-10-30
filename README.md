@@ -267,6 +267,10 @@ sudo systemctl restart clamav-daemon    # Reiniciamos el servicio si hay problem
 
 #### 1.1.2 Servidor web (Apache)
 
+Servidor web de código abierto que gestiona y entrega páginas a los usuarios. \
+Permite configurar sitios, manejar peticiones HTTP/HTTPS y servir contenido dinámico y estático. \
+Es compatible con módulos y lenguajes como PHP, ofreciendo gran flexibilidad y personalización.
+
 ##### Instalación
 ```bash
 sudo apt update
@@ -392,6 +396,10 @@ sudo ufw allow 443
 
 #### 1.1.3 PHP-FPM
 
+Gestor de procesos para ejecutar PHP de forma eficiente. \
+Permite procesar múltiples peticiones simultáneamente, mejorando el rendimiento de servidores web. \
+Se integra con servidores como Nginx o Apache para servir páginas PHP de manera rápida y estable.
+
 ##### Instalacion
 
 ```bash
@@ -465,6 +473,10 @@ sudo systemctl disable php8.3-fpm    # Deshabilita inicio automático
 
 #### 1.1.4 MariaDB
 
+Sistema de gestión de bases de datos relacional y de código abierto, compatible con MySQL. \
+Permite almacenar, consultar y gestionar datos de forma segura y eficiente. \
+Se puede acceder desde aplicaciones y IDEs mediante conexión local o remota usando el puerto **3306**.
+
 ##### Instalacion
 Instalamos con:
 ```bash
@@ -517,6 +529,10 @@ sudo php -m | grep mysql
 ```
 
 #### 1.1.5 XDebug
+
+Es un módulo de PHP que permite depurar y analizar el código de forma más sencilla. \
+Permite inspeccionar variables, pausar la ejecución y seguir el flujo del programa paso a paso. \
+Se integra con IDEs mediante el puerto **9003** para depuración remota.
 
 ##### Instalacion
 
