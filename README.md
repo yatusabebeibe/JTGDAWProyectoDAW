@@ -492,10 +492,23 @@ El archivo principal de configuración se encuentra en:
 
 Editamos la línea del ``bind-address`` para permitir conexiones desde cualquier IP (por defecto solo permite localhost), cambiandolo de ``127.0.0.1`` por ``0.0.0.0`` para permitir todas las conexiones externas.
 
-Guardamos los cambios y ejecutamos el asistente de seguridad:
+Guardamos los cambios y entramos en MariaDB para crear un nuevo usuario administrador con ``sudo mariadb`` \
+Y creamos el usuario con:
+```sql
+GRANT ALL ON *.* TO 'adminsql'@'%' IDENTIFIED BY 'password' WITH GRANT OPTION;
+```
+
+Ejecutamos el asistente de seguridad:
 ```bash
 sudo mysql_secure_installation   # Configuramos contraseña root y opciones de seguridad
 ```
+
+* En el primer paso preguntará por la contraseña de `root` para MariaDB, pulsa la tecla `Enter` ya que no hay contraseña definida.
+* La siguiente, preguntará si quieres asignar una contraseña para el usuario “root”. Es recomendable usar una contraseña.
+* En el tercer paso preguntará si quieres eliminar `usuario anónimo`, aquí indica que `Sí` quieres borrar los datos.
+* Después preguntará si quieres desactivar el acceso remoto del usuario “root”, aquí indica que `Sí` quieres desactivar acceso remoto para usuario por seguridad.
+* De nuevo preguntará si quieres eliminar la base de datos `test`, aquí indica de nuevo que Sí quieres borrar las base de datos de prueba.
+* Por último, preguntará si quieres recargar privilegios, aquí indica que `Sí`.
 
 Reiniciamos el servicio para aplicar los cambios:
 ```bash
