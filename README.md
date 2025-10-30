@@ -700,8 +700,6 @@ Una vez creadas las carpetas. Seleccionamos las carpetas **DENTRO** de ***Proyec
 Una vez hecho. En el explorador del editor apareceran los diferentes proyectos. 
 
 > **IMPORTANTE**: Ir al ***File > Save Workspace As...*** y guardarlo *(Preferiblemente en la carpeta del workspace)*. Es necesario para algunas configuraciones mas tarde.
-> 
-> *Por defecto, el nombre del proyecto es el mismo que el de la carpeta del proyecto, pero puedes editar el archivo ``.code-workspace`` y añadir un **"name"** después del **"path"** del proyecto para que aparezca con un nombre visual diferente. (Si haces esto, es importante tenerlo en cuenta para algunas configuraciones posteriores.)*
 
 ##### Conexion SFTP con maquina de desarrollo
 
@@ -764,10 +762,11 @@ Estaria bien incluir esto en los ``.gitignore`` del proyecto:
 nbproject/
 ```
 
-
 ##### Debug PHP (Xdebug)
 
-Para debuggear PHP con Xdebug, en el archivo ``.code-workspace`` al nivel de **"folders"**, añadir la configuracion del **"launch"** (Si has añadino un **"name"** a algun proyecto):
+Para debuggear PHP con Xdebug, primero, ir a la configuracion y buscar "**php.debug.idekey**" y ponerle el valor "**netbeans-xdebug**".
+
+Y despues en el archivo ``.code-workspace`` al nivel de **"folders"** poner este launch *(cambiando la ruta remota y nombre del directorio local por la que corresponda)*:
 ```json
 {
   "folders": [
@@ -783,14 +782,13 @@ Para debuggear PHP con Xdebug, en el archivo ``.code-workspace`` al nivel de **"
 				"port": 9003,
 				"stopOnEntry": true,
 				"pathMappings": {
-					"/var/www/html": "${workspaceFolder:Web Principal}",
-					"/var/www/html/JTGDAWProyectoDAW":    "${workspaceFolder:DAW}",
-					"/var/www/html/JTGDWECSopaLetras":    "${workspaceFolder:DWEC SopaLetras}",
-					"/var/www/html/JTGDWECProyectoDWEC":  "${workspaceFolder:DWEC - Cliente}",
-					"/var/www/html/JTGDWESProyectoDWES":  "${workspaceFolder:DWES - Servidor}",
-					"/var/www/html/JTGDWESProyectoTema3": "${workspaceFolder:ProyectoTema3}",
-					"/var/www/html/JTGDWESProyectoTema4": "${workspaceFolder:ProyectoTema4}",
-					"/var/www/html/JTGCIBProyectoCiberseguridad": "${workspaceFolder:Ciberseguridad}"
+					"/var/www/html": "${workspaceFolder:xxxProyectoDAW}",
+					"/var/www/html/xxxDAWProyectoDAW":    "${workspaceFolder:xxxDAWProyectoDAW}",
+					"/var/www/html/xxxDWECProyectoDWEC":  "${workspaceFolder:xxxDWECProyectoDWEC}",
+					"/var/www/html/xxxDWESProyectoDWES":  "${workspaceFolder:xxxDWESProyectoDWES}",
+					"/var/www/html/xxxDWESProyectoTema3": "${workspaceFolder:xxxDWESProyectoTema3}",
+					"/var/www/html/xxxDWESProyectoTema4": "${workspaceFolder:xxxDWESProyectoTema4}",
+					"/var/www/html/xxxCIBProyectoCiberseguridad": "${workspaceFolder:xxxCIBProyectoCiberseguridad}"
 				},
 				"xdebugSettings": {
 					"max_data": 2048,
@@ -800,6 +798,10 @@ Para debuggear PHP con Xdebug, en el archivo ``.code-workspace`` al nivel de **"
 	},
 }
 ```
+
+Una vez hecho esto, vamos al apartado de debug de vscode buscando el icono con el triangulo de play con un insecto al lado; o presionando ``Ctrl + Shift + D``. \
+Si le damos al Run **Listen for Xdebug** 
+
 
 
 ##### Informacion del IDE
