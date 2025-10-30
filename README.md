@@ -498,6 +498,11 @@ Y creamos el usuario con:
 GRANT ALL ON *.* TO 'adminsql'@'%' IDENTIFIED BY 'password' WITH GRANT OPTION;
 ```
 
+Habilitamos el puerto 3306 con:
+```bash
+sudo ufw allow 3306
+```
+
 Ejecutamos el asistente de seguridad:
 ```bash
 sudo mysql_secure_installation   # Configuramos contraseña root y opciones de seguridad
