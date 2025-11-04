@@ -67,6 +67,7 @@
         - [Conexion SFTP con maquina de desarrollo](#conexion-sftp-con-maquina-de-desarrollo)
         - [Control de versiones](#control-de-versiones)
         - [Debug PHP (Xdebug)](#debug-php-xdebug)
+        - [Connexion con la BBDD (MariaDB)](#connexion-con-la-bbdd-mariadb)
         - [Informacion del IDE](#informacion-del-ide-1)
   - [2. GitHub](#2-github)
   - [3.Entorno de Explotación](#3entorno-de-explotación)
@@ -386,19 +387,6 @@ sudo nano jtg-used.conf
 Habilitamos el sitio y reiniciamos apache para aplicar cambios.
 ```bash
 sudo a2ensite jtg-used.conf
-sudo systemctl reload apache2
-```
-
-Editamos el `.htaccess` de la pagina principal poniendo esto:
-```apache
-RewriteEngine On
-RewriteCond %{SERVER_PORT} 80
-RewriteRule ^(.*)$ https://10.199.10.22/$1 [R,L]
-```
-
-Habilitamos el modulo para permitir redireccion y reiniciamos apache.
-```bash
-sudo a2enmod rewrite
 sudo systemctl reload apache2
 ```
 
@@ -774,8 +762,7 @@ El archivo tiene que tener este formato (modificar ``name``, ``host`` y ``remote
       ".local",
       ".cache",
       ".bash_history",
-      ".bashrc",
-      ".profile"
+      ".bashrc"
     ]
   }
 }
@@ -799,7 +786,6 @@ Estaria bien incluir esto en los ``.gitignore`` del proyecto:
 .bash_history
 .bashrc
 .wget-hsts
-.profile
 .cache/
 .dotnet/
 .local/
@@ -851,6 +837,18 @@ Y despues en el archivo ``.code-workspace`` al nivel de **"folders"** poner este
 Una vez hecho esto, vamos al apartado de debug de vscode buscando el icono con el triangulo de play con un insecto al lado; o presionando ``Ctrl + Shift + D``. \
 Si le damos al Run **Listen for Xdebug** 
 
+##### Connexion con la BBDD (MariaDB)
+
+Buscamos en la barra lateral el icono de un cilindro.
+
+Una vez en el, en el apartado ***CONNECTIONS*** le damos a ***Add New Connection***, se nos abrira un apartado para elegir la DB que queramos usar. Seleccionaremos **MariaDB**.
+
+Se abrira aun formulario par completar la configuracion de la connexion. Lo rellenamos con los datos necesarios. (Para el usuario administrador de la base de datos, en el `Database` ponemos **mysql** para que tenga acceso a todas las BBDD)
+
+Para ejecutar consultas, primero verificamos cual es la connexion acctiva con la que haremos la consulta hacemos clic aqui y seleccionamos la que queramos:
+![alt text](./images/vscode/DBStatusBar.png)
+
+( ⚠️ Sin terminar ⚠️ )
 
 
 ##### Informacion del IDE
