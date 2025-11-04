@@ -521,6 +521,12 @@ Reiniciamos el servicio para aplicar los cambios:
 sudo systemctl restart mariadb
 ```
 
+Para permitir que el servidor web pueda conectarse con la DB tenemos que instalar este mudulo php y reiniciarlo:
+```bash
+sudo apt install php8.3-mysql
+sudo systemctl restart php8.3-fpm
+```
+
 ##### Monitorizacion
 
 Verificamos la IP y el puerto que está utilizando MariaDB:
