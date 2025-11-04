@@ -36,8 +36,18 @@
       - [1.1.3 PHP-FPM](#113-php-fpm)
         - [Instalacion](#instalacion-3)
         - [Configuracion](#configuracion-4)
-      - [1.1.4 MySQL](#114-mysql)
+        - [Monitorizacion](#monitorizacion-4)
+        - [Mantenimiento](#mantenimiento-4)
+      - [1.1.4 MariaDB](#114-mariadb)
+        - [Instalacion](#instalacion-4)
+        - [Configuracion](#configuracion-5)
+        - [Monitorizacion](#monitorizacion-5)
+        - [Mantenimiento](#mantenimiento-5)
       - [1.1.5 XDebug](#115-xdebug)
+        - [Instalacion](#instalacion-5)
+        - [Configuracion](#configuracion-6)
+        - [Monitorizacion](#monitorizacion-6)
+        - [Mantenimiento](#mantenimiento-6)
       - [1.1.6 DNS](#116-dns)
       - [1.1.7 SFTP](#117-sftp)
       - [1.1.8 Apache Tomcat](#118-apache-tomcat)
@@ -53,6 +63,12 @@
         - [Eliminacion de proyectos](#eliminacion-de-proyectos)
         - [Informacion del IDE](#informacion-del-ide)
       - [1.2.5 **Visual Studio Code**](#125-visual-studio-code)
+        - [Como crear un Workspace](#como-crear-un-workspace)
+        - [Conexion SFTP con maquina de desarrollo](#conexion-sftp-con-maquina-de-desarrollo)
+        - [Control de versiones](#control-de-versiones)
+        - [Debug PHP (Xdebug)](#debug-php-xdebug)
+        - [Connexion con la BBDD (MariaDB)](#connexion-con-la-bbdd-mariadb)
+        - [Informacion del IDE](#informacion-del-ide-1)
   - [2. GitHub](#2-github)
   - [3.Entorno de Explotación](#3entorno-de-explotación)
 
@@ -252,6 +268,10 @@ sudo systemctl restart clamav-daemon    # Reiniciamos el servicio si hay problem
 
 #### 1.1.2 Servidor web (Apache)
 
+Servidor web de código abierto que gestiona y entrega páginas a los usuarios. \
+Permite configurar sitios, manejar peticiones HTTP/HTTPS y servir contenido dinámico y estático. \
+Es compatible con módulos y lenguajes como PHP, ofreciendo gran flexibilidad y personalización.
+
 ##### Instalación
 ```bash
 sudo apt update
@@ -340,6 +360,8 @@ Y habilitamos el puerto 80 en el UFW si no esta ya.
 
 ##### HTTPS
 
+![alt text](./images/apache/imagenModeloHTTPS.png)
+
 
 Generamos un certificado autofirmado y su clave privada (válido 1 año), y rellenamos la info que nos pide.
 ```bash
@@ -368,7 +390,16 @@ sudo a2ensite jtg-used.conf
 sudo systemctl reload apache2
 ```
 
+Para terminar, abrimos el puerto 443 para permitir HTTPS.
+```bash
+sudo ufw allow 443
+```
+
 #### 1.1.3 PHP-FPM
+
+Gestor de procesos para ejecutar PHP de forma eficiente. \
+Permite procesar múltiples peticiones simultáneamente, mejorando el rendimiento de servidores web. \
+Se integra con servidores como Nginx o Apache para servir páginas PHP de manera rápida y estable.
 
 ##### Instalacion
 
@@ -411,7 +442,9 @@ sudo systemctl reload apache2
 
 ##### Configuracion
 
-En `/etc/php/8.3/fpm` hacemos una copia de seguridad de `php.ini` y despues lo editamos cambiando estos valores:
+El archivo principal de configuración de PHP-FPM se encuentra en ``/etc/php/8.3/fpm/php.ini``.
+
+Hacemos una copia de seguridad de `php.ini` y despues lo editamos cambiando estos valores:
 
 ![](./images/php/php.ini_errors.png)
 ![](./images/php/php.ini_memory.png)
@@ -421,8 +454,163 @@ Y reiniciamos el servicio para aplicar los cambios a la configuracion con:
 sudo systemctl restart php8.3-fpm
 ```
 
-#### 1.1.4 MySQL
+##### Monitorizacion
+
+```bash
+sudo systemctl status php8.3-fpm   # Verifica el estado de PHP-FPM
+php -v    # Comprobamos la versión de PHP
+php -m    # Lista los módulos activos
+```
+
+##### Mantenimiento
+
+```bash
+sudo systemctl start php8.3-fpm      # Inicia el servicio
+sudo systemctl stop php8.3-fpm       # Detiene el servicio
+sudo systemctl restart php8.3-fpm    # Reinicia el servicio
+sudo systemctl enable php8.3-fpm     # Habilita inicio automático al arrancar
+sudo systemctl disable php8.3-fpm    # Deshabilita inicio automático
+```
+
+#### 1.1.4 MariaDB
+
+Sistema de gestión de bases de datos relacional y de código abierto, compatible con MySQL. \
+Permite almacenar, consultar y gestionar datos de forma segura y eficiente. \
+Se puede acceder desde aplicaciones y IDEs mediante conexión local o remota usando el puerto **3306**.
+
+##### Instalacion
+Instalamos con:
+```bash
+sudo apt update
+sudo apt install mariadb-server -y  # Instalamos el servidor MariaDB
+```
+
+##### Configuracion
+El archivo principal de configuración se encuentra en:
+```
+/etc/mysql/mariadb.conf.d/50-server.cnf
+```
+
+Editamos la línea del ``bind-address`` para permitir conexiones desde cualquier IP (por defecto solo permite localhost), cambiandolo de ``127.0.0.1`` por ``0.0.0.0`` para permitir todas las conexiones externas.
+
+Guardamos los cambios y entramos en MariaDB para crear un nuevo usuario administrador con ``sudo mariadb`` \
+Y creamos el usuario con:
+```sql
+GRANT ALL ON *.* TO 'adminsql'@'%' IDENTIFIED BY 'password' WITH GRANT OPTION;
+```
+
+Habilitamos el puerto 3306 con:
+```bash
+sudo ufw allow 3306
+```
+
+Ejecutamos el asistente de seguridad:
+```bash
+sudo mysql_secure_installation   # Configuramos contraseña root y opciones de seguridad
+```
+
+* En el primer paso preguntará por la contraseña de `root` para MariaDB, pulsa la tecla `Enter` ya que no hay contraseña definida.
+* La siguiente, preguntará si quieres asignar una contraseña para el usuario “root”. Es recomendable usar una contraseña.
+* En el tercer paso preguntará si quieres eliminar `usuario anónimo`, aquí indica que `Sí` quieres borrar los datos.
+* Después preguntará si quieres desactivar el acceso remoto del usuario “root”, aquí indica que `Sí` quieres desactivar acceso remoto para usuario por seguridad.
+* De nuevo preguntará si quieres eliminar la base de datos `test`, aquí indica de nuevo que Sí quieres borrar las base de datos de prueba.
+* Por último, preguntará si quieres recargar privilegios, aquí indica que `Sí`.
+
+Reiniciamos el servicio para aplicar los cambios:
+```bash
+sudo systemctl restart mariadb
+```
+
+##### Monitorizacion
+
+Verificamos la IP y el puerto que está utilizando MariaDB:
+```bash
+sudo ss -punta | grep mariadb   # Muestra conexiones activas y puertos usados por MariaDB
+```
+
+Comprobamos el estado del servicio:
+```bash
+sudo systemctl status mariadb
+```
+
+##### Mantenimiento
+```bash
+sudo systemctl start mariadb      # Inicia el servicio
+sudo systemctl stop mariadb       # Detiene el servicio
+sudo systemctl restart mariadb    # Reinicia el servicio
+sudo systemctl enable mariadb     # Habilita el inicio automático
+sudo systemctl disable mariadb    # Deshabilita el inicio automático
+```
+
+Comprobamos si PHP detecta los módulos de MySQL/MariaDB:
+```bash
+sudo php -m | grep mysql
+```
+
 #### 1.1.5 XDebug
+
+Es un módulo de PHP que permite depurar y analizar el código de forma más sencilla. \
+Permite inspeccionar variables, pausar la ejecución y seguir el flujo del programa paso a paso. \
+Se integra con IDEs mediante el puerto **9003** para depuración remota.
+
+##### Instalacion
+
+```bash
+sudo apt update
+sudo apt install php8.3-xdebug -y   # Instalamos XDebug para PHP 8.3
+```
+
+Verificamos que XDebug está activo:
+```bash
+sudo php -v | grep Xdebug   # Con la X mayuscula; sino no aparece
+```
+
+##### Configuracion
+
+El archivo principal de configuración se encuentra en:
+```bash
+/etc/php/8.3/fpm/conf.d/20-xdebug.ini:
+```
+
+Y tiene que tener esto:
+```bash
+zend_extension=xdebug.so
+xdebug.mode=develop,debug
+xdebug.start_with_request=yes
+xdebug.client_port=9003
+xdebug.log=/tmp/xdebug.log
+xdebug.log_level=7
+xdebug.idekey="netbeans-xdebug"
+xdebug.discover_client_host=1
+```
+
+Reiniciamos PHP-FPM para aplicar los cambios:
+```bash
+sudo systemctl restart php8.3-fpm
+```
+
+##### Monitorizacion
+
+Verificamos que XDebug está cargado:
+```bash
+php -m | grep xdebug
+```
+
+Podemos revisar el log para errores o avisos:
+```bash
+cat /tmp/xdebug.log
+```
+
+##### Mantenimiento
+
+```bash
+sudo systemctl start php8.3-fpm      # Inicia el servicio PHP-FPM
+sudo systemctl stop php8.3-fpm       # Detiene el servicio
+sudo systemctl restart php8.3-fpm    # Reinicia el servicio
+sudo systemctl enable php8.3-fpm     # Habilita inicio automático
+sudo systemctl disable php8.3-fpm    # Deshabilita inicio automático
+```
+
 #### 1.1.6 DNS
 #### 1.1.7 SFTP
 #### 1.1.8 Apache Tomcat
@@ -505,6 +693,170 @@ Una vez le damos, nos preguntara si queremos tambien eliminar todos los archivos
 > **Modulos Instalados**: 0
 
 #### 1.2.5 **Visual Studio Code**
+
+***Primero que nada, importante instalar estas extensiones. Mas adelante explicare como usar las obligatorias:***
+
+Extensiones **obligatorias**:
+[SFTP](https://marketplace.visualstudio.com/items?itemName=Natizyskunk.sftp),
+[PHP Extension Pack (Xdebug & Autocompletado avanzado)](https://marketplace.visualstudio.com/items?itemName=xdebug.php-pack),
+[PHP Intelephense](https://marketplace.visualstudio.com/items?itemName=bmewburn.vscode-intelephense-client),
+[SQLTools](https://marketplace.visualstudio.com/items?itemName=mtxr.sqltools),
+[MySQL/MariaDB Support for SQLTools](https://marketplace.visualstudio.com/items?itemName=mtxr.sqltools-driver-mysql).
+
+Extensiones **opcionales** pero bastante utiles:
+[Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer),
+[VirtualBox](https://marketplace.visualstudio.com/items?itemName=acherkashin.virtualbox-extension),
+[JsDoc](https://marketplace.visualstudio.com/items?itemName=lllllllqw.jsdoc),
+[Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+[HTML CSS Intellisense](https://marketplace.visualstudio.com/items?itemName=ecmel.vscode-html-css).
+
+##### Como crear un Workspace
+
+Un workspace es una colección de una o más carpetas abiertas en una sola ventana del editor. \
+Sirve para organizar proyectos y aplicar configuraciones específicas a cada uno. \
+Puedes guardar estas colecciones como un archivo ``.code-workspace`` con formato **JSON** para editar y compartir fácilmente la configuracion. (Muy recomendado para despues)
+
+Para crearlo, primero abrimos una ventana vacia sin ninguna carpeta abierta con ``Ctrl + Shift + N``. \
+Una vez abierta, arriba del todo a la izquierda. Le damos a ***File > Add Folder to Workspace...*** \
+Nos abrira un explorador. Yo recomiendo que; en el directorio que prefieras, crees una carpeta para el workspace, y dentro se cree una carpeta para cada proyecto. Algo asi:
+```
+D:\
+└── ProyectosWebDAW -> (Carpeta Workspace)
+    ├── xxxDAWProyectoDAW
+    ├── xxxDWECProyectoDWEC -> (Carpeta proyecto)
+    ├── xxxDWESProyectoDWES
+    ├── xxxProyectoDAW
+    └── ...
+```
+> *Si ya estan los proyectos creados del netbeans, la carpeta del workspace seria "D:\Proyectos_NetBeans" (O como se llame la carpeta).*
+
+Una vez creadas las carpetas. Seleccionamos las carpetas **DENTRO** de ***ProyectosWebDAW***, no la carpeta ***ProyectosWebDAW*** en si. (Se pueden seleccionar todas a la vez)
+
+Una vez hecho. En el explorador del editor apareceran los diferentes proyectos. 
+
+> **IMPORTANTE**: Ir al ***File > Save Workspace As...*** y guardarlo *(Preferiblemente en la carpeta del workspace)*. Es necesario para algunas configuraciones mas tarde.
+
+##### Conexion SFTP con maquina de desarrollo
+
+En cada proyecto creamos una carpeta llamada ``.vscode/`` y que dentro tenga el archivo ``sftp.json``. (O se hace una vez y copiamos y pegamos la carpeta mas rapido).
+
+El archivo tiene que tener este formato (modificar ``name``, ``host`` y ``remotePath``, y borrar los comentarios para que funcione):
+```json
+{
+  "name": "NombreConexion",
+  "context": ".", # Carpeta donde se suben/descargan los archivos en local ('.' = carpeta proyecto)
+  "host": "10.199.10.22",
+  "username": "operadorweb",
+  "password": "paso", # Si no se pone te pregunta cada vez que cierres y abres el editor
+  "remotePath": "/var/www/html/PROYECTO", # Carpeta donde se suben/descargan los archivos en el servidor
+  "uploadOnSave": true, # Sube archivos automaticamente al modificar
+  "ignore": [
+      ".git",
+      ".DS_Store"
+  ],
+  "remoteExplorer": {
+    "filesExclude": [
+      ".git",
+      ".DS_Store",
+      ".cache",
+      ".local",
+      ".cache",
+      ".bash_history",
+      ".bashrc"
+    ]
+  }
+}
+```
+
+Para subir/descargar archivos manualmente, podemos seleccionar el archivo en cuestion, la carpeta o el proyecto entero y darle a:
+- ``Sync Local -> Remote``: Para pasar lo del local a remoto.
+- ``Sync Remote -> Local``: Para pasar lo del remoto a local.
+- ``Sync Both Directions``: Para pasar hacer ambos a la vez.
+
+*(Para pasar imagenes o documentos externos se le tiene que dar manualmente siempre)*
+
+##### Control de versiones
+
+Para abir el panel para el control de versiones, en la barra lateral buscamos un icono con un círculo dividido con ramas; o hacemos ``Ctrl + Shift + G``.
+
+Desde hay podemos controlar todos los git de cada proyecto (Hacer commits, cambiar ramas, crear y añadir tags, gestionar stashes, ...)
+
+Estaria bien incluir esto en los ``.gitignore`` del proyecto:
+```
+.bash_history
+.bashrc
+.wget-hsts
+.cache/
+.dotnet/
+.local/
+.ssh/
+.vscode-server/
+.vscode/
+
+*.code-workspace
+nbproject/
+```
+
+##### Debug PHP (Xdebug)
+
+Para debuggear PHP con Xdebug, primero, ir a la configuracion y buscar "**php.debug.idekey**" y ponerle el valor "**netbeans-xdebug**".
+
+Y despues en el archivo ``.code-workspace`` al nivel de **"folders"** poner este launch *(cambiando la ruta remota y nombre del directorio local por la que corresponda)*:
+```json
+{
+  "folders": [
+    ...
+  ],
+  "launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"name": "Listen for Xdebug",
+				"type": "php",
+				"request": "launch",
+				"port": 9003,
+				"stopOnEntry": false,
+				"pathMappings": {
+					"/var/www/html": "${workspaceFolder:xxxProyectoDAW}",
+					"/var/www/html/xxxDAWProyectoDAW":    "${workspaceFolder:xxxDAWProyectoDAW}",
+					"/var/www/html/xxxDWECProyectoDWEC":  "${workspaceFolder:xxxDWECProyectoDWEC}",
+					"/var/www/html/xxxDWESProyectoDWES":  "${workspaceFolder:xxxDWESProyectoDWES}",
+					"/var/www/html/xxxDWESProyectoTema3": "${workspaceFolder:xxxDWESProyectoTema3}",
+					"/var/www/html/xxxDWESProyectoTema4": "${workspaceFolder:xxxDWESProyectoTema4}",
+					"/var/www/html/xxxCIBProyectoCiberseguridad": "${workspaceFolder:xxxCIBProyectoCiberseguridad}"
+				},
+				"xdebugSettings": {
+					"max_data": 2048,
+				}
+			}
+		]
+	},
+}
+```
+
+Una vez hecho esto, vamos al apartado de debug de vscode buscando el icono con el triangulo de play con un insecto al lado; o presionando ``Ctrl + Shift + D``. \
+Si le damos al Run **Listen for Xdebug** 
+
+##### Connexion con la BBDD (MariaDB)
+
+Buscamos en la barra lateral el icono de un cilindro.
+
+Una vez en el, en el apartado ***CONNECTIONS*** le damos a ***Add New Connection***, se nos abrira un apartado para elegir la DB que queramos usar. Seleccionaremos **MariaDB**.
+
+Se abrira aun formulario par completar la configuracion de la connexion. Lo rellenamos con los datos necesarios. (Para el usuario administrador de la base de datos, en el `Database` ponemos **mysql** para que tenga acceso a todas las BBDD)
+
+Para ejecutar consultas, primero verificamos cual es la connexion acctiva con la que haremos la consulta hacemos clic aqui y seleccionamos la que queramos:
+![alt text](./images/vscode/DBStatusBar.png)
+
+( ⚠️ Sin terminar ⚠️ )
+
+
+##### Informacion del IDE
+
+> **Pagina Oficial**: https://code.visualstudio.com/ \
+> **Version**: Ultima version (Actualizada automaticamente) \
+> **Link Descarga**: https://code.visualstudio.com/Download \
+> **Extensiones Instaladas**: Las de arriba
 
 ## 2. GitHub
 ## 3.Entorno de Explotación
