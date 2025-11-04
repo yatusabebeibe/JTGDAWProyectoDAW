@@ -774,7 +774,8 @@ El archivo tiene que tener este formato (modificar ``name``, ``host`` y ``remote
       ".local",
       ".cache",
       ".bash_history",
-      ".bashrc"
+      ".bashrc",
+      ".profile"
     ]
   }
 }
@@ -798,6 +799,7 @@ Estaria bien incluir esto en los ``.gitignore`` del proyecto:
 .bash_history
 .bashrc
 .wget-hsts
+.profile
 .cache/
 .dotnet/
 .local/
