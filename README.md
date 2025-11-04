@@ -389,6 +389,19 @@ sudo a2ensite jtg-used.conf
 sudo systemctl reload apache2
 ```
 
+Editamos el `.htaccess` de la pagina principal poniendo esto:
+```apache
+RewriteEngine On
+RewriteCond %{SERVER_PORT} 80
+RewriteRule ^(.*)$ https://10.199.10.22/$1 [R,L]
+```
+
+Habilitamos el modulo para permitir redireccion y reiniciamos apache.
+```bash
+sudo a2enmod rewrite
+sudo systemctl reload apache2
+```
+
 Para terminar, abrimos el puerto 443 para permitir HTTPS.
 ```bash
 sudo ufw allow 443
