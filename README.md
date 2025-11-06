@@ -705,8 +705,8 @@ sudo chmod 555 /var/www/<usuario>   # Quitamos permiso de escritura
 Creamos la carpeta donde el usuario puede escribir y editar:
 ```bash
 sudo mkdir /var/www/<usuario>/httpdocs
-sudo chown <usuario>:www-data –R /var/www/<usuario>/httpdocs # Cambiamos el usuario al que pertenece la carpeta
-sudo chmod 2775 –R /var/www/<usuario>/httpdocs  # Añadimos permisos completos para el usuario y su grupo
+sudo chown <usuario>:www-data -R /var/www/<usuario>/httpdocs  # Cambiamos el usuario al que pertenece la carpeta
+sudo chmod 2775 -R /var/www/<usuario>/httpdocs  # Añadimos permisos completos para el usuario y su grupo
 ```
 
 Para terminar, editamos el archivo `/etc/ssh/sshd_config` y añadimos al final:
