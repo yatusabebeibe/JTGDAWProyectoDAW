@@ -54,6 +54,7 @@
         - [Configuracion](#configuracion-7)
         - [Monitorizacion](#monitorizacion-7)
         - [Mantenimiento](#mantenimiento-7)
+        - [Usuarios enjaulados](#usuarios-enjaulados)
       - [1.1.8 Apache Tomcat](#118-apache-tomcat)
       - [1.1.9 LDAP](#119-ldap)
     - [1.2 Windows 11](#12-windows-11)
@@ -679,6 +680,49 @@ sudo systemctl stop ssh       # Detener el servicio
 sudo systemctl restart ssh    # Reiniciar para aplicar cambios
 sudo systemctl enable ssh     # Habilitar inicio automático
 sudo systemctl disable ssh    # Deshabilitar inicio automático
+```
+
+##### Usuarios enjaulados
+
+Creamos un grupo para los usuarios enjaulados.
+```bash
+sudo groupadd sftpusers
+```
+
+Creamos el usuario y le asignamos una contraseña.
+```bash
+sudo useradd -g www-data -G sftpusers -m -d /var/www/<usuario> <usuario>
+sudo passwd <usuario>
+```
+
+Preparamos la jaula (el directorio raíz del usuario). \
+El directorio del usuario debe pertenecer a root para que funcione la jaula SFTP:
+```bash
+sudo chown root:root /var/www/<usuario>
+sudo chmod 555 /var/www/<usuario>   # Quitamos permiso de escritura
+```
+
+Creamos la carpeta donde el usuario puede escribir y editar:
+```bash
+sudo mkdir /var/www/<usuario>/httpdocs
+sudo chown <usuario>:www-data –R /var/www/<usuario>/httpdocs # Cambiamos el usuario al que pertenece la carpeta
+sudo chmod 2775 –R /var/www/<usuario>/httpdocs  # Añadimos permisos completos para el usuario y su grupo
+```
+
+Para terminar, editamos el archivo `/etc/ssh/sshd_config` y añadimos al final:
+```
+Subsystem sftp internal-sftp
+Match Group sftpusers
+ChrootDirectory %h
+ForceCommand internal-sftp -u 2
+AllowTcpForwarding yes
+PermitTunnel no
+X11Forwarding no
+```
+
+Y reiniciamos el servicio SSH.
+```bash
+sudo systemctl restart ssh
 ```
 
 #### 1.1.8 Apache Tomcat
