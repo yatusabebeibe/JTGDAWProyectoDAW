@@ -306,6 +306,12 @@ sudo ufw delete 3         # Eliminamos la regla IPv6
 sudo systemctl status apache2   # Comprobamos si Apache está activo
 sudo ufw status | grep "80"     # Verificamos que el puerto 80 está escuchando
 ```
+
+Ver modulos instalados:
+```bash
+apache2ctl -M
+```
+
 ##### Mantenimiento
 ```bash
 sudo systemctl start apache2     # Iniciamos el servicio si está detenido
