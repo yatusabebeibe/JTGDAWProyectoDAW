@@ -395,15 +395,27 @@ sudo nano jtg-used.conf
 ```
 ![alt text](./images/apache/apacheSiteConfgHTTPS.png)
 
-Habilitamos el sitio y reiniciamos apache para aplicar cambios.
+Habilitamos el sitio y abrimos el puerto 443 para permitir HTTPS.
 ```bash
 sudo a2ensite jtg-used.conf
-sudo systemctl reload apache2
+sudo ufw allow 443
 ```
 
-Para terminar, abrimos el puerto 443 para permitir HTTPS.
+Para hacer redireccion automatica a HTTPS, habilitamos el modulo rewrite de apache.
 ```bash
-sudo ufw allow 443
+sudo a2enmod rewrite
+```
+
+y en el `.htaccess` principal ponemos esto:
+```apache
+RewriteEngine On
+RewriteCond %{SERVER_PORT} 80
+RewriteRule ^(.*)$ https://10.199.10.22/$1 [R,L]
+```
+
+Para terminar, reiniciamos apache para aplicar todos los cambios
+```bash
+sudo systemctl restart apache2
 ```
 
 #### 1.1.3 PHP-FPM
