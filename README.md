@@ -50,6 +50,10 @@
         - [Mantenimiento](#mantenimiento-6)
       - [1.1.6 DNS](#116-dns)
       - [1.1.7 SFTP](#117-sftp)
+        - [Instalacion](#instalacion-6)
+        - [Configuracion](#configuracion-7)
+        - [Monitorizacion](#monitorizacion-7)
+        - [Mantenimiento](#mantenimiento-7)
       - [1.1.8 Apache Tomcat](#118-apache-tomcat)
       - [1.1.9 LDAP](#119-ldap)
     - [1.2 Windows 11](#12-windows-11)
@@ -619,6 +623,64 @@ sudo systemctl disable php8.3-fpm    # Deshabilita inicio automático
 
 #### 1.1.6 DNS
 #### 1.1.7 SFTP
+
+Protocolo seguro para transferir archivos entre un cliente y un servidor usando SSH. \
+Permite subir, descargar y gestionar archivos y directorios de forma cifrada. \
+Se usa mucho para administrar servidores remotamente con seguridad y sin exponer datos.
+
+##### Instalacion
+
+SFTP no necesita instalarse, viene incluido dentro del OpenSSH instalado previamente. \
+Solo debemos asegurarnos de que el servidor SSH esté instalado:
+```bash
+sudo systemctl status ssh
+```
+
+Si no esta, lo instalamos con:
+```bash
+sudo apt update
+sudo apt install openssh-server -y   # Instalamos el servidor SSH si no esta
+```
+
+##### Configuracion
+
+El archivo de configuración está en:
+```bash
+/etc/ssh/sshd_config
+```
+
+Si lo modificamos, reiniciamos SSH para aplicar los cambios:
+```bash
+sudo systemctl restart ssh
+```
+
+##### Monitorizacion
+
+Comprobamos el estado del servicio SSH/SFTP:
+```bash
+sudo systemctl status ssh
+```
+
+Listamos conexiones activas:
+```bash
+sudo ss -punta | grep ssh
+```
+
+Ver logs de inicio de sesión:
+```bash
+sudo journalctl -u ssh -f
+```
+
+##### Mantenimiento
+
+```bash
+sudo systemctl start ssh      # Iniciar el servicio
+sudo systemctl stop ssh       # Detener el servicio
+sudo systemctl restart ssh    # Reiniciar para aplicar cambios
+sudo systemctl enable ssh     # Habilitar inicio automático
+sudo systemctl disable ssh    # Deshabilitar inicio automático
+```
+
 #### 1.1.8 Apache Tomcat
 #### 1.1.9 LDAP
 
