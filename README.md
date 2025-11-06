@@ -519,7 +519,7 @@ Editamos la línea del ``bind-address`` para permitir conexiones desde cualquier
 Guardamos los cambios y entramos en MariaDB para crear un nuevo usuario administrador con ``sudo mariadb`` \
 Y creamos el usuario con:
 ```sql
-GRANT ALL ON *.* TO 'adminsql'@'%' IDENTIFIED BY 'password' WITH GRANT OPTION;
+GRANT ALL ON *.* TO 'adminsql'@'%' IDENTIFIED BY 'paso' WITH GRANT OPTION;
 ```
 
 Habilitamos el puerto 3306 con:
@@ -532,12 +532,13 @@ Ejecutamos el asistente de seguridad:
 sudo mysql_secure_installation   # Configuramos contraseña root y opciones de seguridad
 ```
 
-* En el primer paso preguntará por la contraseña de `root` para MariaDB, pulsa la tecla `Enter` ya que no hay contraseña definida.
-* La siguiente, preguntará si quieres asignar una contraseña para el usuario “root”. Es recomendable usar una contraseña.
-* En el tercer paso preguntará si quieres eliminar `usuario anónimo`, aquí indica que `Sí` quieres borrar los datos.
-* Después preguntará si quieres desactivar el acceso remoto del usuario “root”, aquí indica que `Sí` quieres desactivar acceso remoto para usuario por seguridad.
-* De nuevo preguntará si quieres eliminar la base de datos `test`, aquí indica de nuevo que Sí quieres borrar las base de datos de prueba.
-* Por último, preguntará si quieres recargar privilegios, aquí indica que `Sí`.
+* En el primer paso preguntará por la contraseña de `root` para MariaDB, pulsamos la tecla `Enter` ya que no hay contraseña definida.
+* Después, preguntará si quieres cambiar a autenticacion por "unix_socket". Le diremos que `No`.
+* La siguiente, preguntará si quieres asignar una contraseña para el usuario "root". Le daremos a `Sí` y le pondremos `paso`.
+* En el tercer paso preguntará si quieres eliminar `usuario anónimo`, aquí diremos que `Sí` queremos borrar los datos.
+* Después preguntará si quieres desactivar el acceso remoto del usuario “root”, aquí pondremos que `Sí` quieres desactivar acceso remoto para usuario por seguridad.
+* De nuevo preguntará si quieres eliminar la base de datos `test`, aquí diremos de nuevo que `Sí` quieres borrar las base de datos de prueba.
+* Por último, preguntará si quieres recargar privilegios, aquí pondremos que `Sí`.
 
 Reiniciamos el servicio para aplicar los cambios:
 ```bash
