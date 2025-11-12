@@ -1,4 +1,4 @@
-[< Volver atras](README.md)
+[< Volver atrás](README.md)
 
 - [Plesk](#plesk)
 

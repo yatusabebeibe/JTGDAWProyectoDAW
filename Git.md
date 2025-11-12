@@ -1,7 +1,7 @@
-[< Volver atras](README.md)
+[< Volver atrás](README.md)
 
 - [Git](#git)
-- [Github](#github)
+- [GitHub](#github)
 
 ---
 
@@ -12,5 +12,4 @@
 
 # Git
 
-
-# Github
+# GitHub

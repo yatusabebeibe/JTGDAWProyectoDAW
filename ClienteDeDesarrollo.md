@@ -1,4 +1,4 @@
-[< Volver atras](README.md)
+[< Volver atrás](README.md)
 
 - [Windows 11](#windows-11)
   - [**1 Configuración inicial**](#1-configuración-inicial)
@@ -6,17 +6,17 @@
     - [Cuentas administradoras](#cuentas-administradoras)
   - [**2 Navegadores**](#2-navegadores)
   - [**3 MovaXterm**](#3-movaxterm)
-  - [**4 Netbeans**](#4-netbeans)
-    - [Creacion de proyectos](#creacion-de-proyectos)
-    - [Eliminacion de proyectos](#eliminacion-de-proyectos)
-    - [Informacion del IDE](#informacion-del-ide)
+  - [**4 NetBeans**](#4-netbeans)
+    - [Creación de proyectos](#creación-de-proyectos)
+    - [Eliminación de proyectos](#eliminación-de-proyectos)
+    - [Información del IDE](#información-del-ide)
   - [**5 Visual Studio Code**](#5-visual-studio-code)
     - [Como crear un Workspace](#como-crear-un-workspace)
-    - [Conexion SFTP con maquina de desarrollo](#conexion-sftp-con-maquina-de-desarrollo)
+    - [Conexión SFTP con maquina de desarrollo](#conexión-sftp-con-maquina-de-desarrollo)
     - [Control de versiones](#control-de-versiones)
     - [Debug PHP (Xdebug)](#debug-php-xdebug)
-    - [Connexion con la BBDD (MariaDB)](#connexion-con-la-bbdd-mariadb)
-    - [Informacion del IDE](#informacion-del-ide-1)
+    - [Conexión con la BBDD (MariaDB)](#conexión-con-la-bbdd-mariadb)
+    - [Información del IDE](#información-del-ide-1)
 
 ---
 
@@ -33,31 +33,31 @@
 
 ## **3 MovaXterm**
 
-Para crear una nueva sesion de usuario le damos aqui:
+Para crear una nueva sesión de usuario le damos aquí:
 
 ![alt text](./images/MovaXterm/menuSessionButton.png)
 
 
-Se abrira un menu para elegir el tipo de conexion.
-Elegiremos SSH y pondremos la IP del servidor, marcamos la casilla y ponemos nuestro uruario.
+Se abrirá un menú para elegir el tipo de conexión.
+Elegiremos SSH y pondremos la IP del servidor, marcamos la casilla y ponemos nuestro usuario.
 
 ![alt text](./images/MovaXterm/CreateNewSessionSSH.png)
 
-Al darle a Ok nos pedira la contraseña. Se la ponemos y ya estaria creada la sesion para poder administrar el servidor.
+Al darle a Ok nos pedirá la contraseña. Se la ponemos y ya estaría creada la sesión para poder administrar el servidor.
 
 
 
-## **4 Netbeans**
+## **4 NetBeans**
 
-### Creacion de proyectos
+### Creación de proyectos
 
-Clicamos en el boton de crear un nuevo proyecto.
+Clicamos en el botón de crear un nuevo proyecto.
 
-![Seleccion crear nuevo proyecto](./images/netbeans/crear/menuNewProjectButton.png)
+![Selección crear nuevo proyecto](./images/netbeans/crear/menuNewProjectButton.png)
 
 ---
 
-Seleccionamos el tipo de proywcto:
+Seleccionamos el tipo de proyecto:
 
 ![](./images/netbeans/crear/menuProjectType.png)
 
@@ -69,7 +69,7 @@ Seleccionamos el nombre del proyecto y en la carpeta donde se va a guardar
 
 ---
 
-Seleccionamos la direccion de nuestro servidor y a que carpeta se subiran los archivos
+Seleccionamos la dirección de nuestro servidor y a que carpeta se subirán los archivos
 
 ![alt text](./images/netbeans/crear/projectRemoteConnetion.png)
 
@@ -86,20 +86,20 @@ Y ya lo tenemos
 ![alt text](./images/netbeans/crear/projectEnd.png)
 
 
-### Eliminacion de proyectos
+### Eliminación de proyectos
 
 Le damos click derecho al proyecto que queramos eliminar.
 
 ![alt text](./images/netbeans/eliminar/rightClickMenu.png)
 
-Una vez le damos, nos preguntara si queremos tambien eliminar todos los archivos (locales). Lo seleccionamos si queremos y le damos a "Yes". Para que se elimine
+Una vez le damos, nos preguntara si queremos también eliminar todos los archivos (locales). Lo seleccionamos si queremos y le damos a "Yes". Para que se elimine
 
-### Informacion del IDE
+### Información del IDE
 
 > **Pagina Oficial**: https://netbeans.apache.org/ \
-> **Version**: 20 \
-> **Link Descarga Version**: https://netbeans.apache.org/front/main/download/nb20/ \
-> **Modulos Instalados**: 0
+> **Versión**: 20 \
+> **Link Descarga Versión**: https://netbeans.apache.org/front/main/download/nb20/ \
+> **Módulos Instalados**: 0
 
 ## **5 Visual Studio Code**
 
@@ -112,7 +112,7 @@ Extensiones **obligatorias**:
 [SQLTools](https://marketplace.visualstudio.com/items?itemName=mtxr.sqltools),
 [MySQL/MariaDB Support for SQLTools](https://marketplace.visualstudio.com/items?itemName=mtxr.sqltools-driver-mysql).
 
-Extensiones **opcionales** pero bastante utiles:
+Extensiones **opcionales** pero bastante útiles:
 [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer),
 [VirtualBox](https://marketplace.visualstudio.com/items?itemName=acherkashin.virtualbox-extension),
 [JsDoc](https://marketplace.visualstudio.com/items?itemName=lllllllqw.jsdoc),
@@ -123,11 +123,11 @@ Extensiones **opcionales** pero bastante utiles:
 
 Un workspace es una colección de una o más carpetas abiertas en una sola ventana del editor. \
 Sirve para organizar proyectos y aplicar configuraciones específicas a cada uno. \
-Puedes guardar estas colecciones como un archivo ``.code-workspace`` con formato **JSON** para editar y compartir fácilmente la configuracion. (Muy recomendado para despues)
+Puedes guardar estas colecciones como un archivo ``.code-workspace`` con formato **JSON** para editar y compartir fácilmente la configuración. (Muy recomendado para después)
 
-Para crearlo, primero abrimos una ventana vacia sin ninguna carpeta abierta con ``Ctrl + Shift + N``. \
+Para crearlo, primero abrimos una ventana vacía sin ninguna carpeta abierta con ``Ctrl + Shift + N``. \
 Una vez abierta, arriba del todo a la izquierda. Le damos a ***File > Add Folder to Workspace...*** \
-Nos abrira un explorador. Yo recomiendo que; en el directorio que prefieras, crees una carpeta para el workspace, y dentro se cree una carpeta para cada proyecto. Algo asi:
+Nos abrirá un explorador. Yo recomiendo que; en el directorio que prefieras, crees una carpeta para el workspace, y dentro se cree una carpeta para cada proyecto. Algo así:
 ```
 D:\
 └── ProyectosWebDAW -> (Carpeta Workspace)
@@ -137,17 +137,17 @@ D:\
     ├── xxxProyectoDAW
     └── ...
 ```
-> *Si ya estan los proyectos creados del netbeans, la carpeta del workspace seria "D:\Proyectos_NetBeans" (O como se llame la carpeta).*
+> *Si ya están los proyectos creados del NetBeans, la carpeta del workspace seria "D:\Proyectos_NetBeans" (O como se llame la carpeta).*
 
 Una vez creadas las carpetas. Seleccionamos las carpetas **DENTRO** de ***ProyectosWebDAW***, no la carpeta ***ProyectosWebDAW*** en si. (Se pueden seleccionar todas a la vez)
 
-Una vez hecho. En el explorador del editor apareceran los diferentes proyectos. 
+Una vez hecho. En el explorador del editor aparecerán los diferentes proyectos. 
 
 > **IMPORTANTE**: Ir al ***File > Save Workspace As...*** y guardarlo *(Preferiblemente en la carpeta del workspace)*. Es necesario para algunas configuraciones mas tarde.
 
-### Conexion SFTP con maquina de desarrollo
+### Conexión SFTP con maquina de desarrollo
 
-En cada proyecto creamos una carpeta llamada ``.vscode/`` y que dentro tenga el archivo ``sftp.json``. (O se hace una vez y copiamos y pegamos la carpeta mas rapido).
+En cada proyecto creamos una carpeta llamada ``.vscode/`` y que dentro tenga el archivo ``sftp.json``. (O se hace una vez y copiamos y pegamos la carpeta mas rápido).
 
 El archivo tiene que tener este formato (modificar ``name``, ``host`` y ``remotePath``, y borrar los comentarios para que funcione):
 ```json
@@ -177,20 +177,20 @@ El archivo tiene que tener este formato (modificar ``name``, ``host`` y ``remote
 }
 ```
 
-Para subir/descargar archivos manualmente, podemos seleccionar el archivo en cuestion, la carpeta o el proyecto entero y darle a:
+Para subir/descargar archivos manualmente, podemos seleccionar el archivo en cuestión, la carpeta o el proyecto entero y darle a:
 - ``Sync Local -> Remote``: Para pasar lo del local a remoto.
 - ``Sync Remote -> Local``: Para pasar lo del remoto a local.
 - ``Sync Both Directions``: Para pasar hacer ambos a la vez.
 
-*(Para pasar imagenes o documentos externos se le tiene que dar manualmente siempre)*
+*(Para pasar imágenes o documentos externos se le tiene que dar manualmente siempre)*
 
 ### Control de versiones
 
-Para abir el panel para el control de versiones, en la barra lateral buscamos un icono con un círculo dividido con ramas; o hacemos ``Ctrl + Shift + G``.
+Para abrir el panel para el control de versiones, en la barra lateral buscamos un icono con un círculo dividido con ramas; o hacemos ``Ctrl + Shift + G``.
 
 Desde hay podemos controlar todos los git de cada proyecto (Hacer commits, cambiar ramas, crear y añadir tags, gestionar stashes, ...)
 
-Estaria bien incluir esto en los ``.gitignore`` del proyecto:
+Estaría bien incluir esto en los ``.gitignore`` del proyecto:
 ```
 .bash_history
 .bashrc
@@ -208,9 +208,9 @@ nbproject/
 
 ### Debug PHP (Xdebug)
 
-Para debuggear PHP con Xdebug, primero, ir a la configuracion y buscar "**php.debug.idekey**" y ponerle el valor "**netbeans-xdebug**".
+Para debuggear PHP con Xdebug, primero, ir a la configuración y buscar "**php.debug.idekey**" y ponerle el valor "**netbeans-xdebug**".
 
-Y despues en el archivo ``.code-workspace`` al nivel de **"folders"** poner este launch *(cambiando la ruta remota y nombre del directorio local por la que corresponda)*:
+Y después en el archivo ``.code-workspace`` al nivel de **"folders"** poner este launch *(cambiando la ruta remota y nombre del directorio local por la que corresponda)*:
 ```json
 {
   "folders": [
@@ -246,24 +246,24 @@ Y despues en el archivo ``.code-workspace`` al nivel de **"folders"** poner este
 Una vez hecho esto, vamos al apartado de debug de vscode buscando el icono con el triangulo de play con un insecto al lado; o presionando ``Ctrl + Shift + D``. \
 Si le damos al Run **Listen for Xdebug** 
 
-### Connexion con la BBDD (MariaDB)
+### Conexión con la BBDD (MariaDB)
 
 Buscamos en la barra lateral el icono de un cilindro.
 
-Una vez en el, en el apartado ***CONNECTIONS*** le damos a ***Add New Connection***, se nos abrira un apartado para elegir la DB que queramos usar. Seleccionaremos **MariaDB**.
+Una vez en el, en el apartado ***CONNECTIONS*** le damos a ***Add New Connection***, se nos abrirá un apartado para elegir la DB que queramos usar. Seleccionaremos **MariaDB**.
 
-Se abrira aun formulario par completar la configuracion de la connexion. Lo rellenamos con los datos necesarios. (Para el usuario administrador de la base de datos, en el `Database` ponemos **mysql** para que tenga acceso a todas las BBDD)
+Se abrirá aun formulario par completar la configuración de la conexión. Lo rellenamos con los datos necesarios. (Para el usuario administrador de la base de datos, en el `Database` ponemos **mysql** para que tenga acceso a todas las BBDD)
 
-Para ejecutar consultas, primero verificamos cual es la connexion acctiva con la que haremos la consulta hacemos clic aqui y seleccionamos la que queramos:
+Para ejecutar consultas, primero verificamos cual es la conexión activa con la que haremos la consulta hacemos clic aquí y seleccionamos la que queramos:
 ![alt text](./images/vscode/DBStatusBar.png)
 
 ( ⚠️ Sin terminar ⚠️ )
 
 
-### Informacion del IDE
+### Información del IDE
 
 > **Pagina Oficial**: https://code.visualstudio.com/ \
-> **Version**: Ultima version (Actualizada automaticamente) \
+> **Versión**: Ultima versión (Actualizada automáticamente) \
 > **Link Descarga**: https://code.visualstudio.com/Download \
 > **Extensiones Instaladas**: Las de arriba
 

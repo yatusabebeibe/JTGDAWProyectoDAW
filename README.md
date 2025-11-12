@@ -6,7 +6,7 @@
 |![Alt](images/portada.jpg)|
 | INSTALACIÓN, CONFIGURACIÓN Y DOCUMENTACIÓN DE ENTORNO DE DESARROLLO Y DEL ENTORNO DE EXPLOTACIÓN |
 
-- [1. Sercidor de Desarrollo](ServidorDeDesarrollo.md)
+- [1. Servidor de Desarrollo](ServidorDeDesarrollo.md)
 - [2. Cliente de Desarrollo](ClienteDeDesarrollo.md)
 - [3. GitHub](Git.md)
 - [4. Entorno de Explotación](EntornoDeExplotacion.md)
