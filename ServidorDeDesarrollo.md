@@ -27,6 +27,7 @@
     - [Monitorización](#monitorización-3)
     - [Mantenimiento](#mantenimiento-3)
     - [Permisos y usuarios](#permisos-y-usuarios)
+    - [Usuarios enjaulados](#usuarios-enjaulados)
     - [HTTPS](#https)
     - [Hosts Virtuales](#hosts-virtuales)
   - [3 PHP-FPM](#3-php-fpm)
@@ -50,7 +51,7 @@
     - [Configuración](#configuración-7)
     - [Monitorización](#monitorización-7)
     - [Mantenimiento](#mantenimiento-7)
-    - [Usuarios enjaulados](#usuarios-enjaulados)
+    - [Usuarios enjaulados](#usuarios-enjaulados-1)
   - [1.1.8 Apache Tomcat](#118-apache-tomcat)
   - [1.1.9 LDAP](#119-ldap)
 
@@ -343,6 +344,12 @@ sudo chmod -R 775 /var/www/html
 ```
 
 Y habilitamos el puerto 80 en el UFW si no esta ya.
+
+### Usuarios enjaulados
+
+Esto es una configuración de SFTP.
+
+[Véase: SFTP > Usuarios enjaulados](#usuarios-enjaulados-1)
 
 ### HTTPS
 
