@@ -1,6 +1,32 @@
 [< Volver atrás](README.md)
 
 - [Git](#git)
+  - [Instalación](#instalación)
+  - [Configuración](#configuración)
+  - [Gestión de un repositorio (Terminal)](#gestión-de-un-repositorio-terminal)
+    - [Buenas prácticas](#buenas-prácticas)
+    - [Iniciar / Clonar repo](#iniciar--clonar-repo)
+    - [Clonar repo](#clonar-repo)
+    - [Estado e historial](#estado-e-historial)
+    - [Añadir y confirmar cambios](#añadir-y-confirmar-cambios)
+    - [Crear y cambiar de ramas](#crear-y-cambiar-de-ramas)
+    - [Fusionar ramas (merge) y conflictos](#fusionar-ramas-merge-y-conflictos)
+    - [Conectar con remoto](#conectar-con-remoto)
+    - [Subir y descargar cambios](#subir-y-descargar-cambios)
+    - [Deshacer cambios](#deshacer-cambios)
+    - [Etiquetas](#etiquetas)
+  - [Gestión de un repositorio (VSCode)](#gestión-de-un-repositorio-vscode)
+    - [Buenas prácticas](#buenas-prácticas-1)
+    - [Iniciar / Clonar repo](#iniciar--clonar-repo-1)
+    - [Clonar repo](#clonar-repo-1)
+    - [Estado e historial](#estado-e-historial-1)
+    - [Añadir y confirmar cambios](#añadir-y-confirmar-cambios-1)
+    - [Crear y cambiar de ramas](#crear-y-cambiar-de-ramas-1)
+    - [Fusionar ramas (merge) y conflictos](#fusionar-ramas-merge-y-conflictos-1)
+    - [Conectar con remoto](#conectar-con-remoto-1)
+    - [Subir y descargar cambios](#subir-y-descargar-cambios-1)
+    - [Deshacer cambios](#deshacer-cambios-1)
+    - [Etiquetas](#etiquetas-1)
 - [GitHub](#github)
 
 ---
@@ -15,6 +41,59 @@
 Sistema de control de versiones que permite guardar cambios y trabajar en proyectos de forma organizada. \
 Facilita colaborar, crear ramas y volver a versiones anteriores sin perder historial. \
 Se usa tanto en local como con plataformas como GitHub o GitLab para gestionar repositorios.
+
+## Instalación
+
+## Configuración
+
+## Gestión de un repositorio (Terminal)
+
+### Buenas prácticas
+
+### Iniciar / Clonar repo
+
+### Clonar repo
+
+### Estado e historial
+
+### Añadir y confirmar cambios
+
+### Crear y cambiar de ramas
+
+### Fusionar ramas (merge) y conflictos
+
+### Conectar con remoto
+
+### Subir y descargar cambios
+
+### Deshacer cambios
+
+### Etiquetas
+
+
+## Gestión de un repositorio (VSCode)
+
+### Buenas prácticas
+
+### Iniciar / Clonar repo
+
+### Clonar repo
+
+### Estado e historial
+
+### Añadir y confirmar cambios
+
+### Crear y cambiar de ramas
+
+### Fusionar ramas (merge) y conflictos
+
+### Conectar con remoto
+
+### Subir y descargar cambios
+
+### Deshacer cambios
+
+### Etiquetas
 
 
 # GitHub
