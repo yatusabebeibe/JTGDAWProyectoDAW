@@ -254,10 +254,11 @@ Una vez en el, en el apartado ***CONNECTIONS*** le damos a ***Add New Connection
 
 Se abrirá aun formulario par completar la configuración de la conexión. Lo rellenamos con los datos necesarios. (Para el usuario administrador de la base de datos, en el `Database` ponemos **mysql** para que tenga acceso a todas las BBDD)
 
-Para ejecutar consultas, primero verificamos cual es la conexión activa con la que haremos la consulta hacemos clic aquí y seleccionamos la que queramos:
+Para ejecutar consultas, primero verificamos cual es la conexión activa con la que haremos la consulta hacemos clic aquí y seleccionamos la que queramos si tenemos múltiples: \
 ![alt text](./images/vscode/DBStatusBar.png)
 
-( ⚠️ Sin terminar ⚠️ )
+Una vez hecho esto, abrimos un archivo SQL hacemos click en la consulta que queramos ejecutar (se marca en azul) o seleccionamos varias con el ratón, y le damos ***dos veces*** `Ctrl + E` para ejecutarla/s. \
+*(Para ejecutar todo el archivo, se haría `Ctrl + A` para seleccionar todo el archivo y **dos veces** `Ctrl + E`)*
 
 
 ### Información del IDE
