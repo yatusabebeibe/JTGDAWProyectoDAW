@@ -44,7 +44,26 @@ Se usa tanto en local como con plataformas como GitHub o GitLab para gestionar r
 
 ## Instalación
 
+Lo descargamos de https://git-scm.com/install/
+
+Al ejecutarlo, le damos a aceptar y siguiente hasta la parte de elegir el editor por defecto. Elegimos VSCode y le damos a siguiente.
+
+Después nos preguntara si queremos cambiar el nombre de la rama principal por defecto. Marcamos la opción de si y pondremos `master` (porque es como tenemos que llamar las ramas de nuestros repositorios).
+
+En la opción del PATH elegimos la de terminal y aplicaciones de terceros. \
+En el SSH, SSL y finales de lineá los dejamos por defecto. \
+En la terminal le decimos que use la propia de Windows. \
+Y el resto de opciones le damos a siguiente dejándolas como están hasta instalar.
+
+Una vez instalado podemos abrir una terminal nueva y comprobar que esta instalado con `git --version`.
+
 ## Configuración
+
+Para poder usarlo primero hay que configurar la cuenta poniendo estos comandos en la terminal:
+```bash
+git config --global user.name "Tu Nombre Completo"
+git config --global user.email "tu.email@ejemplo.com"
+```
 
 ## Gestión de un repositorio (Terminal)
 
