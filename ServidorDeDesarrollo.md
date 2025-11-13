@@ -433,28 +433,21 @@ Se integra con servidores como Nginx o Apache para servir páginas PHP de manera
 ### Instalación
 
 ```bash
-# --- Actualizar paquetes y preparar el sistema ---
-# Se asegura que todos los paquetes estén actualizados y se instalan
-# herramientas necesarias para añadir repositorios externos.
+# Actualizamos los paquetes
 sudo apt update
+
+# Instalamos herramientas para gestionar repositorios
 sudo apt install software-properties-common -y
 
-# --- Añadir repositorio de PHP actualizado ---
-# Se añade el PPA de Ondřej Surý para poder instalar versiones recientes
-# de PHP y se verifica que el repositorio se haya añadido correctamente.
+# Añadimos el repositorio para PHP actualizado
 sudo add-apt-repository ppa:ondrej/php -y
 ls /etc/apt/sources.list.d/ | grep ondrej
 sudo apt update
 
-# --- Instalar PHP 8.3 y PHP-FPM ---
-# Se instala PHP 8.3 junto con FPM, que permite que Apache gestione PHP
-# de forma más eficiente y segura que el módulo tradicional.
+# Instalamos PHP 8.3 y PHP-FPM
 sudo apt install libapache2-mod-php8.3 php8.3-fpm -y
 
-# --- Configurar Apache para usar PHP-FPM ---
-# Se habilita el proxy para PHP-FPM, se desactiva mpm_prefork y el módulo
-# PHP tradicional y se activa mpm_event, optimizando Apache para trabajar
-# con PHP-FPM.
+# Configuramos Apache para usar PHP-FPM
 sudo a2enmod proxy_fcgi
 sudo a2dismod mpm_prefork
 sudo a2dismod php8.3
@@ -462,9 +455,7 @@ sudo a2dismod mpm_prefork
 sudo a2enmod mpm_event proxy_fcgi
 sudo a2enconf php8.3-fpm
 
-# --- Reiniciar y recargar Apache ---
-# Se aplican todos los cambios de configuración reiniciando Apache y
-# recargando servicios.
+# Reiniciamos y recargamos Apache para aplicar cambios
 sudo systemctl restart apache2
 sudo systemctl reload apache2
 ```
