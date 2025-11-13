@@ -329,7 +329,7 @@ sudo apache2ctl configtest
 Creamos un usuario llamado `operadorweb` que tenga el grupo `www-data`.
 
 ```bash
-# Creamos el usuario
+# Creamos el usuario el en directorio "/var/www/html/" y en el grupo www-data
 sudo useradd -m -d /var/www/html/ -s /bin/bash -g www-data operadorweb
 
 # Le ponemos contraseña
@@ -388,11 +388,11 @@ Para hacer redirección automática a HTTPS, habilitamos el modulo rewrite de ap
 sudo a2enmod rewrite
 ```
 
-y en el `.htaccess` principal ponemos esto:
+Y en el `.htaccess` principal (el de `/var/www/html/` con el usuario **operadorweb**) ponemos esto:
 ```apache
-RewriteEngine On
-RewriteCond %{SERVER_PORT} 80
-RewriteRule ^(.*)$ https://10.199.10.22/$1 [R,L]
+RewriteEngine On  # Activa las redirecciones
+RewriteCond %{SERVER_PORT} 80  # Comprueba si la peticion es por el puerto 80 (http)
+RewriteRule ^(.*)$ https://10.199.10.22/$1 [R,L]  # Si se cumple la condicion redirecciona a https
 ```
 
 Para terminar, reiniciamos apache para aplicar todos los cambios
