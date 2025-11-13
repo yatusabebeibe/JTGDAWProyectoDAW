@@ -3,6 +3,7 @@
 - [Plesk](#plesk)
   - [Como acceder](#como-acceder)
   - [Subir los sitios](#subir-los-sitios)
+  - [Sitios Virtuales](#sitios-virtuales)
 
 ---
 
@@ -36,3 +37,15 @@ Vamos la GitHub del repositorio que queramos subir, y en las releases descargamo
 
 Luego, nos conectamos con un cliente S/FTP como FileZilla, MovaXterm o WinSCP; y metemos los archivos y carpetas extraídos del zip a la carpeta del servidor que queramos.
 
+## Sitios Virtuales
+
+En la pagina principal de administración, en nuestro dominio vamos al apartado de **"Hosting y DNS"**, y hacemos click en **DNS**.
+
+Le damos a **"Añadir registro"**.
+
+Creamos un tipo de registro **A**, ponemos el nombre de dominio que queramos para el subdominio, el TTL no lo tocamos y ponemos la dirección ip de nuestro servidor.
+
+Una vez le demos a aceptar, nos dirá que hay que actualizar los registros DNS. \
+Le damos click en actualizar y ya estaría.
+
+Seguimos en [esta](ServidorDeDesarrollo.md#hosts-virtuales) parte.

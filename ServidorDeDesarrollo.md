@@ -319,8 +319,6 @@ Para comprobar que los cambios en la documentación funcionan correctamente usam
 sudo apache2ctl configtest
 ```
 
-
-### Virtual Hosts
 ### Permisos y usuarios
 
 > - [X] operadorweb/paso
@@ -394,6 +392,30 @@ Para terminar, reiniciamos apache para aplicar todos los cambios
 ```bash
 sudo systemctl restart apache2
 ```
+
+### Hosts Virtuales
+
+Primero [configuramos el sitio en el servidor](EntornoDeExplotacion.md#sitios-virtuales), y [creamos el usuario enjaulado SFTP](#usuarios-enjaulados) si no lo hicimos ya.
+
+Una vez hecho esto, vamos a ``/etc/apache2/sites-available`` y creamos el archivo \<nombre_sitio_virtual_plesk>-jesustemgal-ieslossauces-es.conf copiando el 000-default.conf.
+
+Temeos que modificarlo para que al acceder a la url creada en Plesk, podamos acceder al servidor. \
+Y que en vez de ir a la pagina normal, vaya a la pagina del usuario enjaulado.
+
+Añadimos esta línea:
+```bash
+ServerName sitio1.jesustemgal.ieslossauces.es  # Esto hace que si alguien escribe este dominio, Apache de este sitio
+```
+
+Y modificamos estas para cambiar la pagina que aparece:
+```bash
+DocumentRoot /var/www/usuarioenjaulado1/httpdocs
+
+ProxyPassMatch ^/(.*\.php)$ unix:/run/php/php8.3-fpm.sock|fcgi://127.0.0.1/var/www/usuarioenjaulado1/httpdocs
+```
+
+Una vez terminado, guardamos el archivo y habilitamos 
+
 
 ## 3 PHP-FPM
 
