@@ -96,6 +96,12 @@ Para clonar uno ya creado en GitHub, copiamos la url del repo y hacemos `git clo
 
 ### Estado e historial
 
+Para ver el estado actual del repo usamos `git status`, que nos indica qué archivos están modificados, cuáles no se han añadido al área de staging y cuáles están listos para hacer commit.
+
+Para ver el historial de commits usamos `git log`. Esto nos muestra los commits hechos en el repo, con su hash, autor, fecha y mensaje. Se pueden añadir opciones como `--oneline` para ver solo una línea por commit o `--graph` para ver un esquema más gráfico de las ramas. Recomiendo usar ambos para una mejor legibilidad.
+
+Para ver los cambios en los archivos usamos `git diff`. Esto muestra línea por línea qué se ha añadido o eliminado desde el último commit pero que no han sido añadido al área de staging. Para ver los cambios del área de staging usamos la opción `--staged`.
+
 ### Añadir y confirmar cambios
 
 ### Crear y cambiar de ramas
@@ -120,6 +126,11 @@ Para iniciar un repositorio, abrimos la carpeta donde lo queramos iniciar y abri
 Para clonar uno ya creado en GitHub, iniciamos uno y en el menú de control de versiones en el apartado "CHANGES" le damos a los 3 puntos y a clonar y ponemos la url del repositorio en GitHub.
 
 ### Estado e historial
+
+En el menú de control de versiones, en el apartado de **CAMBIOS** podemos ver los archivos que se han modificado, y de esos, cuales están en el área de staging y listos para hacer commit. \
+Para ver los cambios a un archivo podemos simplemente hacer click en los archivos del apartado de **CAMBIOS** y nos mostrara que se ha añadido o eliminado desde el ultimo commit.
+
+En el menú de control de versiones, en el apartado de **GRAPH** podemos ver el historial de commits con el titulo del commit y su autor, y si pasamos el cursor por encima de uno, podemos ver mas información, como la fecha y hora, hash del commit, líneas añadidas y eliminadas y cuerpo del mensaje del commit.
 
 ### Añadir y confirmar cambios
 
