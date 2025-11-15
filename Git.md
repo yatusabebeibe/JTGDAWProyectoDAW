@@ -131,7 +131,7 @@ Si quisiéramos añadir un cuerpo al mensaje, haríamos `git commit` sin escribi
 
 Para iniciar un repositorio, abrimos la carpeta donde lo queramos iniciar y abrimos el menú de control de versiones con `Ctrl + G` y le damos a "**Inicializar Repositorio**".
 
-Para clonar uno ya creado en GitHub, iniciamos uno y en el menú de control de versiones en el apartado "CHANGES" le damos a los 3 puntos y a clonar y ponemos la url del repositorio en GitHub.
+Para clonar uno ya creado en GitHub, iniciamos uno y en el menú de control de versiones en el apartado **CAMBIOS** le damos a los 3 puntos y a clonar y ponemos la url del repositorio en GitHub.
 
 ### Estado e historial
 
