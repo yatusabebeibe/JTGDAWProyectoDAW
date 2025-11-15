@@ -3,8 +3,8 @@
 - [Git](#git)
   - [Instalación](#instalación)
   - [Configuración](#configuración)
-  - [Gestión de un repositorio (Terminal)](#gestión-de-un-repositorio-terminal)
-    - [Buenas prácticas](#buenas-prácticas)
+  - [Buenas prácticas](#buenas-prácticas)
+  - [**Gestión de un repositorio (Terminal)**](#gestión-de-un-repositorio-terminal)
     - [Iniciar / Clonar repo](#iniciar--clonar-repo)
     - [Clonar repo](#clonar-repo)
     - [Estado e historial](#estado-e-historial)
@@ -15,8 +15,7 @@
     - [Subir y descargar cambios](#subir-y-descargar-cambios)
     - [Deshacer cambios](#deshacer-cambios)
     - [Etiquetas](#etiquetas)
-  - [Gestión de un repositorio (VSCode)](#gestión-de-un-repositorio-vscode)
-    - [Buenas prácticas](#buenas-prácticas-1)
+  - [**Gestión de un repositorio (VSCode)**](#gestión-de-un-repositorio-vscode)
     - [Iniciar / Clonar repo](#iniciar--clonar-repo-1)
     - [Clonar repo](#clonar-repo-1)
     - [Estado e historial](#estado-e-historial-1)
@@ -51,7 +50,7 @@ Al ejecutarlo, le damos a aceptar y siguiente hasta la parte de elegir el editor
 Después nos preguntara si queremos cambiar el nombre de la rama principal por defecto. Marcamos la opción de si y pondremos `master` (porque es como tenemos que llamar las ramas de nuestros repositorios).
 
 En la opción del PATH elegimos la de terminal y aplicaciones de terceros. \
-En el SSH, SSL y finales de lineá los dejamos por defecto. \
+En el SSH, SSL y finales de línea los dejamos por defecto. \
 En la terminal le decimos que use la propia de Windows. \
 Y el resto de opciones le damos a siguiente dejándolas como están hasta instalar.
 
@@ -61,13 +60,13 @@ Una vez instalado podemos abrir una terminal nueva y comprobar que esta instalad
 
 Para poder usarlo primero hay que configurar la cuenta poniendo estos comandos en la terminal:
 ```bash
-git config --global user.name "Tu Nombre Completo"
-git config --global user.email "tu.email@ejemplo.com"
+git config --global user.name "nombre"
+git config --global user.email "email@ejemplo.com"
 ```
 
-## Gestión de un repositorio (Terminal)
+## Buenas prácticas
 
-### Buenas prácticas
+## **Gestión de un repositorio (Terminal)**
 
 ### Iniciar / Clonar repo
 
@@ -90,9 +89,7 @@ git config --global user.email "tu.email@ejemplo.com"
 ### Etiquetas
 
 
-## Gestión de un repositorio (VSCode)
-
-### Buenas prácticas
+## **Gestión de un repositorio (VSCode)**
 
 ### Iniciar / Clonar repo
 
