@@ -7,7 +7,7 @@
   - [**Gestión de un repositorio (Terminal)**](#gestión-de-un-repositorio-terminal)
     - [Iniciar / Clonar repo](#iniciar--clonar-repo)
     - [Estado e historial](#estado-e-historial)
-    - [Añadir y confirmar cambios](#añadir-y-confirmar-cambios)
+    - [Añadir y confirmar cambios (commit)](#añadir-y-confirmar-cambios-commit)
     - [Crear y cambiar de ramas](#crear-y-cambiar-de-ramas)
     - [Fusionar ramas (merge) y conflictos](#fusionar-ramas-merge-y-conflictos)
     - [Conectar con remoto](#conectar-con-remoto)
@@ -17,7 +17,7 @@
   - [**Gestión de un repositorio (VSCode)**](#gestión-de-un-repositorio-vscode)
     - [Iniciar / Clonar repo](#iniciar--clonar-repo-1)
     - [Estado e historial](#estado-e-historial-1)
-    - [Añadir y confirmar cambios](#añadir-y-confirmar-cambios-1)
+    - [Añadir y confirmar cambios (commit)](#añadir-y-confirmar-cambios-commit-1)
     - [Crear y cambiar de ramas](#crear-y-cambiar-de-ramas-1)
     - [Fusionar ramas (merge) y conflictos](#fusionar-ramas-merge-y-conflictos-1)
     - [Conectar con remoto](#conectar-con-remoto-1)
@@ -102,7 +102,14 @@ Para ver el historial de commits usamos `git log`. Esto nos muestra los commits 
 
 Para ver los cambios en los archivos usamos `git diff`. Esto muestra línea por línea qué se ha añadido o eliminado desde el último commit pero que no han sido añadido al área de staging. Para ver los cambios del área de staging usamos la opción `--staged`.
 
-### Añadir y confirmar cambios
+### Añadir y confirmar cambios (commit)
+
+Para añadir los cambios al área de staging usamos `git add <archivo>` para un archivo concreto, o `git add .` para todos los cambios del directorio actual.
+
+Para quitar los cambios del área de staging pero mantenerlos modificados usamos `git reset <archivo o '.'>`, y para deshacer los cambios hechos y volver al archivo como estaba en el ultimo commit usamos `git restore <archivo o '.'>`.
+
+Para hacer un commit, usamos `git commit -m "mensaje"` (*el mensaje siguiendo las [buenas practicas](#buenas-prácticas)*). \
+Si quisiéramos añadir un cuerpo al mensaje, haríamos `git commit` sin escribir un mensaje y nos aparecería un editor de texto para escribir el mensaje. Para poder escribir le tenemos que pulsar `i`. La primera línea, seria el titulo, las demás serian el cuerpo. Una vez escrito el mensaje y cuerpo, le pulsamos la tecla `Esc` después escribimos `:wq` y le damos a `intro` para confirmar el mensaje y terminar el commit.
 
 ### Crear y cambiar de ramas
 
@@ -132,7 +139,14 @@ Para ver los cambios a un archivo podemos simplemente hacer click en los archivo
 
 En el menú de control de versiones, en el apartado de **GRAPH** podemos ver el historial de commits con el titulo del commit y su autor, y si pasamos el cursor por encima de uno, podemos ver mas información, como la fecha y hora, hash del commit, líneas añadidas y eliminadas y cuerpo del mensaje del commit.
 
-### Añadir y confirmar cambios
+### Añadir y confirmar cambios (commit)
+
+En el menú de control de versiones, en el apartado de **CAMBIOS**, en los archivos que están en la sección de **Cambios**, podemos darle al símbolo de '+' y añadirá todos sus cambios a la sección de staged; o podemos hacer click en el archivo y seleccionar bloque por bloque que queremos añadir.
+
+Para deshacer cambios, seria lo mimo que lo anterior pero en vez de darle al '+' se le daría a la flecha hacia atrás.
+
+Para hacer un commit, el el apartado de **CAMBIOS**, ponemos el mensaje (*siguiendo las [buenas practicas](#buenas-prácticas)*) y le damos a ***Confirmación***. \
+Si quisiéramos añadir un cuerpo al mensaje, le damos a ***Confirmación*** sin escribir un mensaje y nos aparecería un editor de texto para escribir el mensaje. La primera línea, seria el titulo, las demás serian el cuerpo. Una vez escrito el mensaje y cuerpo, en la barra superior (donde aparecen los archivos) a la derecha le damos a el tic de verificación para confirmar el mensaje y terminar el commit.
 
 ### Crear y cambiar de ramas
 
