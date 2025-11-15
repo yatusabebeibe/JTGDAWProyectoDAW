@@ -66,6 +66,28 @@ git config --global user.email "email@ejemplo.com"
 
 ## Buenas prácticas
 
+1. Añadir un archivo `.gitignore` en la raíz del proyecto para no subir archivos y/o carpetas innecesarios o que no queremos.
+2. Usar lenguaje imperativo en los commits. Los commits deben verse como "*instrucciones*" que cambian el proyecto mas que como cosas que se han hecho.
+3. NO usar punto final. El mensaje corto del commit (la primera línea) es el encabezado/titulo del commit, y al igual que en el periódico o las noticias, los títulos no llevan punto final.
+4. NI puntos suspensivos. Si vemos los commits como instrucciones, las instrucciones deben de ser claras y estar completas. No deben crear duda a quien lo lea después.
+5. Usar como máximo unos 50 caracteres. Si tienes que explicar demasiado, tu commit probablemente hace demasiadas cosas. Si es posible dividirlo en varios commits; **hazlo**.
+6. Si tienes que añadir alguna explicación necesaria se pondrá en el cuerpo del commit. En el se el puede explicar el qué y el por qué, no el cómo. Porque el mensaje puede mentir, pero el código no.
+7. Usar prefijos para mejor legibilidad. Para eso, se usa esta estructura: `<tipo>(<scope>): <descripcion>`.
+   - Es scope es opcional y sirve para indicar la parte del proyecto afectada (*por ejemplo un módulo, componente o funcionalidad específica*), pudiendo entender rápidamente dónde se aplicó el cambio.
+   - Para el tipo de commit, los más comunes y usados son ***feat***, ***fix***, ***refactor*** y ***docs***, pera hay mas. Aquí unos ejemplos y usos:
+     - **feat**: Añade una nueva característica.
+     - **fix**: Arregla errores en el código.
+     - **refactor**: Refactorización del código como cambios de nombre de variables o funciones.
+     - **docs**: Cambios en la documentación.
+     - **style**: Cambios de formato, tabulaciones, espacios, etc en el código; no afectan al funcionamiento.
+     - **perf**: Cambios que mejoran el rendimiento del sitio.
+     - **build**: Cambios en el sistema de construcción, tareas de despliegue o instalación.
+     - **test**: Añade tests o refactoriza uno existente.
+     - **ci**: Cambios en la integración continua.
+   - Si el commit contiene **breaking changes** (*cambios que rompen la compatibilidad con las versiones anteriores. Ej: eliminar o renombrar funciones o clases, cambiar parámetros obligatorios, etc*), se pondrá un signo de exclamación `!` antes de los dos puntos. \
+   Y en el cuerpo de commit se podría poner `BREAKING CHANGE:` y explicar exactamente que se ha eliminado o cambiado que rompe la compatibilidad.
+
+
 ## **Gestión de un repositorio (Terminal)**
 
 ### Iniciar / Clonar repo
