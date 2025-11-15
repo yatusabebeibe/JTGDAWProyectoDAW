@@ -85,6 +85,7 @@ git config --global user.email "email@ejemplo.com"
    - Si el commit contiene **breaking changes** (*cambios que rompen la compatibilidad con las versiones anteriores. Ej: eliminar o renombrar funciones o clases, cambiar parámetros obligatorios, etc*), se pondrá un signo de exclamación `!` antes de los dos puntos. \
    Y en el cuerpo de commit se podría poner `BREAKING CHANGE:` y explicar exactamente que se ha eliminado o cambiado que rompe la compatibilidad.
 
+Nosotros usaremos el estándar de [Commits Convencionales](https://www.conventionalcommits.org/es/v1.0.0/), que sigue todas estas reglas.
 
 ## **Gestión de un repositorio (Terminal)**
 
