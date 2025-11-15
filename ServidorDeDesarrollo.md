@@ -1,0 +1,745 @@
+[< Volver atrás](README.md)
+
+- [Ubuntu Server 24.04.3 LTS](#ubuntu-server-24043-lts)
+  - [1 **Configuración inicial**](#1-configuración-inicial)
+    - [Nombre y configuración de red](#nombre-y-configuración-de-red)
+    - [**Actualizar el sistema**](#actualizar-el-sistema)
+    - [**Configuración fecha y hora**](#configuración-fecha-y-hora)
+    - [**Cuentas administradoras**](#cuentas-administradoras)
+    - [**Cortafuegos (UFW)**](#cortafuegos-ufw)
+      - [Instalación](#instalación)
+      - [Configuración](#configuración)
+      - [Monitorización](#monitorización)
+      - [Mantenimiento](#mantenimiento)
+    - [**SSH**](#ssh)
+      - [Instalación](#instalación-1)
+      - [Configuración](#configuración-1)
+      - [Monitorización](#monitorización-1)
+      - [Mantenimiento](#mantenimiento-1)
+    - [**Antivirus**](#antivirus)
+      - [Instalación](#instalación-2)
+      - [Configuración](#configuración-2)
+      - [Monitorización](#monitorización-2)
+      - [Mantenimiento](#mantenimiento-2)
+  - [2 Servidor web (Apache)](#2-servidor-web-apache)
+    - [Instalación](#instalación-3)
+    - [Configuración](#configuración-3)
+    - [Monitorización](#monitorización-3)
+    - [Mantenimiento](#mantenimiento-3)
+    - [Permisos y usuarios](#permisos-y-usuarios)
+    - [Usuarios enjaulados](#usuarios-enjaulados)
+    - [HTTPS](#https)
+    - [Hosts Virtuales](#hosts-virtuales)
+  - [3 PHP-FPM](#3-php-fpm)
+    - [Instalación](#instalación-4)
+    - [Configuración](#configuración-4)
+    - [Monitorización](#monitorización-4)
+    - [Mantenimiento](#mantenimiento-4)
+  - [4 MariaDB](#4-mariadb)
+    - [Instalación](#instalación-5)
+    - [Configuración](#configuración-5)
+    - [Monitorización](#monitorización-5)
+    - [Mantenimiento](#mantenimiento-5)
+  - [5 XDebug](#5-xdebug)
+    - [Instalación](#instalación-6)
+    - [Configuración](#configuración-6)
+    - [Monitorización](#monitorización-6)
+    - [Mantenimiento](#mantenimiento-6)
+  - [6 DNS](#6-dns)
+  - [7 SFTP](#7-sftp)
+    - [Instalación](#instalación-7)
+    - [Configuración](#configuración-7)
+    - [Monitorización](#monitorización-7)
+    - [Mantenimiento](#mantenimiento-7)
+    - [Usuarios enjaulados](#usuarios-enjaulados-1)
+  - [1.1.8 Apache Tomcat](#118-apache-tomcat)
+  - [1.1.9 LDAP](#119-ldap)
+
+---
+
+> **Jesús Temprano Gallego**  
+> Curso: 2025/2026  
+> 2º Curso CFGS Desarrollo de Aplicaciones Web  
+> Despliegue de aplicaciones web
+
+# Ubuntu Server 24.04.3 LTS
+
+Este documento es una guía detallada del proceso de instalación y configuración de un servidor de aplicaciones en Ubuntu Server utilizando Apache, con soporte PHP y MySQL
+
+## 1 **Configuración inicial**
+
+### Nombre y configuración de red
+
+> **Nombre de la máquina**: daw-used\
+> **Memoria RAM**: 2G\
+> **Particiones**: 150G(/) y resto (/var)\
+> **Configuración de red interface**: enp0s3 \
+> **Dirección IP** :10.199.10.22/22\
+> **GW**: 10.199.8.1/22\
+> **DNS**: 10.151.123.21 y 10.151.126.21
+
+Para comprobar esto usamos:
+```bash
+hostname    # Para ver el nombre de la maquina
+ip a        # Para ver la IP y interface
+ip r        # Par ver la IP, interface y gateway
+resolvectl  # Para ver el DNS
+df -h       # Para ver las particiones
+fdisk -l    # # Para ver las particiones (fromato mas limpio)
+cat /etc/os-release # Ver la verison del SO
+```
+
+---
+
+Cambiamos el nombre de la maquina con:
+```bash
+sudo hostnamectl set-hostname <nombre>
+sudo nano /etc/hosts
+```
+
+---
+
+Editamos el fichero de configuración del interface de red  **``/etc/netplan``**, con estos datos:
+
+
+```yaml
+# This is the network config written by 'subiquity'network:
+network:
+  version: 2
+  ethernets:
+    enp0s3:
+      addresses:
+        - 10.199.10.22/22
+      nameservers:
+        addresses:
+          - 10.151.123.21
+          - 10.151.126.21
+        search: [jesus.local]
+      routes:
+        - to: default
+          via: 10.199.8.1
+```
+
+### **Actualizar el sistema**
+
+```bash
+sudo apt update && sudo apt upgrade -y
+```
+
+### **Configuración fecha y hora**
+
+```bash
+# Comprobamos la fecha con:
+date
+```
+En caso de que este mal hacemos esto: [Establecer fecha, hora y zona horaria](https://somebooks.es/establecer-la-fecha-hora-y-zona-horaria-en-la-terminal-de-ubuntu-20-04-lts/ "Cambiar fecha y hora")
+
+```bash
+# Ponemos la zona horaria correcta para cambiar la hora
+sudo timedatectl set-timezone Europe/Madrid
+
+# Comprobamos que la fecha y/o hora han cambiado con:
+date
+```
+
+### **Cuentas administradoras**
+
+> - [X] root(inicio)
+> - [X] miadmin/paso
+> - [X] miadmin2/paso
+
+La cuenta ``root`` viene por defecto. Las otras dos las creamos con el comando:
+```bash
+sudo adduser <nombre_usuario>
+# Te pedira contraseña, y el resto de cosas serán opcionales (teléfono, correo, etc)
+
+# Para hacerlo administrador usamos:
+sudo usermod -aG sudo,adm,cdrom,dip,plugdev,lxd <nombre_usuario>
+```
+
+o con:
+```bash
+sudo useradd -m -d </ruta/del/home> -s </bin/bash> -G <grupo/s> <usuario>
+sudo passwd <usuario> # Para poner la contraseña
+sudo chown -R <usuario>:<grupo> </ruta/del/home> # Para cambiar el dueño de la carpeta home
+```
+
+### **Cortafuegos (UFW)**
+
+#### Instalación
+```bash
+sudo apt update
+sudo apt install ufw     # Instalamos UFW si no está instalado
+```
+#### Configuración
+```bash
+sudo ufw enable          # Activamos el cortafuegos
+sudo ufw allow 22        # Abrimos el puerto 22 (SSH)
+```
+
+Para eliminar reglas específicas (por ejemplo IPv6 o cualquier otra):
+```bash
+sudo ufw status numbered  # Mostramos reglas con número
+sudo ufw delete 2         # Eliminamos la regla con el número correspondiente
+```
+#### Monitorización
+```bash
+sudo ufw status verbose    # Mostramos el estado detallado del cortafuegos y las reglas activas
+```
+#### Mantenimiento
+```bash
+sudo ufw disable           # Desactivamos el cortafuegos temporalmente
+sudo ufw reset             # Reseteamos todas las reglas a la configuración inicial
+```
+
+### **SSH**
+
+#### Instalación
+```bash
+sudo apt update
+sudo apt install openssh-server   # Instalamos el servidor SSH
+```
+#### Configuración
+```bash
+sudo nano /etc/ssh/sshd_config   # Archivo de configuración SSH
+sudo systemctl restart ssh       # Reiniciamos el servicio para aplicar cambios si hacemos
+```
+#### Monitorización
+```bash
+sudo systemctl status ssh        # Comprobamos el estado del servicio
+```
+#### Mantenimiento
+```bash
+sudo systemctl enable ssh         # Habilitamos que SSH se inicie al arrancar
+sudo systemctl disable ssh        # Deshabilitamos el inicio automático si se necesita
+sudo systemctl restart ssh        # Reiniciamos el servicio si hay problemas
+```
+
+
+### **Antivirus**
+
+#### Instalación
+Instalaremos el Antivirus `ClamAV`:
+```bash
+sudo apt update && sudo apt install -y clamav
+```
+
+#### Configuración
+Si no quieres cambiar nada, puedes verificar la configuración.
+```bash
+cat /etc/clamav/clamd.conf      # Mostramos la configuración del demonio
+cat /etc/clamav/freshclam.conf  # Mostramos la configuración de actualizaciones
+```
+
+Si quieres actualizar la base de datos de los virus:
+```bash
+sudo systemctl stop clamav-freshclam   # Detenemos el servicio de actualizaciones
+sudo freshclam                         # Actualizamos la base de datos de virus
+sudo systemctl start clamav-freshclam  # Volvemos a iniciar el servicio
+```
+#### Monitorización
+```bash
+sudo systemctl status clamav-daemon    # Comprobamos el estado del servicio ClamAV
+sudo systemctl status clamav-freshclam # Comprobamos el estado del servicio de actualizaciones
+```
+#### Mantenimiento
+```bash
+sudo systemctl enable clamav-daemon     # Habilitamos el demonio al inicio del sistema
+sudo systemctl disable clamav-daemon    # Deshabilitamos el inicio automático si se necesita
+sudo systemctl restart clamav-daemon    # Reiniciamos el servicio si hay problemas
+```
+
+## 2 Servidor web (Apache)
+
+Servidor web de código abierto que gestiona y entrega páginas a los usuarios. \
+Permite configurar sitios, manejar peticiones HTTP/HTTPS y servir contenido dinámico y estático. \
+Es compatible con módulos y lenguajes como PHP, ofreciendo gran flexibilidad y personalización.
+
+### Instalación
+```bash
+sudo apt update
+sudo apt install apache2 -y   # Instalamos Apache
+```
+### Configuración
+```bash
+cat /etc/apache2/apache2.conf   # Mostramos la configuración principal
+cat /etc/apache2/sites-available/000-default.conf  # Configuración del sitio por defecto
+```
+Cambiamos el `None` por `All`, para poder modificar los archivos **``.htaccess``**
+![alt text](./images/apache/apacheAllowOverride.png)
+
+Para aplicar los cambios después de editar usamos:
+```bash
+sudo apache2ctl configtest      # Comprobamos que no de errores = "Syntax OK"
+sudo systemctl restart apache2  # Reiniciamos el servicio para aplicar cambios
+```
+Abrimos el puerto 80:
+```bash
+sudo ufw allow 80         # Abrimos el puerto 80 (HTTP)
+sudo ufw status numbered  # Mostramos reglas con número
+sudo ufw delete 3         # Eliminamos la regla IPv6
+```
+### Monitorización
+```bash
+sudo systemctl status apache2   # Comprobamos si Apache está activo
+sudo ufw status | grep "80"     # Verificamos que el puerto 80 está escuchando
+```
+
+Ver módulos instalados:
+```bash
+apache2ctl -M
+```
+
+### Mantenimiento
+```bash
+sudo systemctl start apache2     # Iniciamos el servicio si está detenido
+sudo systemctl stop apache2      # Detenemos el servicio
+sudo systemctl restart apache2   # Reiniciamos el servicio
+sudo systemctl enable apache2    # Habilitamos el inicio automático al arrancar
+sudo systemctl disable apache2   # Deshabilitamos el inicio automático si se necesita
+
+```
+
+---
+
+<!-- documentar "/etc/apache2/" y subcarpetas -->
+Los archivos de configuración de Apache se encuentran en **``/etc/apache2/``**:
+  - **``apache2.conf``**: es el archivo de configuración inicial. Es el primer fichero que se ejecuta cuando arrancamos el servidor.
+  - **``ports.conf``**: donde se definen los puertos en los que Apache escuchará las conexiones
+  - **``mods-available/``**: Contiene todos los módulos de Apache que están instalados en el sistema.
+  - **``mods-enabled/``**: Contiene enlaces simbólicos a los módulos de mods-available/ que están activos, es decir, cargados y funcionando en el servidor.
+  - **``conf-available/``**: Almacena archivos de configuración global mediante enlaces simbólicos influyendo en la configuración general del servidor.
+  - **``conf-enabled/``**: Contiene enlaces simbólicos a los archivos de conf-available/ que están activos, aplicando su configuración al servidor.
+  - **``sites-available/``**: Guarda archivos de configuración de sitios virtuales mediante enlaces simbólicos, permitiendo configurar diferentes sitios alojados en el mismo servidor
+  - **``sites-enabled/``**: Contiene enlaces simbólicos a los archivos de sites-available/ que están activos, habilitando los sitios virtuales correspondientes.
+
+---
+
+Para comprobar que los cambios en la documentación funcionan correctamente usamos:
+```bash
+sudo apache2ctl configtest
+```
+
+### Permisos y usuarios
+
+> - [X] operadorweb/paso
+> - [X] operadorweb2/paso
+> - [X] operadorweb3/paso
+
+Creamos un usuario llamado `operadorweb` que tenga el grupo `www-data`.
+
+```bash
+# Creamos el usuario el en directorio "/var/www/html/" y en el grupo www-data
+sudo useradd -m -d /var/www/html/ -s /bin/bash -g www-data operadorweb
+
+# Le ponemos contraseña
+sudo passwd operadorweb
+
+
+# Cambiamos el propietario de su carpeta home con:
+sudo chown -R operadorweb:www-data /var/www/html/
+
+# Y los permisos con:
+sudo chmod -R 775 /var/www/html
+```
+
+Y habilitamos el puerto 80 en el UFW si no esta ya.
+
+### Usuarios enjaulados
+
+Esto es una configuración de SFTP.
+
+[Véase: SFTP > Usuarios enjaulados](#usuarios-enjaulados-1)
+
+### HTTPS
+
+![alt text](./images/apache/imagenModeloHTTPS.png)
+
+
+Generamos un certificado auto firmado y su clave privada (válido 1 año), y rellenamos la información que nos pide.
+```bash
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/jtg-used.key -out /etc/ssl/certs/jtg-used.crt
+```
+
+Comprobamos que se han creado correctamente los certificados:
+```bash
+sudo ls -la /etc/ssl/certs/   | grep jtg-used
+sudo ls -la /etc/ssl/private/ | grep jtg-used
+```
+
+Habilitamos el modulo ssh, y configuramos un sitio para que lo use.
+```bash
+sudo a2enmod ssl
+sudo systemctl restart apache2
+cd /etc/apache2/sites-available/
+sudo cp default-ssl.conf jtg-used.conf
+sudo nano jtg-used.conf
+```
+![alt text](./images/apache/apacheSiteConfgHTTPS.png)
+
+Habilitamos el sitio y abrimos el puerto 443 para permitir HTTPS.
+```bash
+sudo a2ensite jtg-used.conf
+sudo ufw allow 443
+```
+
+Para hacer redirección automática a HTTPS, habilitamos el modulo rewrite de apache.
+```bash
+sudo a2enmod rewrite
+```
+
+Y en el `.htaccess` principal (el de `/var/www/html/` con el usuario **operadorweb**) ponemos esto:
+```apache
+RewriteEngine On  # Activa las redirecciones
+RewriteCond %{SERVER_PORT} 80  # Comprueba si la peticion es por el puerto 80 (http)
+RewriteRule ^(.*)$ https://10.199.10.22/$1 [R,L]  # Si se cumple la condicion redirecciona a https
+```
+
+Para terminar, reiniciamos apache para aplicar todos los cambios
+```bash
+sudo systemctl restart apache2
+```
+
+### Hosts Virtuales
+
+Primero [configuramos el sitio en el servidor](EntornoDeExplotacion.md#sitios-virtuales), y [creamos el usuario enjaulado SFTP](#usuarios-enjaulados) si no lo hicimos ya.
+
+Una vez hecho esto, vamos a ``/etc/apache2/sites-available`` y creamos el archivo \<nombre_sitio_virtual_plesk>-jesustemgal-ieslossauces-es.conf copiando el 000-default.conf.
+
+Temeos que modificarlo para que al acceder a la url creada en Plesk, podamos acceder al servidor. \
+Y que en vez de ir a la pagina normal, vaya a la pagina del usuario enjaulado.
+
+Añadimos esta línea:
+```bash
+ServerName sitio1.jesustemgal.ieslossauces.es  # Esto hace que si alguien escribe este dominio, Apache de este sitio
+```
+
+Y modificamos estas para cambiar la pagina que aparece:
+```bash
+DocumentRoot /var/www/usuarioenjaulado1/httpdocs
+
+ProxyPassMatch ^/(.*\.php)$ unix:/run/php/php8.3-fpm.sock|fcgi://127.0.0.1/var/www/usuarioenjaulado1/httpdocs
+```
+
+Una vez terminado, guardamos el archivo y habilitamos 
+
+
+## 3 PHP-FPM
+
+Gestor de procesos para ejecutar PHP de forma eficiente. \
+Permite procesar múltiples peticiones simultáneamente, mejorando el rendimiento de servidores web. \
+Se integra con servidores como Nginx o Apache para servir páginas PHP de manera rápida y estable.
+
+### Instalación
+
+```bash
+# Actualizamos los paquetes
+sudo apt update
+
+# Instalamos herramientas para gestionar repositorios
+sudo apt install software-properties-common -y
+
+# Añadimos el repositorio para PHP actualizado
+sudo add-apt-repository ppa:ondrej/php -y
+ls /etc/apt/sources.list.d/ | grep ondrej
+sudo apt update
+
+# Instalamos PHP 8.3 y PHP-FPM
+sudo apt install libapache2-mod-php8.3 php8.3-fpm -y
+
+# Configuramos Apache para usar PHP-FPM
+sudo a2enmod proxy_fcgi
+sudo a2dismod mpm_prefork
+sudo a2dismod php8.3
+sudo a2dismod mpm_prefork
+sudo a2enmod mpm_event proxy_fcgi
+sudo a2enconf php8.3-fpm
+
+# Reiniciamos y recargamos Apache para aplicar cambios
+sudo systemctl restart apache2
+sudo systemctl reload apache2
+```
+
+### Configuración
+
+El archivo principal de configuración de PHP-FPM se encuentra en ``/etc/php/8.3/fpm/php.ini``.
+
+Hacemos una copia de seguridad de `php.ini` y después lo editamos cambiando estos valores:
+
+![](./images/php/php.ini_errors.png)
+![](./images/php/php.ini_memory.png)
+
+Y reiniciamos el servicio para aplicar los cambios a la configuración con:
+```bash
+sudo systemctl restart php8.3-fpm
+```
+
+### Monitorización
+
+```bash
+sudo systemctl status php8.3-fpm   # Verifica el estado de PHP-FPM
+php -v    # Comprobamos la versión de PHP
+php -m    # Lista los módulos activos
+```
+
+### Mantenimiento
+
+```bash
+sudo systemctl start php8.3-fpm      # Inicia el servicio
+sudo systemctl stop php8.3-fpm       # Detiene el servicio
+sudo systemctl restart php8.3-fpm    # Reinicia el servicio
+sudo systemctl enable php8.3-fpm     # Habilita inicio automático al arrancar
+sudo systemctl disable php8.3-fpm    # Deshabilita inicio automático
+```
+
+## 4 MariaDB
+
+Sistema de gestión de bases de datos relacional y de código abierto, compatible con MySQL. \
+Permite almacenar, consultar y gestionar datos de forma segura y eficiente. \
+Se puede acceder desde aplicaciones y IDEs mediante conexión local o remota usando el puerto **3306**.
+
+### Instalación
+Instalamos con:
+```bash
+sudo apt update
+sudo apt install mariadb-server -y  # Instalamos el servidor MariaDB
+```
+
+### Configuración
+El archivo principal de configuración se encuentra en:
+```
+/etc/mysql/mariadb.conf.d/50-server.cnf
+```
+
+Editamos la línea del ``bind-address`` para permitir conexiones desde cualquier IP (por defecto solo permite localhost), cambiandolo de ``127.0.0.1`` por ``0.0.0.0`` para permitir todas las conexiones externas.
+
+Guardamos los cambios y entramos en MariaDB para crear un nuevo usuario administrador con ``sudo mariadb`` \
+Y creamos el usuario con:
+```sql
+GRANT ALL ON *.* TO 'adminsql'@'%' IDENTIFIED BY 'paso' WITH GRANT OPTION;
+```
+
+Habilitamos el puerto 3306 con:
+```bash
+sudo ufw allow 3306
+```
+
+Ejecutamos el asistente de seguridad:
+```bash
+sudo mysql_secure_installation   # Configuramos contraseña root y opciones de seguridad
+```
+
+* En el primer paso preguntará por la contraseña de `root` para MariaDB, pulsamos la tecla `Enter` ya que no hay contraseña definida.
+* Después, preguntará si quieres cambiar a autenticación por "unix_socket". Le diremos que `No`.
+* La siguiente, preguntará si quieres asignar una contraseña para el usuario "root". Le daremos a `Sí` y le pondremos `paso`.
+* En el tercer paso preguntará si quieres eliminar `usuario anónimo`, aquí diremos que `Sí` queremos borrar los datos.
+* Después preguntará si quieres desactivar el acceso remoto del usuario “root”, aquí pondremos que `Sí` quieres desactivar acceso remoto para usuario por seguridad.
+* De nuevo preguntará si quieres eliminar la base de datos `test`, aquí diremos de nuevo que `Sí` quieres borrar las base de datos de prueba.
+* Por último, preguntará si quieres recargar privilegios, aquí pondremos que `Sí`.
+
+Reiniciamos el servicio para aplicar los cambios:
+```bash
+sudo systemctl restart mariadb
+```
+
+Para permitir que el servidor web pueda conectarse con la DB tenemos que instalar este modulo php y reiniciarlo:
+```bash
+sudo apt install php8.3-mysql
+sudo systemctl restart php8.3-fpm
+```
+
+### Monitorización
+
+Verificamos la IP y el puerto que está utilizando MariaDB:
+```bash
+sudo ss -punta | grep mariadb   # Muestra conexiones activas y puertos usados por MariaDB
+```
+
+Comprobamos el estado del servicio:
+```bash
+sudo systemctl status mariadb
+```
+
+### Mantenimiento
+```bash
+sudo systemctl start mariadb      # Inicia el servicio
+sudo systemctl stop mariadb       # Detiene el servicio
+sudo systemctl restart mariadb    # Reinicia el servicio
+sudo systemctl enable mariadb     # Habilita el inicio automático
+sudo systemctl disable mariadb    # Deshabilita el inicio automático
+```
+
+Comprobamos si PHP detecta los módulos de MySQL/MariaDB:
+```bash
+sudo php -m | grep mysql
+```
+
+## 5 XDebug
+
+Es un módulo de PHP que permite depurar y analizar el código de forma más sencilla. \
+Permite inspeccionar variables, pausar la ejecución y seguir el flujo del programa paso a paso. \
+Se integra con IDEs mediante el puerto **9003** para depuración remota.
+
+### Instalación
+
+```bash
+sudo apt update
+sudo apt install php8.3-xdebug -y   # Instalamos XDebug para PHP 8.3
+```
+
+Verificamos que XDebug está activo:
+```bash
+sudo php -v | grep Xdebug   # Con la X mayuscula; sino no aparece
+```
+
+### Configuración
+
+El archivo principal de configuración se encuentra en:
+```bash
+/etc/php/8.3/fpm/conf.d/20-xdebug.ini:
+```
+
+Y tiene que tener esto:
+```bash
+zend_extension=xdebug.so
+xdebug.mode=develop,debug
+xdebug.start_with_request=yes
+xdebug.client_port=9003
+xdebug.log=/tmp/xdebug.log
+xdebug.log_level=7
+xdebug.idekey="netbeans-xdebug"
+xdebug.discover_client_host=1
+```
+
+Reiniciamos PHP-FPM para aplicar los cambios:
+```bash
+sudo systemctl restart php8.3-fpm
+```
+
+### Monitorización
+
+Verificamos que XDebug está cargado:
+```bash
+php -m | grep xdebug
+```
+
+Podemos revisar el log para errores o avisos:
+```bash
+cat /tmp/xdebug.log
+```
+
+### Mantenimiento
+
+```bash
+sudo systemctl start php8.3-fpm      # Inicia el servicio PHP-FPM
+sudo systemctl stop php8.3-fpm       # Detiene el servicio
+sudo systemctl restart php8.3-fpm    # Reinicia el servicio
+sudo systemctl enable php8.3-fpm     # Habilita inicio automático
+sudo systemctl disable php8.3-fpm    # Deshabilita inicio automático
+```
+
+## 6 DNS
+## 7 SFTP
+
+Protocolo seguro para transferir archivos entre un cliente y un servidor usando SSH. \
+Permite subir, descargar y gestionar archivos y directorios de forma cifrada. \
+Se usa mucho para administrar servidores remotamente con seguridad y sin exponer datos.
+
+### Instalación
+
+SFTP no necesita instalarse, viene incluido dentro del OpenSSH instalado previamente. \
+Solo debemos asegurarnos de que el servidor SSH esté instalado:
+```bash
+sudo systemctl status ssh
+```
+
+Si no esta, lo instalamos con:
+```bash
+sudo apt update
+sudo apt install openssh-server -y   # Instalamos el servidor SSH si no esta
+```
+
+### Configuración
+
+El archivo de configuración está en:
+```bash
+/etc/ssh/sshd_config
+```
+
+Si lo modificamos, reiniciamos SSH para aplicar los cambios:
+```bash
+sudo systemctl restart ssh
+```
+
+### Monitorización
+
+Comprobamos el estado del servicio SSH/SFTP:
+```bash
+sudo systemctl status ssh
+```
+
+Listamos conexiones activas:
+```bash
+sudo ss -punta | grep ssh
+```
+
+Ver logs de inicio de sesión:
+```bash
+sudo journalctl -u ssh -f
+```
+
+### Mantenimiento
+
+```bash
+sudo systemctl start ssh      # Iniciar el servicio
+sudo systemctl stop ssh       # Detener el servicio
+sudo systemctl restart ssh    # Reiniciar para aplicar cambios
+sudo systemctl enable ssh     # Habilitar inicio automático
+sudo systemctl disable ssh    # Deshabilitar inicio automático
+```
+
+### Usuarios enjaulados
+
+Creamos un grupo para los usuarios enjaulados.
+```bash
+sudo groupadd sftpusers
+```
+
+Creamos el usuario y le asignamos una contraseña.
+```bash
+sudo useradd -g www-data -G sftpusers -m -d /var/www/<usuario> <usuario>
+sudo passwd <usuario>
+```
+
+Preparamos la jaula (el directorio raíz del usuario). \
+El directorio del usuario debe pertenecer a root para que funcione la jaula SFTP:
+```bash
+sudo chown root:root /var/www/<usuario>
+sudo chmod 555 /var/www/<usuario>   # Quitamos permiso de escritura
+```
+
+Creamos la carpeta donde el usuario puede escribir y editar:
+```bash
+sudo mkdir /var/www/<usuario>/httpdocs
+sudo chown <usuario>:www-data -R /var/www/<usuario>/httpdocs  # Cambiamos el usuario al que pertenece la carpeta
+sudo chmod 2775 -R /var/www/<usuario>/httpdocs  # Añadimos permisos completos para el usuario y su grupo
+```
+
+Para terminar, editamos el archivo `/etc/ssh/sshd_config` y añadimos al final:
+```
+Subsystem sftp internal-sftp
+Match Group sftpusers
+ChrootDirectory %h
+ForceCommand internal-sftp -u 2
+AllowTcpForwarding yes
+PermitTunnel no
+X11Forwarding no
+```
+
+Y reiniciamos el servicio SSH.
+```bash
+sudo systemctl restart ssh
+```
+
+## 1.1.8 Apache Tomcat
+## 1.1.9 LDAP
