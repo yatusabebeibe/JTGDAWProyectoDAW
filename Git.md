@@ -69,7 +69,7 @@ git config --global user.email "email@ejemplo.com"
 3. NO usar punto final. El mensaje corto del commit (la primera línea) es el encabezado/titulo del commit, y al igual que en el periódico o las noticias, los títulos no llevan punto final.
 4. NI puntos suspensivos. Si vemos los commits como instrucciones, las instrucciones deben de ser claras y estar completas. No deben crear duda a quien lo lea después.
 5. Usar como máximo unos 50 caracteres. Si tienes que explicar demasiado, tu commit probablemente hace demasiadas cosas. Si es posible dividirlo en varios commits; **hazlo**.
-6. Si tienes que añadir alguna explicación necesaria se pondrá en el cuerpo del commit. En el se el puede explicar el qué y el por qué, no el cómo. Porque el mensaje puede mentir, pero el código no.
+6. Si tienes que añadir alguna explicación necesaria se pondrá en el cuerpo del commit. En el se el puede explicar el qué y el por qué, no el cómo. Porque el mensaje puede mentir, pero el código no. Se debe dejar una línea en blanco entre el titulo y el cuerpo.
 7. Usar prefijos para mejor legibilidad. Para eso, se usa esta estructura: `<tipo>(<scope>): <descripcion>`.
    - Es scope es opcional y sirve para indicar la parte del proyecto afectada (*por ejemplo un módulo, componente o funcionalidad específica*), pudiendo entender rápidamente dónde se aplicó el cambio.
    - Para el tipo de commit, los más comunes y usados son ***feat***, ***fix***, ***refactor*** y ***docs***, pera hay mas. Aquí unos ejemplos y usos:
