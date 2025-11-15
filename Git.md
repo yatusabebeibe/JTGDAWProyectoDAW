@@ -155,7 +155,7 @@ En el menú de control de versiones, en el apartado de **CAMBIOS**, en los archi
 Para deshacer cambios, seria lo mimo que lo anterior pero en vez de darle al '+' se le daría a la flecha hacia atrás.
 
 Para hacer un commit, el el apartado de **CAMBIOS**, ponemos el mensaje (*siguiendo las [buenas practicas](#buenas-prácticas)*) y le damos a ***Confirmación***. \
-Si quisiéramos añadir un cuerpo al mensaje, le damos a ***Confirmación*** sin escribir un mensaje y nos aparecería un editor de texto para escribir el mensaje. La primera línea, seria el titulo, las demás serian el cuerpo. Una vez escrito el mensaje y cuerpo, en la barra superior (donde aparecen los archivos) a la derecha le damos a el tic de verificación para confirmar el mensaje y terminar el commit.
+Si quisiéramos añadir un cuerpo al mensaje, simplemente pondríamos `Crtl + Intro` para escribir mas líneas y le damos a ***Confirmación***.
 
 ### Crear y cambiar de ramas
 
