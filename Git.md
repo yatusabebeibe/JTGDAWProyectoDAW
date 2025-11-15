@@ -114,6 +114,14 @@ Si quisiéramos añadir un cuerpo al mensaje, haríamos `git commit` sin escribi
 
 ### Crear y cambiar de ramas
 
+Para crear una nueva rama usamos `git branch <nombre_rama>`. Esto solo crea la rama, no cambia a ella automáticamente.
+
+Para cambiar a otra rama usamos `git checkout <nombre_rama>`. También se puede crear y cambiar a la rama en un solo paso con `git checkout -b <nombre_rama>`.
+
+Para ver todas las ramas del repositorio usamos `git branch`, la rama actual aparecerá con un *.
+
+Para eliminar una rama usamos `git branch -d <nombre_rama>` (*solo se borrará si todos sus cambios ya están incluidos en otra rama*) o `git branch -D <nombre_rama>` (*se borra aunque tenga cambios no integrados*).
+
 ### Fusionar ramas (merge) y conflictos
 
 ### Conectar con remoto
@@ -150,6 +158,12 @@ Para hacer un commit, el el apartado de **CAMBIOS**, ponemos el mensaje (*siguie
 Si quisiéramos añadir un cuerpo al mensaje, le damos a ***Confirmación*** sin escribir un mensaje y nos aparecería un editor de texto para escribir el mensaje. La primera línea, seria el titulo, las demás serian el cuerpo. Una vez escrito el mensaje y cuerpo, en la barra superior (donde aparecen los archivos) a la derecha le damos a el tic de verificación para confirmar el mensaje y terminar el commit.
 
 ### Crear y cambiar de ramas
+
+Para crear una rama, abajo a la izquierda en la barra de estado, le clicamos el nombre de nuestra rama actual. Seleccionamos **Crear nueva rama...** y le ponemos el nombre que queramos.
+
+Para cambiar entre ramas, en el mismo sitio vamos y seleccionamos la rama que queramos usar.
+
+Para eliminar una rama, en el menú de control de versiones, en el apartado de **CAMBIOS** le damos a los tres puntos, seleccionamos `Rama > Borrar rama...` y borramos la que queramos (si queremos borrar en la que estamos actualmente, primero tenemos que cambiar a otra rama).
 
 ### Fusionar ramas (merge) y conflictos
 
