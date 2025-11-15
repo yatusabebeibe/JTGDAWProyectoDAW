@@ -124,6 +124,20 @@ Para eliminar una rama usamos `git branch -d <nombre_rama>` (*solo se borrará s
 
 ### Fusionar ramas (merge) y conflictos
 
+Para fusionar otra rama en la rama actual usamos `git merge <rama_a_fusionar>`. La rama en la que estamos **recibe** los cambios de la rama que indicamos.
+
+Si Git puede combinar los cambios automáticamente, el merge se hace solo y solo mueve el puntero de la rama. \
+Si queremos asegurar que cree un commit de merge en todo caso, tenemos que usar `git merge --no-ff <rama_a_fusionar> -m "mensaje"`. Para añadir un cuerpo al mensaje lo haríamos sin el `-m "mensaje"` y seria lo mismo que con los commit.
+
+Si hay cambios que no se pueden combinar, se genera un conflicto. Los archivos en conflicto aparecen modificados y marcados para resolver.
+
+Para resolver los conflictos:
+1. Vemos qué archivos están en conflicto usando `git status`.
+2. Abrimos los archivos y buscamos las marcas `<<<<<<<`, `=======` y `>>>>>>>`.
+3. Elegimos qué cambios conservar editando el archivo a como lo queramos dejar y eliminamos las marcas.
+4. Guardamos los archivos y añadimos los cambios con `git add <archivo o '.'>`.
+5. Terminamos el merge con `git commit -m "mensaje"` o `git commit` si Git no lo hace automáticamente.
+
 ### Conectar con remoto
 
 ### Subir y descargar cambios
@@ -166,6 +180,22 @@ Para cambiar entre ramas, en el mismo sitio vamos y seleccionamos la rama que qu
 Para eliminar una rama, en el menú de control de versiones, en el apartado de **CAMBIOS** le damos a los tres puntos, seleccionamos `Rama > Borrar rama...` y borramos la que queramos (si queremos borrar en la que estamos actualmente, primero tenemos que cambiar a otra rama).
 
 ### Fusionar ramas (merge) y conflictos
+
+Para fusionar otra rama en la rama actual, en el menú de control de versiones, en el apartado de **CAMBIOS** le damos a los tres puntos, seleccionamos `Rama > Combinar`. La rama en la que estamos **recibe** los cambios de la rama que indicamos.
+
+Si Git puede combinar los cambios automáticamente, el merge se hace solo y simplemente mueve el puntero de la rama. \
+Si queremos asegurar que cree un commit de merge en todo caso, *vscode no tiene una forma propia de hacer esto*. Pero podríamos hacerlo con la extension [Git Graph](https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph).
+
+En el apartado de **CAMBIOS** al lado de los tres puntos seleccionamos el icono del grafo (el de las líneas y puntos) y se abrirá una pestaña con el historial de commits. \
+Hacemos doble click en la rama en la que queramos recibir los cambios y después click derecho la rama de la cual traemos los cambios y seleccionamos `Merge into current branch...`.\
+Marcamos "*Create a new commit even if fast-forward is possible*" para hacer que cree un nuevo commit, y "*No Commit*" para hacer que no envíe el commit directamente para poder cambiar el mensaje en el menú de la barra lateral.
+
+Si hay cambios que no se pueden combinar, se genera un conflicto. Los archivos en conflicto aparecen modificados, marcados para resolver y en una sección nueva en el menú en el apartado de **CAMBIOS** llamada "*Fusionar cambios mediante combinación*".
+
+Para solucionarlo, clicamos en el archivo en esa nueva sección y nos llevara a donde esta el conflicto. \
+Nos aparecerán varias opciones. Podemos elegir entre conservar el actual, el entrante o ambos. Seleccionamos el que nos convenga y una vez seleccionado, si aceptamos ambos, podemos editar el archivo manualmente para poder solucionar cualquier error que git no pueda detectar.
+
+Una vez terminado y que no haya mas conflictos, añadimos el archivo al stage, escribimos el commit de merge y le damos a ***Confirmación***.
 
 ### Conectar con remoto
 
