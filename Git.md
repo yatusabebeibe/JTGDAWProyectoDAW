@@ -6,7 +6,6 @@
   - [Buenas prácticas](#buenas-prácticas)
   - [**Gestión de un repositorio (Terminal)**](#gestión-de-un-repositorio-terminal)
     - [Iniciar / Clonar repo](#iniciar--clonar-repo)
-    - [Clonar repo](#clonar-repo)
     - [Estado e historial](#estado-e-historial)
     - [Añadir y confirmar cambios](#añadir-y-confirmar-cambios)
     - [Crear y cambiar de ramas](#crear-y-cambiar-de-ramas)
@@ -17,7 +16,6 @@
     - [Etiquetas](#etiquetas)
   - [**Gestión de un repositorio (VSCode)**](#gestión-de-un-repositorio-vscode)
     - [Iniciar / Clonar repo](#iniciar--clonar-repo-1)
-    - [Clonar repo](#clonar-repo-1)
     - [Estado e historial](#estado-e-historial-1)
     - [Añadir y confirmar cambios](#añadir-y-confirmar-cambios-1)
     - [Crear y cambiar de ramas](#crear-y-cambiar-de-ramas-1)
@@ -92,7 +90,9 @@ git config --global user.email "email@ejemplo.com"
 
 ### Iniciar / Clonar repo
 
-### Clonar repo
+Para iniciar un nuevo repositorio, por la terminal vamos a la carpeta donde lo queramos iniciar y ponemos `git init`.
+
+Para clonar uno ya creado en GitHub, copiamos la url del repo y hacemos `git clone <url> <(opcional) directorio donde se guardara>`. Si no se pone directorio, se crea uno con el nombre que tiene el repo en GitHub. Si se pone uno, este tiene que estar vacío.
 
 ### Estado e historial
 
@@ -115,7 +115,9 @@ git config --global user.email "email@ejemplo.com"
 
 ### Iniciar / Clonar repo
 
-### Clonar repo
+Para iniciar un repositorio, abrimos la carpeta donde lo queramos iniciar y abrimos el menú de control de versiones con `Ctrl + G` y le damos a "**Inicializar Repositorio**".
+
+Para clonar uno ya creado en GitHub, iniciamos uno y en el menú de control de versiones en el apartado "CHANGES" le damos a los 3 puntos y a clonar y ponemos la url del repositorio en GitHub.
 
 ### Estado e historial
 
