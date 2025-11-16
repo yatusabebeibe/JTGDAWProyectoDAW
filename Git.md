@@ -140,6 +140,13 @@ Para resolver los conflictos:
 
 ### Conectar con remoto
 
+Para enlazar el repositorio local con uno remoto usamos `git remote add <nombre_remoto> <url_del_repo>` (*nombre_remoto el 99% de las veces es "**origin**". Es un **casi** un estándar*). 
+Esto crea la conexión entre tu repo local y el repo de GitHub (o cualquier otro servicio).
+
+Para eliminar un remoto usamos `git remote remove <nombre_remoto>`, que borra la conexión con ese repositorio remoto.
+
+Para comprobar qué remotos están configurados usamos `git remote -v`, que muestra las URLs asociadas al remoto.
+
 ### Subir y descargar cambios
 
 ### Deshacer cambios
@@ -198,6 +205,12 @@ Nos aparecerán varias opciones. Podemos elegir entre conservar el actual, el en
 Una vez terminado y que no haya mas conflictos, añadimos el archivo al stage, escribimos el commit de merge y le damos a ***Confirmación***.
 
 ### Conectar con remoto
+
+Para conectar con remoto, en el menú de control de versiones, en el apartado de **CAMBIOS** le damos a los tres puntos, seleccionamos `Remoto > Agregar remoto...`, ponemos la url del remoto y de nombre le damos `origin`.
+
+Para eliminar el remoto, en el mismo sitio pero dándole a `Quitar remoto`.
+
+Puedes ver los remotos que hay, en el apartado de **CAMBIOS** le damos a los tres puntos, seleccionamos `Push > Insertar en...` y nos mostrara una lista con los que tenemos.
 
 ### Subir y descargar cambios
 
