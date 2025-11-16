@@ -159,6 +159,10 @@ Podemos usar la opción `--force`. Al usarla en el `push` sobrescribimos el remo
 
 ### Deshacer cambios
 
+Si queremos deshacer un commit ya hecho pero aún no se ha subido al remoto, usamos `git reset --soft <commit>` para mantener los cambios en los archivos, o `git reset --hard <commit>` para borrar también los cambios en los archivos y volver al estado del commit indicado.
+
+Si el commit ya se ha subido al remoto, podemos hacer los mismos pasos que si no se hubiera subido y luego forzar el push con `git push --force` para sobrescribir el remoto con nuestra versión corregida. Esto puede afectar a otros que ya hayan descargado esos commits, por lo que se debe usar con cuidado.
+
 ### Etiquetas
 
 
@@ -231,6 +235,10 @@ Podemos hacer un pull y push a la vez con `Pull, Push > Sincronizar`.
 Si solo queremos traer los cambios sin fusionarlos todavía, usamos `Pull, Push > Fetch`, que actualiza la información del remoto y descarga los commits nuevos, pero no modifica nuestros archivos hasta que hagamos un merge manual.
 
 ### Deshacer cambios
+
+Si has hecho un commit en local o si además también lo has subido a remoto y lo quieres deshacer, desde la interfaz de vscode no es posible.
+
+Si necesitas hacerlo solo se podría [hacer por terminal](#deshacer-cambios).
 
 ### Etiquetas
 
