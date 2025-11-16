@@ -188,7 +188,9 @@ Para subir/descargar archivos manualmente, podemos seleccionar el archivo en cue
 
 Para abrir el panel para el control de versiones, en la barra lateral buscamos un icono con un círculo dividido con ramas; o hacemos ``Ctrl + Shift + G``.
 
-Desde hay podemos controlar todos los git de cada proyecto (Hacer commits, cambiar ramas, crear y añadir tags, gestionar stashes, ...)
+Desde hay podemos controlar todos los git de cada proyecto (Hacer commits, cambiar ramas, crear y añadir tags, gestionar stashes, ...).
+
+Para una explicación mas detallada sobre como gestionar un repositorio git por VSCode lo explico [aquí](Git.md#gestión-de-un-repositorio-vscode).
 
 Estaría bien incluir esto en los ``.gitignore`` del proyecto:
 ```
