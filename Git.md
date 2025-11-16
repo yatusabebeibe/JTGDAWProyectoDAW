@@ -5,26 +5,28 @@
   - [Configuración](#configuración)
   - [Buenas prácticas](#buenas-prácticas)
   - [**Gestión de un repositorio (Terminal)**](#gestión-de-un-repositorio-terminal)
-    - [Iniciar / Clonar repo](#iniciar--clonar-repo)
-    - [Estado e historial](#estado-e-historial)
-    - [Añadir y confirmar cambios (commit)](#añadir-y-confirmar-cambios-commit)
-    - [Crear y cambiar de ramas](#crear-y-cambiar-de-ramas)
-    - [Fusionar ramas (merge) y conflictos](#fusionar-ramas-merge-y-conflictos)
-    - [Conectar con remoto](#conectar-con-remoto)
-    - [Subir y descargar cambios](#subir-y-descargar-cambios)
-    - [Deshacer cambios](#deshacer-cambios)
-    - [Etiquetas](#etiquetas)
+    - [1. Iniciar / Clonar repo](#1-iniciar--clonar-repo)
+    - [2. Estado e historial](#2-estado-e-historial)
+    - [3. Añadir y confirmar cambios (commit)](#3-añadir-y-confirmar-cambios-commit)
+    - [4. Crear y cambiar de ramas](#4-crear-y-cambiar-de-ramas)
+    - [5. Fusionar ramas (merge) y conflictos](#5-fusionar-ramas-merge-y-conflictos)
+    - [6. Conectar con remoto](#6-conectar-con-remoto)
+    - [7. Subir y descargar cambios](#7-subir-y-descargar-cambios)
+    - [8. Deshacer cambios](#8-deshacer-cambios)
+    - [9. Etiquetas](#9-etiquetas)
   - [**Gestión de un repositorio (VSCode)**](#gestión-de-un-repositorio-vscode)
-    - [Iniciar / Clonar repo](#iniciar--clonar-repo-1)
-    - [Estado e historial](#estado-e-historial-1)
-    - [Añadir y confirmar cambios (commit)](#añadir-y-confirmar-cambios-commit-1)
-    - [Crear y cambiar de ramas](#crear-y-cambiar-de-ramas-1)
-    - [Fusionar ramas (merge) y conflictos](#fusionar-ramas-merge-y-conflictos-1)
-    - [Conectar con remoto](#conectar-con-remoto-1)
-    - [Subir y descargar cambios](#subir-y-descargar-cambios-1)
-    - [Deshacer cambios](#deshacer-cambios-1)
-    - [Etiquetas](#etiquetas-1)
+    - [1. Iniciar / Clonar repo](#1-iniciar--clonar-repo-1)
+    - [2. Estado e historial](#2-estado-e-historial-1)
+    - [3. Añadir y confirmar cambios (commit)](#3-añadir-y-confirmar-cambios-commit-1)
+    - [4. Crear y cambiar de ramas](#4-crear-y-cambiar-de-ramas-1)
+    - [5. Fusionar ramas (merge) y conflictos](#5-fusionar-ramas-merge-y-conflictos-1)
+    - [6. Conectar con remoto](#6-conectar-con-remoto-1)
+    - [7. Subir y descargar cambios](#7-subir-y-descargar-cambios-1)
+    - [8. Deshacer cambios](#8-deshacer-cambios-1)
+    - [9. Etiquetas](#9-etiquetas-1)
 - [GitHub](#github)
+  - [Crear repositorio](#crear-repositorio)
+  - [Crear tags y releases](#crear-tags-y-releases)
 
 ---
 
@@ -89,13 +91,13 @@ Nosotros usaremos el estándar de [Commits Convencionales](https://www.conventio
 
 ## **Gestión de un repositorio (Terminal)**
 
-### Iniciar / Clonar repo
+### 1. Iniciar / Clonar repo
 
 Para iniciar un nuevo repositorio, por la terminal vamos a la carpeta donde lo queramos iniciar y ponemos `git init`.
 
 Para clonar uno ya creado en GitHub, copiamos la url del repo y hacemos `git clone <url> <(opcional) directorio donde se guardara>`. Si no se pone directorio, se crea uno con el nombre que tiene el repo en GitHub. Si se pone uno, este tiene que estar vacío.
 
-### Estado e historial
+### 2. Estado e historial
 
 Para ver el estado actual del repo usamos `git status`, que nos indica qué archivos están modificados, cuáles no se han añadido al área de staging y cuáles están listos para hacer commit.
 
@@ -103,7 +105,7 @@ Para ver el historial de commits usamos `git log`. Esto nos muestra los commits 
 
 Para ver los cambios en los archivos usamos `git diff`. Esto muestra línea por línea qué se ha añadido o eliminado desde el último commit pero que no han sido añadido al área de staging. Para ver los cambios del área de staging usamos la opción `--staged`.
 
-### Añadir y confirmar cambios (commit)
+### 3. Añadir y confirmar cambios (commit)
 
 Para añadir los cambios al área de staging usamos `git add <archivo>` para un archivo concreto, o `git add .` para todos los cambios del directorio actual.
 
@@ -112,7 +114,7 @@ Para quitar los cambios del área de staging pero mantenerlos modificados usamos
 Para hacer un commit, usamos `git commit -m "mensaje"` (*el mensaje siguiendo las [buenas practicas](#buenas-prácticas)*). \
 Si quisiéramos añadir un cuerpo al mensaje, haríamos `git commit` sin escribir un mensaje y nos aparecería un editor de texto para escribir el mensaje. Para poder escribir le tenemos que pulsar `i`. La primera línea, seria el titulo, las demás serian el cuerpo. Una vez escrito el mensaje y cuerpo, le pulsamos la tecla `Esc` después escribimos `:wq` y le damos a `intro` para confirmar el mensaje y terminar el commit.
 
-### Crear y cambiar de ramas
+### 4. Crear y cambiar de ramas
 
 Para crear una nueva rama usamos `git branch <nombre_rama>`. Esto solo crea la rama, no cambia a ella automáticamente.
 
@@ -122,7 +124,7 @@ Para ver todas las ramas del repositorio usamos `git branch`, la rama actual apa
 
 Para eliminar una rama usamos `git branch -d <nombre_rama>` (*solo se borrará si todos sus cambios ya están incluidos en otra rama*) o `git branch -D <nombre_rama>` (*se borra aunque tenga cambios no integrados*).
 
-### Fusionar ramas (merge) y conflictos
+### 5. Fusionar ramas (merge) y conflictos
 
 Para fusionar otra rama en la rama actual usamos `git merge <rama_a_fusionar>`. La rama en la que estamos **recibe** los cambios de la rama que indicamos.
 
@@ -138,7 +140,7 @@ Para resolver los conflictos:
 4. Guardamos los archivos y añadimos los cambios con `git add <archivo o '.'>`.
 5. Terminamos el merge con `git commit -m "mensaje"` o `git commit` si Git no lo hace automáticamente.
 
-### Conectar con remoto
+### 6. Conectar con remoto
 
 Para enlazar el repositorio local con uno remoto usamos `git remote add <nombre_remoto> <url_del_repo>` (*nombre_remoto el 99% de las veces es "**origin**". Es un **casi** un estándar*). 
 Esto crea la conexión entre tu repo local y el repo de GitHub (o cualquier otro servicio).
@@ -147,7 +149,7 @@ Para eliminar un remoto usamos `git remote remove <nombre_remoto>`, que borra la
 
 Para comprobar qué remotos están configurados usamos `git remote -v`, que muestra las URLs asociadas al remoto.
 
-### Subir y descargar cambios
+### 7. Subir y descargar cambios
 
 Para subir los cambios al remoto usamos `git push <rama>`.
 
@@ -157,13 +159,13 @@ Si solo queremos descargar los cambios sin fusionarlos todavía, usamos `git fet
 
 Podemos usar la opción `--force`. Al usarla en el `push` sobrescribimos el remoto con nuestra versión local; en `pull` forzamos que lo local se reemplace por lo del remoto; y en `fetch` forzamos que Git actualice lo que sabe del remoto aunque sobrescriba la información que había anteriormente.
 
-### Deshacer cambios
+### 8. Deshacer cambios
 
 Si queremos deshacer un commit ya hecho pero aún no se ha subido al remoto, usamos `git reset --soft <commit>` para mantener los cambios en los archivos, o `git reset --hard <commit>` para borrar también los cambios en los archivos y volver al estado del commit indicado.
 
 Si el commit ya se ha subido al remoto, podemos hacer los mismos pasos que si no se hubiera subido y luego forzar el push con `git push --force` para sobrescribir el remoto con nuestra versión corregida. Esto puede afectar a otros que ya hayan descargado esos commits, por lo que se debe usar con cuidado.
 
-### Etiquetas
+### 9. Etiquetas
 
 Para crear una etiqueta usamos `git tag <nombre_etiqueta>`. Esto marca un commit concreto sin añadir información extra.
 
@@ -178,20 +180,20 @@ Para borrar una etiqueta local usamos `git tag -d <nombre_etiqueta>`. Para borra
 
 ## **Gestión de un repositorio (VSCode)**
 
-### Iniciar / Clonar repo
+### 1. Iniciar / Clonar repo
 
 Para iniciar un repositorio, abrimos la carpeta donde lo queramos iniciar y abrimos el menú de control de versiones con `Ctrl + G` y le damos a "**Inicializar Repositorio**".
 
 Para clonar uno ya creado en GitHub, iniciamos uno y en el menú de control de versiones en el apartado **CAMBIOS** le damos a los 3 puntos y a clonar y ponemos la url del repositorio en GitHub.
 
-### Estado e historial
+### 2. Estado e historial
 
 En el menú de control de versiones, en el apartado de **CAMBIOS** podemos ver los archivos que se han modificado, y de esos, cuales están en el área de staging y listos para hacer commit. \
 Para ver los cambios a un archivo podemos simplemente hacer click en los archivos del apartado de **CAMBIOS** y nos mostrara que se ha añadido o eliminado desde el ultimo commit.
 
 En el menú de control de versiones, en el apartado de **GRAPH** podemos ver el historial de commits con el titulo del commit y su autor, y si pasamos el cursor por encima de uno, podemos ver mas información, como la fecha y hora, hash del commit, líneas añadidas y eliminadas y cuerpo del mensaje del commit.
 
-### Añadir y confirmar cambios (commit)
+### 3. Añadir y confirmar cambios (commit)
 
 En el menú de control de versiones, en el apartado de **CAMBIOS**, en los archivos que están en la sección de **Cambios**, podemos darle al símbolo de '+' y añadirá todos sus cambios a la sección de staged; o podemos hacer click en el archivo y seleccionar bloque por bloque que queremos añadir.
 
@@ -200,7 +202,7 @@ Para deshacer cambios, seria lo mimo que lo anterior pero en vez de darle al '+'
 Para hacer un commit, el el apartado de **CAMBIOS**, ponemos el mensaje (*siguiendo las [buenas practicas](#buenas-prácticas)*) y le damos a ***Confirmación***. \
 Si quisiéramos añadir un cuerpo al mensaje, simplemente pondríamos `Crtl + Intro` para escribir mas líneas y le damos a ***Confirmación***.
 
-### Crear y cambiar de ramas
+### 4. Crear y cambiar de ramas
 
 Para crear una rama, abajo a la izquierda en la barra de estado, le clicamos el nombre de nuestra rama actual. Seleccionamos **Crear nueva rama...** y le ponemos el nombre que queramos.
 
@@ -208,7 +210,7 @@ Para cambiar entre ramas, en el mismo sitio vamos y seleccionamos la rama que qu
 
 Para eliminar una rama, en el menú de control de versiones, en el apartado de **CAMBIOS** le damos a los tres puntos, seleccionamos `Rama > Borrar rama...` y borramos la que queramos (si queremos borrar en la que estamos actualmente, primero tenemos que cambiar a otra rama).
 
-### Fusionar ramas (merge) y conflictos
+### 5. Fusionar ramas (merge) y conflictos
 
 Para fusionar otra rama en la rama actual, en el menú de control de versiones, en el apartado de **CAMBIOS** le damos a los tres puntos, seleccionamos `Rama > Combinar`. La rama en la que estamos **recibe** los cambios de la rama que indicamos.
 
@@ -226,7 +228,7 @@ Nos aparecerán varias opciones. Podemos elegir entre conservar el actual, el en
 
 Una vez terminado y que no haya mas conflictos, añadimos el archivo al stage, escribimos el commit de merge y le damos a ***Confirmación***.
 
-### Conectar con remoto
+### 6. Conectar con remoto
 
 Para conectar con remoto, en el menú de control de versiones, en el apartado de **CAMBIOS** le damos a los tres puntos, seleccionamos `Remoto > Agregar remoto...`, ponemos la url del remoto y de nombre le damos `origin`.
 
@@ -234,7 +236,7 @@ Para eliminar el remoto, en el mismo sitio pero dándole a `Quitar remoto`.
 
 Puedes ver los remotos que hay, en el apartado de **CAMBIOS** le damos a los tres puntos, seleccionamos `Pull, Push > Insertar en...` y nos mostrara una lista con los que tenemos.
 
-### Subir y descargar cambios
+### 7. Subir y descargar cambios
 
 Para subir los cambios al remoto, en el menú de control de versiones le damos a los tres puntos y seleccionamos `Pull, Push > Insertar`. Esto enviará los commits de la rama actual al remoto correspondiente.
 
@@ -244,13 +246,13 @@ Podemos hacer un pull y push a la vez con `Pull, Push > Sincronizar`.
 
 Si solo queremos traer los cambios sin fusionarlos todavía, usamos `Pull, Push > Fetch`, que actualiza la información del remoto y descarga los commits nuevos, pero no modifica nuestros archivos hasta que hagamos un merge manual.
 
-### Deshacer cambios
+### 8. Deshacer cambios
 
 Si has hecho un commit en local o si además también lo has subido a remoto y lo quieres deshacer, desde la interfaz de vscode no es posible.
 
-Si necesitas hacerlo solo se podría [hacer por terminal](#deshacer-cambios).
+Si necesitas hacerlo solo se podría [hacer por terminal](#8-deshacer-cambios).
 
-### Etiquetas
+### 9. Etiquetas
 
 Para crear una etiqueta, en el menú de control de versiones, en el apartado de **CAMBIOS** le damos a los tres puntos, seleccionamos `Etiquetas > Crear etiqueta...`, le ponemos un nombre y nos aparecerá para poner un mensaje. Si no queremos poner mensaje, pulsamos intro sin poner nada.
 
@@ -260,9 +262,34 @@ Para borrar una etiqueta local vamos a `Etiquetas > Eliminar etiqueta...`. Y par
 
 Para ver todas las etiquetas del repositorio, en el menú de control de versiones, en el apartado de **GRAPH** podemos ver el historial de commits donde también aparecen los tags que hay.
 
+---
 
 # GitHub
 
 Plataforma online para almacenar y gestionar repositorios Git en la nube. \
 Permite colaborar, revisar código, crear issues y pull requests entre varios desarrolladores. \
 Incluye herramientas extra como automatización, documentación y gestión de tareas para mejorar el trabajo en equipo.
+
+## Crear repositorio
+
+Para crear un repositorio entramos en [GitHub](https://github.com/) y en la barra superior, a la derecha, pulsamos el icono de `+` y le damos a "**New repository**".
+
+Le ponemos un nombre al repositorio. Una descripción si queremos y le damos a "**Create repository**".
+
+Nada mas crearlo no tendrá ningún ningún archivo y nos aparecerá una url con la que podremos **clonar** por [terminal](#1-iniciar--clonar-repo) o [VSCode](#1-iniciar--clonar-repo-1) y empezar a crear y subir archivos, o **añadir el remoto** por [terminal](#6-conectar-con-remoto) o [VSCode](#6-conectar-con-remoto-1) y hacer un push para subir nuestros archivos e historial del repositorio local.
+
+## Crear tags y releases
+
+Una vez que ya hemos creado el repositorio y hemos subido cosas podemos crear tags y releases.
+
+Para crear tags (*si es que no los hemos creado ya por [terminal](#9-etiquetas) o [VSCode](#9-etiquetas-1)*) podemos ir al repositorio en GitHub, y le damos en la parte de la derecha donde pone `Releases`.
+
+Una vez aquí, hacemos click en `Draft a new release` (*para crear un tag desde GitHub solo se puede hacer creando un release*).
+
+Aquí podemos crear un release. Para esto, seleccionamos un tag que ya tuviéramos creado que apunta a un commit o creamos uno nuevo y seleccionamos a que commit estará asociado.
+
+Le ponemos un titulo al release (normalmente suele ser la versión) y una descripción donde indicamos los cambios respecto a la versión anterior.
+
+Una vez hecho esto publicamos la release.
+
+Hacemos esto para poder descargar y ver el código fuente en un punto en el tiempo concreto de forma mas fácil.

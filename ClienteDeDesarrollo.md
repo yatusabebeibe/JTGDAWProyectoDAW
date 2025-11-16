@@ -4,7 +4,7 @@
   - [**1 Configuración inicial**](#1-configuración-inicial)
     - [Nombre y configuración de red](#nombre-y-configuración-de-red)
     - [Cuentas administradoras](#cuentas-administradoras)
-  - [**2 Navegadores**](#2-navegadores)
+  - [**2 Navegador**](#2-navegador)
   - [**3 MovaXterm**](#3-movaxterm)
   - [**4 NetBeans**](#4-netbeans)
     - [Creación de proyectos](#creación-de-proyectos)
@@ -29,7 +29,14 @@
 ## **1 Configuración inicial**
 ### Nombre y configuración de red
 ### Cuentas administradoras
-## **2 Navegadores**
+
+## **2 Navegador**
+
+Usare Firefox como mi navegador principal.
+
+Usare estas extensiones:
+- [**uBlock Origin**](https://addons.mozilla.org/es-ES/firefox/addon/ublock-origin/): para bloquear peticiones entre el navegador y los servidores de anuncios, rastreadores, y otros elementos que puedan afectar la privacidad o el rendimiento del navegador.
+- [**Bitwarden**](https://addons.mozilla.org/en-US/firefox/addon/bitwarden-password-manager/): para guardar y gestionar mis contraseñas de forma segura.
 
 ## **3 MovaXterm**
 
@@ -188,7 +195,9 @@ Para subir/descargar archivos manualmente, podemos seleccionar el archivo en cue
 
 Para abrir el panel para el control de versiones, en la barra lateral buscamos un icono con un círculo dividido con ramas; o hacemos ``Ctrl + Shift + G``.
 
-Desde hay podemos controlar todos los git de cada proyecto (Hacer commits, cambiar ramas, crear y añadir tags, gestionar stashes, ...)
+Desde hay podemos controlar todos los git de cada proyecto (Hacer commits, cambiar ramas, crear y añadir tags, gestionar stashes, ...).
+
+Para una explicación mas detallada sobre como gestionar un repositorio git por VSCode lo explico [aquí](Git.md#gestión-de-un-repositorio-vscode).
 
 Estaría bien incluir esto en los ``.gitignore`` del proyecto:
 ```
