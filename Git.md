@@ -25,6 +25,7 @@
     - [8. Deshacer cambios](#8-deshacer-cambios-1)
     - [9. Etiquetas](#9-etiquetas-1)
 - [GitHub](#github)
+  - [Crear repositorio](#crear-repositorio)
 
 ---
 
@@ -267,3 +268,11 @@ Para ver todas las etiquetas del repositorio, en el menú de control de versione
 Plataforma online para almacenar y gestionar repositorios Git en la nube. \
 Permite colaborar, revisar código, crear issues y pull requests entre varios desarrolladores. \
 Incluye herramientas extra como automatización, documentación y gestión de tareas para mejorar el trabajo en equipo.
+
+## Crear repositorio
+
+Para crear un repositorio entramos en [GitHub](https://github.com/) y en la barra superior, a la derecha, pulsamos el icono de `+` y le damos a "**New repository**".
+
+Le ponemos un nombre al repositorio. Una descripción si queremos y le damos a "**Create repository**".
+
+Nada mas crearlo no tendrá ningún ningún archivo y nos aparecerá una url con la que podremos **clonar** por [terminal](#1-iniciar--clonar-repo) o [VSCode](#1-iniciar--clonar-repo-1) y empezar a crear y subir archivos, o **añadir el remoto** por [terminal](#6-conectar-con-remoto) o [VSCode](#6-conectar-con-remoto-1) y hacer un push para subir nuestros archivos e historial del repositorio local.
