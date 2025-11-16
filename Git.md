@@ -69,7 +69,7 @@ git config --global user.email "email@ejemplo.com"
 3. NO usar punto final. El mensaje corto del commit (la primera línea) es el encabezado/titulo del commit, y al igual que en el periódico o las noticias, los títulos no llevan punto final.
 4. NI puntos suspensivos. Si vemos los commits como instrucciones, las instrucciones deben de ser claras y estar completas. No deben crear duda a quien lo lea después.
 5. Usar como máximo unos 50 caracteres. Si tienes que explicar demasiado, tu commit probablemente hace demasiadas cosas. Si es posible dividirlo en varios commits; **hazlo**.
-6. Si tienes que añadir alguna explicación necesaria se pondrá en el cuerpo del commit. En el se el puede explicar el qué y el por qué, no el cómo. Porque el mensaje puede mentir, pero el código no.
+6. Si tienes que añadir alguna explicación necesaria se pondrá en el cuerpo del commit. En el se el puede explicar el qué y el por qué, no el cómo. Porque el mensaje puede mentir, pero el código no. Se debe dejar una línea en blanco entre el titulo y el cuerpo.
 7. Usar prefijos para mejor legibilidad. Para eso, se usa esta estructura: `<tipo>(<scope>): <descripcion>`.
    - Es scope es opcional y sirve para indicar la parte del proyecto afectada (*por ejemplo un módulo, componente o funcionalidad específica*), pudiendo entender rápidamente dónde se aplicó el cambio.
    - Para el tipo de commit, los más comunes y usados son ***feat***, ***fix***, ***refactor*** y ***docs***, pera hay mas. Aquí unos ejemplos y usos:
@@ -114,15 +114,66 @@ Si quisiéramos añadir un cuerpo al mensaje, haríamos `git commit` sin escribi
 
 ### Crear y cambiar de ramas
 
+Para crear una nueva rama usamos `git branch <nombre_rama>`. Esto solo crea la rama, no cambia a ella automáticamente.
+
+Para cambiar a otra rama usamos `git checkout <nombre_rama>`. También se puede crear y cambiar a la rama en un solo paso con `git checkout -b <nombre_rama>`.
+
+Para ver todas las ramas del repositorio usamos `git branch`, la rama actual aparecerá con un *.
+
+Para eliminar una rama usamos `git branch -d <nombre_rama>` (*solo se borrará si todos sus cambios ya están incluidos en otra rama*) o `git branch -D <nombre_rama>` (*se borra aunque tenga cambios no integrados*).
+
 ### Fusionar ramas (merge) y conflictos
+
+Para fusionar otra rama en la rama actual usamos `git merge <rama_a_fusionar>`. La rama en la que estamos **recibe** los cambios de la rama que indicamos.
+
+Si Git puede combinar los cambios automáticamente, el merge se hace solo y solo mueve el puntero de la rama. \
+Si queremos asegurar que cree un commit de merge en todo caso, tenemos que usar `git merge --no-ff <rama_a_fusionar> -m "mensaje"`. Para añadir un cuerpo al mensaje lo haríamos sin el `-m "mensaje"` y seria lo mismo que con los commit.
+
+Si hay cambios que no se pueden combinar, se genera un conflicto. Los archivos en conflicto aparecen modificados y marcados para resolver.
+
+Para resolver los conflictos:
+1. Vemos qué archivos están en conflicto usando `git status`.
+2. Abrimos los archivos y buscamos las marcas `<<<<<<<`, `=======` y `>>>>>>>`.
+3. Elegimos qué cambios conservar editando el archivo a como lo queramos dejar y eliminamos las marcas.
+4. Guardamos los archivos y añadimos los cambios con `git add <archivo o '.'>`.
+5. Terminamos el merge con `git commit -m "mensaje"` o `git commit` si Git no lo hace automáticamente.
 
 ### Conectar con remoto
 
+Para enlazar el repositorio local con uno remoto usamos `git remote add <nombre_remoto> <url_del_repo>` (*nombre_remoto el 99% de las veces es "**origin**". Es un **casi** un estándar*). 
+Esto crea la conexión entre tu repo local y el repo de GitHub (o cualquier otro servicio).
+
+Para eliminar un remoto usamos `git remote remove <nombre_remoto>`, que borra la conexión con ese repositorio remoto.
+
+Para comprobar qué remotos están configurados usamos `git remote -v`, que muestra las URLs asociadas al remoto.
+
 ### Subir y descargar cambios
+
+Para subir los cambios al remoto usamos `git push <rama>`.
+
+Para descargar los cambios del remoto usamos `git pull`, que trae los cambios de la rama remota correspondiente y los fusiona con la rama en la que estamos.
+
+Si solo queremos descargar los cambios sin fusionarlos todavía, usamos `git fetch`, que trae los commits nuevos del remoto y actualiza su información si no hay conflictos, sin modificar nuestros archivos ni nuestra rama actual.
+
+Podemos usar la opción `--force`. Al usarla en el `push` sobrescribimos el remoto con nuestra versión local; en `pull` forzamos que lo local se reemplace por lo del remoto; y en `fetch` forzamos que Git actualice lo que sabe del remoto aunque sobrescriba la información que había anteriormente.
 
 ### Deshacer cambios
 
+Si queremos deshacer un commit ya hecho pero aún no se ha subido al remoto, usamos `git reset --soft <commit>` para mantener los cambios en los archivos, o `git reset --hard <commit>` para borrar también los cambios en los archivos y volver al estado del commit indicado.
+
+Si el commit ya se ha subido al remoto, podemos hacer los mismos pasos que si no se hubiera subido y luego forzar el push con `git push --force` para sobrescribir el remoto con nuestra versión corregida. Esto puede afectar a otros que ya hayan descargado esos commits, por lo que se debe usar con cuidado.
+
 ### Etiquetas
+
+Para crear una etiqueta usamos `git tag <nombre_etiqueta>`. Esto marca un commit concreto sin añadir información extra.
+
+Para crear una etiqueta con mensaje usamos `git tag -a <nombre_etiqueta> -m "mensaje"`. Esto marca un commit y guarda información adicional.
+
+Para ver todas las etiquetas del repositorio usamos `git tag`.
+
+Para subir una etiqueta al remoto usamos `git push origin <nombre_etiqueta>`. Para subir todas las etiquetas existentes usamos `git push origin --tags`.
+
+Para borrar una etiqueta local usamos `git tag -d <nombre_etiqueta>`. Para borrarla del remoto usamos `git push origin --delete <nombre_etiqueta>`.
 
 
 ## **Gestión de un repositorio (VSCode)**
@@ -131,7 +182,7 @@ Si quisiéramos añadir un cuerpo al mensaje, haríamos `git commit` sin escribi
 
 Para iniciar un repositorio, abrimos la carpeta donde lo queramos iniciar y abrimos el menú de control de versiones con `Ctrl + G` y le damos a "**Inicializar Repositorio**".
 
-Para clonar uno ya creado en GitHub, iniciamos uno y en el menú de control de versiones en el apartado "CHANGES" le damos a los 3 puntos y a clonar y ponemos la url del repositorio en GitHub.
+Para clonar uno ya creado en GitHub, iniciamos uno y en el menú de control de versiones en el apartado **CAMBIOS** le damos a los 3 puntos y a clonar y ponemos la url del repositorio en GitHub.
 
 ### Estado e historial
 
@@ -147,19 +198,67 @@ En el menú de control de versiones, en el apartado de **CAMBIOS**, en los archi
 Para deshacer cambios, seria lo mimo que lo anterior pero en vez de darle al '+' se le daría a la flecha hacia atrás.
 
 Para hacer un commit, el el apartado de **CAMBIOS**, ponemos el mensaje (*siguiendo las [buenas practicas](#buenas-prácticas)*) y le damos a ***Confirmación***. \
-Si quisiéramos añadir un cuerpo al mensaje, le damos a ***Confirmación*** sin escribir un mensaje y nos aparecería un editor de texto para escribir el mensaje. La primera línea, seria el titulo, las demás serian el cuerpo. Una vez escrito el mensaje y cuerpo, en la barra superior (donde aparecen los archivos) a la derecha le damos a el tic de verificación para confirmar el mensaje y terminar el commit.
+Si quisiéramos añadir un cuerpo al mensaje, simplemente pondríamos `Crtl + Intro` para escribir mas líneas y le damos a ***Confirmación***.
 
 ### Crear y cambiar de ramas
 
+Para crear una rama, abajo a la izquierda en la barra de estado, le clicamos el nombre de nuestra rama actual. Seleccionamos **Crear nueva rama...** y le ponemos el nombre que queramos.
+
+Para cambiar entre ramas, en el mismo sitio vamos y seleccionamos la rama que queramos usar.
+
+Para eliminar una rama, en el menú de control de versiones, en el apartado de **CAMBIOS** le damos a los tres puntos, seleccionamos `Rama > Borrar rama...` y borramos la que queramos (si queremos borrar en la que estamos actualmente, primero tenemos que cambiar a otra rama).
+
 ### Fusionar ramas (merge) y conflictos
+
+Para fusionar otra rama en la rama actual, en el menú de control de versiones, en el apartado de **CAMBIOS** le damos a los tres puntos, seleccionamos `Rama > Combinar`. La rama en la que estamos **recibe** los cambios de la rama que indicamos.
+
+Si Git puede combinar los cambios automáticamente, el merge se hace solo y simplemente mueve el puntero de la rama. \
+Si queremos asegurar que cree un commit de merge en todo caso, *vscode no tiene una forma propia de hacer esto*. Pero podríamos hacerlo con la extension [Git Graph](https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph).
+
+En el apartado de **CAMBIOS** al lado de los tres puntos seleccionamos el icono del grafo (el de las líneas y puntos) y se abrirá una pestaña con el historial de commits. \
+Hacemos doble click en la rama en la que queramos recibir los cambios y después click derecho la rama de la cual traemos los cambios y seleccionamos `Merge into current branch...`.\
+Marcamos "*Create a new commit even if fast-forward is possible*" para hacer que cree un nuevo commit, y "*No Commit*" para hacer que no envíe el commit directamente para poder cambiar el mensaje en el menú de la barra lateral.
+
+Si hay cambios que no se pueden combinar, se genera un conflicto. Los archivos en conflicto aparecen modificados, marcados para resolver y en una sección nueva en el menú en el apartado de **CAMBIOS** llamada "*Fusionar cambios mediante combinación*".
+
+Para solucionarlo, clicamos en el archivo en esa nueva sección y nos llevara a donde esta el conflicto. \
+Nos aparecerán varias opciones. Podemos elegir entre conservar el actual, el entrante o ambos. Seleccionamos el que nos convenga y una vez seleccionado, si aceptamos ambos, podemos editar el archivo manualmente para poder solucionar cualquier error que git no pueda detectar.
+
+Una vez terminado y que no haya mas conflictos, añadimos el archivo al stage, escribimos el commit de merge y le damos a ***Confirmación***.
 
 ### Conectar con remoto
 
+Para conectar con remoto, en el menú de control de versiones, en el apartado de **CAMBIOS** le damos a los tres puntos, seleccionamos `Remoto > Agregar remoto...`, ponemos la url del remoto y de nombre le damos `origin`.
+
+Para eliminar el remoto, en el mismo sitio pero dándole a `Quitar remoto`.
+
+Puedes ver los remotos que hay, en el apartado de **CAMBIOS** le damos a los tres puntos, seleccionamos `Pull, Push > Insertar en...` y nos mostrara una lista con los que tenemos.
+
 ### Subir y descargar cambios
+
+Para subir los cambios al remoto, en el menú de control de versiones le damos a los tres puntos y seleccionamos `Pull, Push > Insertar`. Esto enviará los commits de la rama actual al remoto correspondiente.
+
+Para descargar los cambios del remoto, usamos `Pull, Push > Incorporar cambios`, que trae los cambios de la rama remota correspondiente y los combina automáticamente con la rama actual.
+
+Podemos hacer un pull y push a la vez con `Pull, Push > Sincronizar`.
+
+Si solo queremos traer los cambios sin fusionarlos todavía, usamos `Pull, Push > Fetch`, que actualiza la información del remoto y descarga los commits nuevos, pero no modifica nuestros archivos hasta que hagamos un merge manual.
 
 ### Deshacer cambios
 
+Si has hecho un commit en local o si además también lo has subido a remoto y lo quieres deshacer, desde la interfaz de vscode no es posible.
+
+Si necesitas hacerlo solo se podría [hacer por terminal](#deshacer-cambios).
+
 ### Etiquetas
+
+Para crear una etiqueta, en el menú de control de versiones, en el apartado de **CAMBIOS** le damos a los tres puntos, seleccionamos `Etiquetas > Crear etiqueta...`, le ponemos un nombre y nos aparecerá para poner un mensaje. Si no queremos poner mensaje, pulsamos intro sin poner nada.
+
+Para subir todas las etiquetas al remoto pulsamos `F1` y escribimos `push etiquetas` y le damos al intro.
+
+Para borrar una etiqueta local vamos a `Etiquetas > Eliminar etiqueta...`. Y para borrarlas del remoto `Etiquetas > Eliminar etiqueta remota...`.
+
+Para ver todas las etiquetas del repositorio, en el menú de control de versiones, en el apartado de **GRAPH** podemos ver el historial de commits donde también aparecen los tags que hay.
 
 
 # GitHub
