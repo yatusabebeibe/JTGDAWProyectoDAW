@@ -210,7 +210,7 @@ Para conectar con remoto, en el menú de control de versiones, en el apartado de
 
 Para eliminar el remoto, en el mismo sitio pero dándole a `Quitar remoto`.
 
-Puedes ver los remotos que hay, en el apartado de **CAMBIOS** le damos a los tres puntos, seleccionamos `Push > Insertar en...` y nos mostrara una lista con los que tenemos.
+Puedes ver los remotos que hay, en el apartado de **CAMBIOS** le damos a los tres puntos, seleccionamos `Pull, Push > Insertar en...` y nos mostrara una lista con los que tenemos.
 
 ### Subir y descargar cambios
 
