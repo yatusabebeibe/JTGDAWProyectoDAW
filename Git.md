@@ -165,6 +165,16 @@ Si el commit ya se ha subido al remoto, podemos hacer los mismos pasos que si no
 
 ### Etiquetas
 
+Para crear una etiqueta usamos `git tag <nombre_etiqueta>`. Esto marca un commit concreto sin añadir información extra.
+
+Para crear una etiqueta con mensaje usamos `git tag -a <nombre_etiqueta> -m "mensaje"`. Esto marca un commit y guarda información adicional.
+
+Para ver todas las etiquetas del repositorio usamos `git tag`.
+
+Para subir una etiqueta al remoto usamos `git push origin <nombre_etiqueta>`. Para subir todas las etiquetas existentes usamos `git push origin --tags`.
+
+Para borrar una etiqueta local usamos `git tag -d <nombre_etiqueta>`. Para borrarla del remoto usamos `git push origin --delete <nombre_etiqueta>`.
+
 
 ## **Gestión de un repositorio (VSCode)**
 
@@ -241,6 +251,14 @@ Si has hecho un commit en local o si además también lo has subido a remoto y l
 Si necesitas hacerlo solo se podría [hacer por terminal](#deshacer-cambios).
 
 ### Etiquetas
+
+Para crear una etiqueta, en el menú de control de versiones, en el apartado de **CAMBIOS** le damos a los tres puntos, seleccionamos `Etiquetas > Crear etiqueta...`, le ponemos un nombre y nos aparecerá para poner un mensaje. Si no queremos poner mensaje, pulsamos intro sin poner nada.
+
+Para subir todas las etiquetas al remoto pulsamos `F1` y escribimos `push etiquetas` y le damos al intro.
+
+Para borrar una etiqueta local vamos a `Etiquetas > Eliminar etiqueta...`. Y para borrarlas del remoto `Etiquetas > Eliminar etiqueta remota...`.
+
+Para ver todas las etiquetas del repositorio, en el menú de control de versiones, en el apartado de **GRAPH** podemos ver el historial de commits donde también aparecen los tags que hay.
 
 
 # GitHub
