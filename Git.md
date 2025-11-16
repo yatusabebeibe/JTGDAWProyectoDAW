@@ -26,6 +26,7 @@
     - [9. Etiquetas](#9-etiquetas-1)
 - [GitHub](#github)
   - [Crear repositorio](#crear-repositorio)
+  - [Crear tags y releases](#crear-tags-y-releases)
 
 ---
 
@@ -276,3 +277,19 @@ Para crear un repositorio entramos en [GitHub](https://github.com/) y en la barr
 Le ponemos un nombre al repositorio. Una descripción si queremos y le damos a "**Create repository**".
 
 Nada mas crearlo no tendrá ningún ningún archivo y nos aparecerá una url con la que podremos **clonar** por [terminal](#1-iniciar--clonar-repo) o [VSCode](#1-iniciar--clonar-repo-1) y empezar a crear y subir archivos, o **añadir el remoto** por [terminal](#6-conectar-con-remoto) o [VSCode](#6-conectar-con-remoto-1) y hacer un push para subir nuestros archivos e historial del repositorio local.
+
+## Crear tags y releases
+
+Una vez que ya hemos creado el repositorio y hemos subido cosas podemos crear tags y releases.
+
+Para crear tags (*si es que no los hemos creado ya por [terminal](#9-etiquetas) o [VSCode](#9-etiquetas-1)*) podemos ir al repositorio en GitHub, y le damos en la parte de la derecha donde pone `Releases`.
+
+Una vez aquí, hacemos click en `Draft a new release` (*para crear un tag desde GitHub solo se puede hacer creando un release*).
+
+Aquí podemos crear un release. Para esto, seleccionamos un tag que ya tuviéramos creado que apunta a un commit o creamos uno nuevo y seleccionamos a que commit estará asociado.
+
+Le ponemos un titulo al release (normalmente suele ser la versión) y una descripción donde indicamos los cambios respecto a la versión anterior.
+
+Una vez hecho esto publicamos la release.
+
+Hacemos esto para poder descargar y ver el código fuente en un punto en el tiempo concreto de forma mas fácil.
