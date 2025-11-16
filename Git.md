@@ -149,6 +149,14 @@ Para comprobar qué remotos están configurados usamos `git remote -v`, que mues
 
 ### Subir y descargar cambios
 
+Para subir los cambios al remoto usamos `git push <rama>`.
+
+Para descargar los cambios del remoto usamos `git pull`, que trae los cambios de la rama remota correspondiente y los fusiona con la rama en la que estamos.
+
+Si solo queremos descargar los cambios sin fusionarlos todavía, usamos `git fetch`, que trae los commits nuevos del remoto y actualiza su información si no hay conflictos, sin modificar nuestros archivos ni nuestra rama actual.
+
+Podemos usar la opción `--force`. Al usarla en el `push` sobrescribimos el remoto con nuestra versión local; en `pull` forzamos que lo local se reemplace por lo del remoto; y en `fetch` forzamos que Git actualice lo que sabe del remoto aunque sobrescriba la información que había anteriormente.
+
 ### Deshacer cambios
 
 ### Etiquetas
@@ -213,6 +221,14 @@ Para eliminar el remoto, en el mismo sitio pero dándole a `Quitar remoto`.
 Puedes ver los remotos que hay, en el apartado de **CAMBIOS** le damos a los tres puntos, seleccionamos `Pull, Push > Insertar en...` y nos mostrara una lista con los que tenemos.
 
 ### Subir y descargar cambios
+
+Para subir los cambios al remoto, en el menú de control de versiones le damos a los tres puntos y seleccionamos `Pull, Push > Insertar`. Esto enviará los commits de la rama actual al remoto correspondiente.
+
+Para descargar los cambios del remoto, usamos `Pull, Push > Incorporar cambios`, que trae los cambios de la rama remota correspondiente y los combina automáticamente con la rama actual.
+
+Podemos hacer un pull y push a la vez con `Pull, Push > Sincronizar`.
+
+Si solo queremos traer los cambios sin fusionarlos todavía, usamos `Pull, Push > Fetch`, que actualiza la información del remoto y descarga los commits nuevos, pero no modifica nuestros archivos hasta que hagamos un merge manual.
 
 ### Deshacer cambios
 
