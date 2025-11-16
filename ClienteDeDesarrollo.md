@@ -4,7 +4,7 @@
   - [**1 Configuración inicial**](#1-configuración-inicial)
     - [Nombre y configuración de red](#nombre-y-configuración-de-red)
     - [Cuentas administradoras](#cuentas-administradoras)
-  - [**2 Navegadores**](#2-navegadores)
+  - [**2 Navegador**](#2-navegador)
   - [**3 MovaXterm**](#3-movaxterm)
   - [**4 NetBeans**](#4-netbeans)
     - [Creación de proyectos](#creación-de-proyectos)
@@ -29,7 +29,14 @@
 ## **1 Configuración inicial**
 ### Nombre y configuración de red
 ### Cuentas administradoras
-## **2 Navegadores**
+
+## **2 Navegador**
+
+Usare Firefox como mi navegador principal.
+
+Usare estas extensiones:
+- [**uBlock Origin**](https://addons.mozilla.org/es-ES/firefox/addon/ublock-origin/): para bloquear peticiones entre el navegador y los servidores de anuncios, rastreadores, y otros elementos que puedan afectar la privacidad o el rendimiento del navegador.
+- [**Bitwarden**](https://addons.mozilla.org/en-US/firefox/addon/bitwarden-password-manager/): para guardar y gestionar mis contraseñas de forma segura.
 
 ## **3 MovaXterm**
 
