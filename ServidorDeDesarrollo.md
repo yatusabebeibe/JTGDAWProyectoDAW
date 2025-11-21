@@ -456,10 +456,9 @@ sudo apt install libapache2-mod-php8.3 php8.3-fpm -y
 
 # Configuramos Apache para usar PHP-FPM
 sudo a2enmod proxy_fcgi
-sudo a2dismod mpm_prefork
 sudo a2dismod php8.3
 sudo a2dismod mpm_prefork
-sudo a2enmod mpm_event proxy_fcgi
+sudo a2enmod mpm_event
 sudo a2enconf php8.3-fpm
 
 # Reiniciamos y recargamos Apache para aplicar cambios
