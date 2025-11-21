@@ -4,6 +4,7 @@
   - [Como acceder](#como-acceder)
   - [Subir los sitios](#subir-los-sitios)
   - [Sitios Virtuales](#sitios-virtuales)
+  - [Creación de subdominios](#creación-de-subdominios)
 
 ---
 
@@ -49,3 +50,12 @@ Una vez le demos a aceptar, nos dirá que hay que actualizar los registros DNS. 
 Le damos click en actualizar y ya estaría.
 
 Seguimos en [esta](ServidorDeDesarrollo.md#hosts-virtuales) parte.
+
+## Creación de subdominios
+
+En la pagina principal de administración, hacemos click en **"Añadir subdominio"**.
+
+En esta pagina pondremos el nombre del subdominio; y luego en **"Raíz del documento"** ponemos la ruta a la carpeta que será la pagina principal de ese subdominio. \
+Por ejemplo, si queremos poner la aplicación al tema 4 de DWES la ruta sería `/httpdocs/JTGDWESProyectoTema4`.
+
+Una vez terminado, le damos a aceptar y ya estaría.
