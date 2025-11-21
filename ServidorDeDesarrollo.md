@@ -409,19 +409,26 @@ Una vez hecho esto, vamos a ``/etc/apache2/sites-available`` y creamos el archiv
 Temeos que modificarlo para que al acceder a la url creada en Plesk, podamos acceder al servidor. \
 Y que en vez de ir a la pagina normal, vaya a la pagina del usuario enjaulado.
 
-Añadimos esta línea:
-```bash
+Añadimos estas líneas:
+```apache
 ServerName sitio1.jesustemgal.ieslossauces.es  # Esto hace que si alguien escribe este dominio, Apache de este sitio
+
+<FilesMatch "\.php$"> # Estas las ponemos al final del documento
+    SetHandler "proxy:unix:/run/php/php8.3-fpm.sock|fcgi://localhost/"
+</FilesMatch>
 ```
 
-Y modificamos estas para cambiar la pagina que aparece:
-```bash
+Modificamos esta para cambiar la pagina que aparece:
+```apache
 DocumentRoot /var/www/usuarioenjaulado1/httpdocs
-
-ProxyPassMatch ^/(.*\.php)$ unix:/run/php/php8.3-fpm.sock|fcgi://127.0.0.1/var/www/usuarioenjaulado1/httpdocs
 ```
 
-Una vez terminado, guardamos el archivo y habilitamos 
+Y eliminamos o comentamos esta si la tenemos:
+```apache
+ProxyPassMatch ^/(.*\.php)$ unix:/run/php/php8.3-fpm.sock|fcgi://127.0.0.1/var/www/...
+```
+
+Una vez terminado, guardamos el archivo y habilitamos la pagina.
 
 
 ## 3 PHP-FPM
@@ -449,10 +456,9 @@ sudo apt install libapache2-mod-php8.3 php8.3-fpm -y
 
 # Configuramos Apache para usar PHP-FPM
 sudo a2enmod proxy_fcgi
-sudo a2dismod mpm_prefork
 sudo a2dismod php8.3
 sudo a2dismod mpm_prefork
-sudo a2enmod mpm_event proxy_fcgi
+sudo a2enmod mpm_event
 sudo a2enconf php8.3-fpm
 
 # Reiniciamos y recargamos Apache para aplicar cambios
