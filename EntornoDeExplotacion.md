@@ -5,6 +5,7 @@
   - [Subir los sitios](#subir-los-sitios)
   - [Sitios Virtuales](#sitios-virtuales)
   - [Creación de subdominios](#creación-de-subdominios)
+  - [Creación de bases de datos](#creación-de-bases-de-datos)
 
 ---
 
@@ -59,3 +60,17 @@ En esta pagina pondremos el nombre del subdominio; y luego en **"Raíz del docum
 Por ejemplo, si queremos poner la aplicación al tema 4 de DWES la ruta sería `/httpdocs/JTGDWESProyectoTema4`.
 
 Una vez terminado, le damos a aceptar y ya estaría.
+
+## Creación de bases de datos
+
+En la pagina principal de administración, en nuestro dominio principal vamos a **"Bases de datos"**, y dentro le damos a **"Añadir base de datos"**.
+
+En el menú que se nos abrirá le ponemos un nombre a la base de datos, en sitio relacionado seleccionamos el [Subdominio](#creación-de-subdominios) al que estará asociada la BD.
+
+Abajo, creamos el usuario que se usara con esa base de datos. \
+El nombre del usuario será el indicado según el estándar de desarrollo; y para la contraseña, dado que necesita tener un mínimo de seguridad tenemos que generar o crear una que cumpla con los requisitos de Plesk.
+
+Y para importar el script SQL de borrado, creación y carga inicial de las tablas, en la pantalla para gestionar las bases de datos, tenemos que meter cada script en un `.zip` (*O crear un solo script y meterlo en un `.zip`*). \
+Luego seleccionamos la DB en la que queramos importar los scripts y le damos a **"Importar volcado"**, le damos a **"Seleccionar archivo"** desde el ordenador local y seleccionamos el `.zip` con el/los script/s SQL.
+
+Hecho esto, ya estaría la DB creada.
