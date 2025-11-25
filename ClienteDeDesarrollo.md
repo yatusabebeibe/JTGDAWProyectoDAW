@@ -161,10 +161,10 @@ El archivo tiene que tener este formato (modificar ``name``, ``host`` y ``remote
 {
   "name": "NombreConexion",
   "context": ".", # Carpeta donde se suben/descargan los archivos en local ('.' = carpeta proyecto)
-  "host": "10.199.10.22",
+  "host": "10.199.11.252",
   "username": "operadorweb",
   "password": "paso", # Si no se pone te pregunta cada vez que cierres y abres el editor
-  "remotePath": "/var/www/html/PROYECTO", # Carpeta donde se suben/descargan los archivos en el servidor
+  "remotePath": "/var/www/daw211/httpdocs/PROYECTO", # Carpeta donde se suben/descargan los archivos en el servidor
   "uploadOnSave": true, # Sube archivos automaticamente al modificar
   "ignore": [
       ".git",
@@ -235,13 +235,13 @@ Y después en el archivo ``.code-workspace`` al nivel de **"folders"** poner est
                 "port": 9003,
                 "stopOnEntry": false,
                 "pathMappings": {
-                    "/var/www/html": "${workspaceFolder:xxxProyectoDAW}",
-                    "/var/www/html/xxxDAWProyectoDAW":    "${workspaceFolder:xxxDAWProyectoDAW}",
-                    "/var/www/html/xxxDWECProyectoDWEC":  "${workspaceFolder:xxxDWECProyectoDWEC}",
-                    "/var/www/html/xxxDWESProyectoDWES":  "${workspaceFolder:xxxDWESProyectoDWES}",
-                    "/var/www/html/xxxDWESProyectoTema3": "${workspaceFolder:xxxDWESProyectoTema3}",
-                    "/var/www/html/xxxDWESProyectoTema4": "${workspaceFolder:xxxDWESProyectoTema4}",
-                    "/var/www/html/xxxCIBProyectoCiberseguridad": "${workspaceFolder:xxxCIBProyectoCiberseguridad}"
+                    "/var/www/daw211/httpdocs": "${workspaceFolder:xxxProyectoDAW}",
+                    "/var/www/daw211/httpdocs/xxxDAWProyectoDAW":    "${workspaceFolder:xxxDAWProyectoDAW}",
+                    "/var/www/daw211/httpdocs/xxxDWECProyectoDWEC":  "${workspaceFolder:xxxDWECProyectoDWEC}",
+                    "/var/www/daw211/httpdocs/xxxDWESProyectoDWES":  "${workspaceFolder:xxxDWESProyectoDWES}",
+                    "/var/www/daw211/httpdocs/xxxDWESProyectoTema3": "${workspaceFolder:xxxDWESProyectoTema3}",
+                    "/var/www/daw211/httpdocs/xxxDWESProyectoTema4": "${workspaceFolder:xxxDWESProyectoTema4}",
+                    "/var/www/daw211/httpdocs/xxxCIBProyectoCiberseguridad": "${workspaceFolder:xxxCIBProyectoCiberseguridad}"
                 },
                 "xdebugSettings": {
                     "max_data": 2048,
