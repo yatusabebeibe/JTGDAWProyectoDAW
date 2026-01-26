@@ -4,11 +4,25 @@
   - [**1 Configuración inicial**](#1-configuración-inicial)
     - [Nombre y configuración de red](#nombre-y-configuración-de-red)
     - [Cuentas administradoras](#cuentas-administradoras)
+    - [Instalación PHP](#instalación-php)
+      - [1 Descargar PHP](#1-descargar-php)
+      - [2 Configurar las variables de entorno](#2-configurar-las-variables-de-entorno)
+      - [3 Comprobar la instalación](#3-comprobar-la-instalación)
+    - [Instalación y uso de phpDocumentor](#instalación-y-uso-de-phpdocumentor)
+      - [1 Descargar phpDocumentor](#1-descargar-phpdocumentor)
+      - [2 Guardar el archivo](#2-guardar-el-archivo)
+      - [3 Generar documentación desde la línea de comandos](#3-generar-documentación-desde-la-línea-de-comandos)
+      - [4 Solución de problemas con rutas que contienen espacios](#4-solución-de-problemas-con-rutas-que-contienen-espacios)
   - [**2 Navegador**](#2-navegador)
   - [**3 MovaXterm**](#3-movaxterm)
   - [**4 NetBeans**](#4-netbeans)
     - [Creación de proyectos](#creación-de-proyectos)
     - [Eliminación de proyectos](#eliminación-de-proyectos)
+    - [Generar Documentación](#generar-documentación)
+      - [Configuración](#configuración)
+        - [PHP](#php)
+        - [phpDocumentor](#phpdocumentor)
+      - [Generar documentación NetBeans](#generar-documentación-netbeans)
     - [Información del IDE](#información-del-ide)
   - [**5 Visual Studio Code**](#5-visual-studio-code)
     - [Como crear un Workspace](#como-crear-un-workspace)
@@ -29,6 +43,79 @@
 ## **1 Configuración inicial**
 ### Nombre y configuración de red
 ### Cuentas administradoras
+
+### Instalación PHP
+
+#### 1 Descargar PHP
+
+1. Accede a la página oficial de PHP para Windows:
+
+   * [https://windows.php.net/download/](https://windows.php.net/download/)
+2. Descarga la versión **Thread Safe (TS)** en formato **ZIP**.
+3. Extrae el contenido del ZIP en una carpeta, por ejemplo:
+```
+C:\Users\<usuario>\bin\phpdoc\php-8.3.29\
+```
+
+#### 2 Configurar las variables de entorno
+
+1. Abre las **Variables de entorno del sistema**:
+
+   * Clic derecho en **Este equipo**
+   * Propiedades
+   * Configuración avanzada del sistema
+   * Variables de entorno
+
+2. En **Variables del sistema**, selecciona la variable `Path` y pulsa **Editar**.
+
+3. Añade la ruta donde se encuentra `php.exe`, por ejemplo:
+
+```
+C:\Users\<usuario>\bin\phpdoc\php-8.3.29\php-8.3.29-Win32-vs16-x64\
+```
+
+4. Acepta los cambios y cierra todas las ventanas.
+
+#### 3 Comprobar la instalación
+
+1. Abre una terminal (CMD o PowerShell).
+2. Ejecuta el siguiente comando:
+```bash
+php -v
+```
+3. Si se muestra la versión de PHP, la instalación es correcta.
+
+### Instalación y uso de phpDocumentor
+
+#### 1 Descargar phpDocumentor
+
+1. Accede a la documentación oficial:
+* [https://docs.phpdoc.org/guide/getting-started/installing.html](https://docs.phpdoc.org/guide/getting-started/installing.html)
+
+2. Descarga el archivo:
+* [https://phpdoc.org/phpDocumentor.phar](https://phpdoc.org/phpDocumentor.phar)
+
+#### 2 Guardar el archivo
+
+Guarda el archivo `phpDocumentor.phar` en una ruta accesible, por ejemplo:
+```text
+C:\Users\<usuario>\bin\phpdoc\phpDocumentor.phar
+```
+
+#### 3 Generar documentación desde la línea de comandos
+
+Ejecuta el siguiente comando en CMD:
+```bash
+"C:\Users\<usuario>\bin\phpdoc\php-8.3.29\php-8.3.29-Win32-vs16-x64\php.exe" "C:\Users\<usuario>\bin\phpdoc\phpDocumentor.phar" run --ansi --directory "D:/ProyectosNetbeans/DAW2LibreriaValidacion" --target "D:/ProyectosNetbeans/DAW2LibreriaValidacion/doc" --title "DAW2LibreriaValidacion"
+```
+
+#### 4 Solución de problemas con rutas que contienen espacios
+
+Si aparecen errores relacionados con rutas como `Program Files`:
+
+1. Crea una carpeta llamada `.phpdoc` en la raíz del proyecto.
+2. Dentro de esa carpeta, crea un archivo `phpdoc.xml`.
+3. Ejecuta de nuevo phpDocumentor usando ese archivo de configuración.
 
 ## **2 Navegador**
 
@@ -101,6 +188,46 @@ Le damos click derecho al proyecto que queramos eliminar.
 
 Una vez le damos, nos preguntara si queremos también eliminar todos los archivos (locales). Lo seleccionamos si queremos y le damos a "Yes". Para que se elimine
 
+### Generar Documentación
+
+#### Configuración
+
+##### PHP
+
+1. Abre **NetBeans**.
+2. Ve a **Tools → Options**.
+3. Selecciona la pestaña **PHP**.
+4. En el campo del ejecutable de PHP, selecciona:
+
+   ```
+   C:\Users\<usuario>\bin\phpdoc\php-8.3.29\php-8.3.29-Win32-vs16-x64\php.exe
+   ```
+5. Aplica los cambios.
+
+---
+
+##### phpDocumentor
+
+1. En **Tools → Options → PHP → Frameworks & Tools**.
+2. Selecciona la pestaña **PHPDoc**.
+3. Indica la ruta del archivo:
+
+   ```
+   C:\Users\<usuario>\bin\phpdoc\phpDocumentor.phar
+   ```
+4. Aplica y acepta.
+
+---
+
+#### Generar documentación NetBeans
+
+Abrimos el proyecto PHP que queramos documentar en NetBeans.
+
+Una vez dentro generamos la documentación así:
+1. Clic derecho sobre el proyecto.
+2. Selecciona **Generate Documentation**.
+3. Para evitar errores, ve a **Properties → Documentation** y define la carpeta **Target**, por ejemplo: `doc`
+
 ### Información del IDE
 
 > **Pagina Oficial**: https://netbeans.apache.org/ \
@@ -148,7 +275,7 @@ D:\
 
 Una vez creadas las carpetas. Seleccionamos las carpetas **DENTRO** de ***ProyectosWebDAW***, no la carpeta ***ProyectosWebDAW*** en si. (Se pueden seleccionar todas a la vez)
 
-Una vez hecho. En el explorador del editor aparecerán los diferentes proyectos. 
+Una vez hecho. En el explorador del editor aparecerán los diferentes proyectos.
 
 > **IMPORTANTE**: Ir al ***File > Save Workspace As...*** y guardarlo *(Preferiblemente en la carpeta del workspace)*. Es necesario para algunas configuraciones mas tarde.
 
@@ -253,7 +380,7 @@ Y después en el archivo ``.code-workspace`` al nivel de **"folders"** poner est
 ```
 
 Una vez hecho esto, vamos al apartado de debug de vscode buscando el icono con el triangulo de play con un insecto al lado; o presionando ``Ctrl + Shift + D``. \
-Si le damos al Run **Listen for Xdebug** 
+Si le damos al Run **Listen for Xdebug**
 
 ### Conexión con la BBDD (MariaDB)
 
